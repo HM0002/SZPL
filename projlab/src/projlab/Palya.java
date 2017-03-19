@@ -18,31 +18,43 @@ import java.util.ArrayList;
  */
 public class Palya {
 
+	// Attribútumok:
+
+	/** elemek: Itt tároljuk, hogy mely Sin példányok tartoznak a pályához. */
+	private ArrayList<Sin> elemek;
+
 	/**
-	 * Attribútumok:
-	 * 
-	 * elemek: Itt tároljuk, hogy mely Sin példányok tartoznak a pályához.
 	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
-	 * 
+	 */
+	private ArrayList<Vonat> vonatok;
+
+	/**
 	 * vonatSzam: Tartalmazza, hogy az adott pályához hány vonat tartozik, ennyi
 	 * vonatot kell majd indítani.
-	 * 
+	 */
+	private int vonatSzam;
+
+	/**
 	 * kocsiSzam: Tartalmazza, hogy hány kocsi tartozik ezekhez a vonatokhoz.
-	 * 
+	 */
+	private int kocsiSzam;
+
+	/**
 	 * alagutSzam: Itt tároljuk, hogy az elemek-ben hány Sin példánynak igaz az
 	 * alagut változója.
-	 * 
+	 */
+	private int alagutSzam;
+
+	/**
 	 * keslelteto: Azt tároljuk itt, hogy a pálya mennyi idõközönként(tick)
 	 * enged be új vonatot.
 	 */
-	private ArrayList<Sin> elemek;
-	private ArrayList<Vonat> vonatok;
-	private int vonatSzam;
-	private int kocsiSzam;
-	private int alagutSzam;
 	private int keslelteto;
 
-	/** Konstruktor */
+	/**
+	 * Konstruktor, a paraméterül kapott Sin példányoknak beállítjuk, hogy ehhez
+	 * a Palya-hoz tartoznak.
+	 */
 	Palya(int vSz, int kSz, int k, ArrayList<Sin> e, ArrayList<Vonat> v) {
 		elemek = e;
 		for (Sin sin : elemek)
@@ -79,6 +91,7 @@ public class Palya {
 		return keslelteto;
 	}
 
+	/** Visszatér az elemek listával, ha az nem üres. Ha igen, akkor null-al. */
 	public ArrayList<Sin> getElemek() {
 		if (elemek.isEmpty())
 			// throw exception
@@ -87,6 +100,9 @@ public class Palya {
 			return elemek;
 	}
 
+	/**
+	 * Visszatér az vonatok listával, ha az nem üres. Ha igen, akkor null-al.
+	 */
 	public ArrayList<Vonat> getVonatok() {
 		if (vonatok.isEmpty())
 			// throw exception
@@ -95,6 +111,12 @@ public class Palya {
 			return vonatok;
 	}
 
+	/**
+	 * Csak akkor van meghívva, ha 2 alagút van a pályán. Paraméterül kap egy
+	 * olyan Sin példányt, aminek az alagut attribútumának értéke igaz. Ezután
+	 * végig megy az elemek listán, és a getAlagut metódussal alagutakat keres.
+	 * Ha talál, és az nem a paraméterül kapott Sin, visszatér vele.
+	 */
 	public Sin alagut(Sin s) {
 		for (Sin sin : elemek) {
 			if (sin.getAlagut() == true && sin != s)

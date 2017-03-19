@@ -10,25 +10,28 @@ package projlab;
  * 
  * Felelõsség:
  * 
- * Ez az objektum felelõs az utasok leszállításáért, tehát a kocsik
- * kiürítéséért. Mivel a Sin gyereke, ezért felel még a rajtalevõ Jarmu
- * következõ pozíciójának megadásáért is. Nem lehet rá alagutat építeni.
+ * Felelõs az utasok leszállításáért, tehát a kocsik kiürítéséért. Mivel a Sin
+ * gyereke, ezért felel még a rajtalevõ Jarmu következõ pozíciójának megadásáért
+ * is. Nem lehet rá alagutat építeni.
  */
 public class Allomas extends Sin {
 
+	// Attribútumok:
+
+	/** szin: Meghatározza az állomás színkódját. */
+	private int szin;
+
 	/**
-	 * Attribútumok:
-	 * 
-	 * szin: Meghatározza az állomás színkódját.
-	 * 
 	 * aktiv: Azt határozza meg, hogy az utasok leszállhatnak-e a rajta lévõ
 	 * Jarmu példányról, vagy sem. Akkor igaz, ha megengedjük a leszállást,
 	 * egyébként hamis.
 	 */
-	private int szin;
 	private boolean aktiv;
 
-	/** Konstruktor */
+	/**
+	 * Konstruktor, meghívjuk az õs konstruktorát, és kiegészítjük a szin, és az
+	 * aktiv értékadásával.
+	 */
 	Allomas(int i) {
 		super();
 		szin = i;
@@ -66,17 +69,18 @@ public class Allomas extends Sin {
 	}
 
 	/**
-	 * Sin elfogad(Kocsi k): Összehasonlítja az állomás és a kocsi színkódját a
-	 * getSzin metódussal, Ha nem egyezik meg, hamisra állítja az aktiv-ot, ha a
-	 * kocsi szin attribútuma nem 0, tehát ha nem üres. Ha megegyezik és az
-	 * aktiv igaz, akkor leszállítja az utasokat, tehát kiüríti a kocsit a Kocsi
-	 * kiurit metodusával (0-ra rakja a szin-t). mellett megadja a következõ sín
-	 * példányt, ahova a Jarmu kerülni fog az új idõpillanatban, úgy, hogy
-	 * megnézi a Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a
-	 * szomszedok tömbbõl visszatér az ettõl különbözõ értékkel az elsõ két elem
-	 * közül. Mivel állmoásra nem épülhet alagút, nincs más feltételnézés.
-	 * Ezután csökkentjük a a foglalt értékét, és növeljük az új pozicio-ban
-	 * lévõ Sin foglalt értékét, a setFoglalt metódussal.
+	 * Sin elfogad(Kocsi k): Összehasonlítja az állomás és a kocsi színkódját,
+	 * melyet a Kocsi getSzin metódusával kér le. Ha nem egyezik meg, hamisra
+	 * állítja az aktiv-ot, ha a kocsi szin attribútuma nem 0, tehát ha nem
+	 * üres. Ha megegyezik és az aktiv igaz, akkor leszállítja az utasokat,
+	 * tehát kiüríti a kocsit a Kocsi kiurit metodusával (0-ra rakja a szin-t).
+	 * mellett megadja a következõ sín példányt, ahova a Jarmu kerülni fog az új
+	 * idõpillanatban, úgy, hogy megnézi a Mozdony elozoPozicio-ját a
+	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az ettõl
+	 * különbözõ értékkel az elsõ két elem közül. Mivel állmoásra nem épülhet
+	 * alagút, nincs más feltételnézés. Ezután csökkentjük a a foglalt értékét,
+	 * és növeljük az új pozicio-ban lévõ Sin foglalt értékét, a setFoglalt
+	 * metódussal.
 	 */
 	public Sin elfogad(Kocsi k) {
 		int kSzin = k.getSzin();

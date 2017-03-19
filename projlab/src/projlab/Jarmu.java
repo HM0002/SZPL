@@ -18,14 +18,17 @@ package projlab;
  */
 public abstract class Jarmu {
 
+	// Attribútumok:
+
 	/**
-	 * Attribútumok:
-	 * 
 	 * pozicio: Itt tároljuk, hogy a jármû melyik Sin példányon helyezkedik el.
+	 */
+	private Sin pozicio;
+
+	/**
 	 * elozoPozicio: Itt tároljuk, az egy ütemmel (tick) korábbi Sin példányt,
 	 * amin elhelyezkedett.
 	 */
-	private Sin pozicio;
 	private Sin elozoPozicio;
 
 	/** Konstruktor */

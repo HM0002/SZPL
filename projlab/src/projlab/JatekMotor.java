@@ -15,23 +15,35 @@ import java.util.ArrayList;
  */
 public class JatekMotor {
 
+	// Attribútumok:
+
 	/**
-	 * Attribútumok:
-	 * 
 	 * palyak: Itt tároljuk az összes Palya példányunkat. A 0. elemben tároljuk
 	 * az aktuális pályát, amin éppen játszunk. Pálya váltásnál shifteljük.
-	 * 
-	 * prevTime: Itt tároljuk, mikor mozgattuk utoljára a Jarmu objektumainkat.
-	 * vonatSzamlalo: Ebben tároljuk, hogy hány vonatot indítottunk el az éppen
-	 * futásban lévõ pályán. ujVonat: Itt tároljuk, hogy utoljára hány
-	 * idõpillanat(tick) óta indult új Vonat-ot.
 	 */
-	private long prevTime;
-	private int ujVonat;
-	private int vonatSzamlalo;
 	private ArrayList<Palya> palyak;
 
-	/** Konstruktor */
+	/**
+	 * prevTime: Itt tároljuk, mikor mozgattuk utoljára a Jarmu objektumainkat.
+	 */
+	private long prevTime;
+
+	/**
+	 * ujVonat: Itt tároljuk, hogy utoljára hány idõpillanat(tick) óta indult új
+	 * Vonat-ot.
+	 */
+	private int ujVonat;
+
+	/**
+	 * vonatSzamlalo: Ebben tároljuk, hogy hány vonatot indítottunk el az éppen
+	 * futásban lévõ pályán.
+	 */
+	private int vonatSzamlalo;
+
+	/**
+	 * Konstruktor, az ujVonat kezdõértéke egy nagy szám, mely biztosan nagyobb,
+	 * mint a pályák keslelteto értéke, ezáltal biztosan elindul az elsõ vonat.
+	 */
 	JatekMotor(ArrayList<Palya> p) {
 		palyak = p;
 		prevTime = 0;
