@@ -76,7 +76,7 @@ public class Allomas extends Sin {
 	 * szomszedok tömbbõl visszatér az ettõl különbözõ értékkel az elsõ két elem
 	 * közül. Mivel állmoásra nem épülhet alagút, nincs más feltételnézés.
 	 * Ezután csökkentjük a a foglalt értékét, és növeljük az új pozicio-ban
-	 * lévõ Sin foglalt értékét, a setFoglalt metódussal.
+	 * lévõ Sin foglalt értékét, a setFoglalt metódussal..
 	 */
 	public Sin elfogad(Kocsi k) {
 		int kSzin = k.getSzin();
