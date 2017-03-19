@@ -79,9 +79,8 @@ public class Allomas extends Sin {
 	 * lévõ Sin foglalt értékét, a setFoglalt metódussal..
 	 */
 	public Sin elfogad(Kocsi k) {
-		int kSzin = k.getSzin();
-		if (kSzin != szin) {
-			if (kSzin != 0)
+		if (k.getSzin() != szin) {
+			if (k.getSzin() != 0)
 				aktiv = false;
 		} else if (aktiv == true)
 			k.kiurit();
