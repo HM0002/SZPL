@@ -19,15 +19,18 @@ package projlab;
  */
 public class Kocsi extends Jarmu {
 
+	// Attribútumok:
+
 	/**
-	 * Attribútumok:
-	 * 
 	 * szin: Meghatározza a kocsi színkódját, a 0 felel az üresért, ami a
 	 * szürke.
 	 */
 	private int szin;
 
-	/** Konstruktor */
+	/**
+	 * Konstruktor, meghívjuk az õs konstruktorát, és kiegészítjük a szin
+	 * értékadásával.
+	 */
 	Kocsi(int i) {
 		super();
 		szin = i;
