@@ -35,14 +35,42 @@ public class Valto extends Sin {
 	}
 
 	/**
-	 * A szomszedok tömb elemeit kicseréli, a 0. a második, az 1. a nulladik, és
-	 * a 2. elem az elsõ helyre kerül. Mindig a 0. és az 1. elem van összekötve.
+	 * Sin elfogad(Jarmu j): Megadja a következõ sín példányt, ahova a Jarmu
+	 * kerülni fog az új idõpillanatban, úgy, hogy megnézi a Mozdony
+	 * elozoPozicio-ját a getElozoPozicio metódussal, és vizsgálja, hogy ez
+	 * benne van-e a szomszédok tömb elsõ két elemében. Ha igen visszatér a
+	 * másik elemmel a kettõ közül, viszont ha nem, az azt jelenti, hogy nem
+	 * volt az elõzõ sínünk összekötve a váltóval, úgyhogy ütközést generálunk a
+	 * setFoglalt metódussal.
+	 */
+	public Sin elfogad(Jarmu j) {
+		if (j.getElozoPozicio() == szomszedok[0]) {
+			foglalt--;
+			szomszedok[1].setFoglalt();
+			return szomszedok[1];
+		} else if (j.getElozoPozicio() == szomszedok[1]) {
+			foglalt--;
+			szomszedok[0].setFoglalt();
+			return szomszedok[0];
+		} else {
+			setFoglalt();
+			setFoglalt();
+			return null;
+		}
+	}
+
+	/**
+	 * Ha nincs jármû a váltón, tehát ha a foglalt értéke 0, a szomszedok tömb
+	 * elemeit kicseréli. A 0. a második, az 1. a nulladik, és a 2. elem az elsõ
+	 * helyre kerül. Mindig a 0. és az 1. elem van összekötve.
 	 */
 	public void atallit() {
-		Sin temp = szomszedok[0];
-		szomszedok[0] = szomszedok[1];
-		szomszedok[1] = szomszedok[2];
-		szomszedok[2] = temp;
+		if (foglalt == 0) {
+			Sin temp = szomszedok[0];
+			szomszedok[0] = szomszedok[1];
+			szomszedok[1] = szomszedok[2];
+			szomszedok[2] = temp;
+		}
 	}
 
 }

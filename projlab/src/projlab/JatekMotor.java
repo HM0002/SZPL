@@ -55,14 +55,16 @@ public class JatekMotor {
 	 * Vizsgáljuk az eltelt idõt. Ha eltelt egy adott idõ (1 másodperc), lekéri
 	 * az aktuális pálya (palyak 0. eleme) vonatait a getVonatok metódussal,
 	 * majd ezeknek a vonatoknak a jármûveit a getJarmuvek metódussal. Az összes
-	 * jármûnek ezután meghívjuk a tick metódusát, mely felel a mozgatásukért.
+	 * olyan jármûnek ezután meghívjuk a tick metódusát, amelyiknek a getPozicio
+	 * metódusa nem null értékkel tér vissza. A tick felel a mozgatásukért.
 	 * Ezután reseteljük az eltelt idõt.
 	 */
 	public void idoMeres() {
 		if (Math.abs(System.nanoTime() - prevTime) > 1000000000) {
 			for (Vonat vonat : palyak.get(0).getVonatok()) {
 				for (Jarmu jarmu : vonat.getJarmuvek())
-					jarmu.tick();
+					if (jarmu.getPozicio() != null)
+						jarmu.tick();
 			}
 			prevTime = System.nanoTime();
 		}
@@ -92,16 +94,16 @@ public class JatekMotor {
 	 * növeljük 1-el. Ha nagyobb vagy egyenlõ, lekérjük a pályától a
 	 * vonatSzamlalo-adik vonat jármûveit, ugyanis egy rendezett listában vannak
 	 * a vonatok, és a vonatSzamlalo-adik vonat az, ami még nem indult el.
-	 * Ezután az így lekért jármûvek setPozicio metódusával beállítjuk a helyes
-	 * kezdõpozíciókat, majd növeljök a vonatSzamlalo-t, és nullázzuk az
+	 * Ezután az így lekért jármûvek setKezdoPoziciok metódusával beállítjuk a
+	 * helyes kezdõ pozíciókat, majd növeljök a vonatSzamlalo-t, és nullázzuk az
 	 * ujVonat-ot.
 	 */
 	public void vonatInditas() {
 		if (vonatSzamlalo < palyak.get(0).getVonatSzam()) {
 			if (ujVonat >= palyak.get(0).getKeslelteto()) {
-				for (Jarmu jarmu : palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek())
-					for (int i = 0; i < palyak.get(0).getKocsiSzam() + 1; i++)
-						jarmu.setPozicio(palyak.get(0).getElemek().get(5 - i));
+				for (int i = 0; i < palyak.get(0).getKocsiSzam() + 1; i++)
+					palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek().get(i).setKezdoPoziciok(
+							palyak.get(0).getElemek().get(5 - i), palyak.get(0).getElemek().get(4 - i));
 				ujVonat = 0;
 				vonatSzamlalo++;
 			} else

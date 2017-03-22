@@ -7,10 +7,8 @@ public class Main {
 	static JatekMotor JM;
 	
 	public static void main(String[] args) {
-				
-		init();
 		
-		//tesztesetek, pl ujJatek:
+		init();			
 		JM.ujJatek();
 		
 	}	
@@ -47,7 +45,7 @@ public class Main {
 		ArrayList<Sin> sinek1 = new ArrayList<Sin>();
 			
 		//Sin-ek összekötése
-		s0.setSzomszedok(s1, null);
+		s0.setSzomszedok(null, s1);
 		s1.setSzomszedok(s0, s2);
 		s2.setSzomszedok(s1, s3);
 		s3.setSzomszedok(s2, s4);

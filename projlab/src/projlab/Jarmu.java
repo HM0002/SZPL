@@ -69,10 +69,15 @@ public abstract class Jarmu {
 		return elozoPozicio;
 	}
 
-	/** Értékül adja a pozicio-t az elozoPozicio-nak, s-et a pozicio-nak. */
-	public void setPozicio(Sin s) {
-		elozoPozicio = pozicio;
-		pozicio = s;
+	/**
+	 * Értékül adja a kapott pozíciót (sP) a pozicio-nak, és a kapott elõzõ
+	 * pozíciót (sEP) az elozoPozicio-nak. Ezután beállítja az Sp Sin-t
+	 * foglaltra, a setFoglalt metódussal.
+	 */
+	public void setKezdoPoziciok(Sin sP, Sin sEP) {
+		elozoPozicio = sEP;
+		pozicio = sP;
+		sP.setFoglalt();
 	}
 
 	/** Abstract, a Mozdony és Kocsi-ban ezt implementáljuk. */
