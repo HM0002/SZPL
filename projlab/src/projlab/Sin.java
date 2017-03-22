@@ -1,5 +1,8 @@
 package projlab;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Sin osztály:
  * 
@@ -17,6 +20,7 @@ package projlab;
  * segítségével.
  */
 public class Sin {
+	private final static Logger logger = Logger.getLogger(Main.class.getName());
 
 	// Attribútumok:
 
@@ -29,6 +33,9 @@ public class Sin {
 	 */
 	protected Sin[] szomszedok;
 
+	// debuggoláshoz, hogy tudjuk kicsoda
+	private String id;
+
 	/** alagut: Igaz, ha alagút van építve ezen a példányon, egyébként hamis. */
 	protected boolean alagut;
 
@@ -39,11 +46,13 @@ public class Sin {
 	protected Palya palya;
 
 	/** Konstruktor */
-	Sin() {
+	Sin(String id) {
+		logger.log(Level.INFO, "Sin paraméter nélküli konstruktor elindult");
 		szomszedok = new Sin[3];
 		alagut = false;
 		palya = null;
 		foglalt = 0;
+		this.id = id;
 	}
 
 	/** Értékül adjda p-t a palya-nak. */
@@ -59,6 +68,8 @@ public class Sin {
 		szomszedok[0] = s0;
 		szomszedok[1] = s1;
 		szomszedok[2] = null;
+		logger.log(Level.INFO,
+				"Sin.setSzomszedok(), rajta:" + this.getID() + " paraméterek: " + szomszedok[0] + ", " + szomszedok[1]);
 	}
 
 	/**
@@ -76,6 +87,7 @@ public class Sin {
 	 * változójának értékét 1-el.
 	 */
 	public Sin elfogad(Jarmu j) {
+		logger.log(Level.INFO, "Sin.elfogad() metódus, a következõ sín elemen:" + this.getID());
 		if (alagut == true)
 			if (palya.getAlagutSzam() == 2)
 				return palya.alagut(this).getFirstSzomszed();
@@ -106,6 +118,7 @@ public class Sin {
 	 * Ezzel a megoldással az alagutSzam sose mehet 0 alá, és 2 felé.
 	 */
 	public void setAlagut() {
+		logger.log(Level.INFO, "Sin.setAlagut() ezen az elemen:" + this.getID());
 		if (foglalt == 0) {
 			if (palya.getAlagutSzam() == 2) {
 				if (alagut == false)
@@ -130,6 +143,7 @@ public class Sin {
 
 	/** Visszatér az alagut értékével. */
 	public boolean getAlagut() {
+		logger.log(Level.INFO, "Sin.getAlagut() rajta:"+this.getID()+" érték: " + alagut);
 		return alagut;
 	}
 
@@ -138,6 +152,7 @@ public class Sin {
 	 * tartózkodik.
 	 */
 	public int getFoglalt() {
+		logger.log(Level.INFO, "Sin.getFoglalt() rajta:"+this.getID()+" értéke: " + foglalt);
 		return foglalt;
 	}
 
@@ -146,6 +161,7 @@ public class Sin {
 	 * pozicio-ja lett.
 	 */
 	public void setFoglalt() {
+		logger.log(Level.INFO, "Sin.setFoglalt()");
 		foglalt++;
 	}
 
@@ -155,9 +171,14 @@ public class Sin {
 	 * a szomszedok tömb 0. elemével.
 	 */
 	public Sin getFirstSzomszed() {
+		logger.log(Level.INFO, "Sin.getFirstSzomszed() rajta" + this.getID() + " visszaadott sín: " + szomszedok[0]);
 		foglalt--;
 		szomszedok[0].setFoglalt();
 		return szomszedok[0];
 	}
 
+	// debug method
+	public String getID() {
+		return id;
+	}
 }

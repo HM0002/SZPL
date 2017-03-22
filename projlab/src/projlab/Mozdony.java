@@ -1,5 +1,8 @@
 package projlab;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Mozdony osztály:
  * 
@@ -14,9 +17,16 @@ package projlab;
  * pozícióval,így mozog a Mozdony-unk.
  */
 public class Mozdony extends Jarmu {
+	private final static Logger logger = Logger.getLogger(Main.class.getName());
+
+	Mozdony(String id) {
+		super(id);
+		logger.log(Level.INFO, "Mozdony() paraméter nélküli konstruktor elindult.");
+	}
 
 	/** Visszatér 0-val, ugyanis a mozdony mindig üres. */
 	public int getSzin() {
+		logger.log(Level.INFO, "Mozdony.getSzin() ezen az elemen:"+this.getID());
 		return 0;
 	}
 

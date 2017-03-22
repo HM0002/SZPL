@@ -1,6 +1,8 @@
 package projlab;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Palya osztály:
@@ -17,6 +19,7 @@ import java.util.ArrayList;
  * a megkapott pályainformációk összegyûjtésével.
  */
 public class Palya {
+	private final static Logger logger = Logger.getLogger(Main.class.getName());
 
 	// Attribútumok:
 
@@ -56,6 +59,7 @@ public class Palya {
 	 * a Palya-hoz tartoznak.
 	 */
 	Palya(int vSz, int kSz, int k, ArrayList<Sin> e, ArrayList<Vonat> v) {
+		logger.log(Level.INFO, "Palya(int,int,int, ArrayList<Sin>, ArrayList<Vonat>) paraméterû konstruktor elindult.");
 		elemek = e;
 		for (Sin sin : elemek)
 			sin.setPalya(this);
@@ -68,31 +72,37 @@ public class Palya {
 
 	/** Visszatér a vonatSzam értékével. */
 	public int getVonatSzam() {
+		logger.log(Level.INFO, "Palya.getVonatSzam(), visszaadott érték: "+vonatSzam);
 		return vonatSzam;
 	}
 
 	/** Visszatér a kocsiSzam értékével. */
 	public int getKocsiSzam() {
+		logger.log(Level.INFO, "Palya.getKocsiSzam(), visszaadott érték: "+kocsiSzam);
 		return kocsiSzam;
 	}
 
 	/** Visszatér az alagutSzam értékével. */
 	public int getAlagutSzam() {
+		logger.log(Level.INFO, "Palya.getAlagutSzam() visszaadott érték: "+alagutSzam);
 		return alagutSzam;
 	}
 
 	/** Hozzáad i-t az alagutSzam értékéhez. */
 	public void setAlagutSzam(int i) {
+		logger.log(Level.INFO, "Palya.setAlagutSzam(int)");
 		alagutSzam += i;
 	}
 
 	/** Visszatér a keslelteto értékével. */
 	public int getKeslelteto() {
+		logger.log(Level.INFO, "Palya.getKeslelteto() visszaadott érték: "+keslelteto);
 		return keslelteto;
 	}
 
 	/** Visszatér az elemek listával, ha az nem üres. Ha igen, akkor null-al. */
 	public ArrayList<Sin> getElemek() {
+		logger.log(Level.INFO, "Palya.getElemek()");
 		if (elemek.isEmpty())
 			// throw exception
 			return null;
@@ -104,6 +114,7 @@ public class Palya {
 	 * Visszatér az vonatok listával, ha az nem üres. Ha igen, akkor null-al.
 	 */
 	public ArrayList<Vonat> getVonatok() {
+		logger.log(Level.INFO, "Palya.getVonatok()");
 		if (vonatok.isEmpty())
 			// throw exception
 			return null;
@@ -118,6 +129,7 @@ public class Palya {
 	 * Ha talál, és az nem a paraméterül kapott Sin, visszatér vele.
 	 */
 	public Sin alagut(Sin s) {
+		logger.log(Level.INFO, "Palya.alagut(Sin), paraméter: " + s);
 		for (Sin sin : elemek) {
 			if (sin.getAlagut() == true && sin != s)
 				return sin;
