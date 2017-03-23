@@ -1,5 +1,8 @@
 package projlab;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Váltó osztály:
  * 
@@ -16,12 +19,20 @@ package projlab;
  * megadásáért is. Nem lehet rá alagutat építeni.
  */
 public class Valto extends Sin {
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+	Valto(String id) {
+		super(id);
+		logger.log(Level.INFO, "Valto() paraméter nélküli konstruktor elindult.");
+	}
 
 	/**
 	 * Értékül adja s0-t a szomszedok 0. elemének, s1-et a szomszedok 1.
 	 * elemének, és s2-t a szomszedok 3. elemének.
 	 */
 	public void setSzomszedok(Sin s0, Sin s1, Sin s2) {
+		logger.log(Level.INFO, "Valto.setSzomszedok(Sin, Sin, Sin), rajta: " + this.getID() + ", szomszédok:"
+				+ s0.getID() + "," + s1.getID() + "," + s2.getID());
 		szomszedok[0] = s0;
 		szomszedok[1] = s1;
 		szomszedok[2] = s2;
@@ -32,6 +43,7 @@ public class Valto extends Sin {
 	 * építeni.
 	 */
 	public void setAlagut() {
+		logger.log(Level.INFO, "Valto.setAlagut() ezen:" + this.getID());
 	}
 
 	/**
@@ -44,6 +56,8 @@ public class Valto extends Sin {
 	 * setFoglalt metódussal.
 	 */
 	public Sin elfogad(Jarmu j) {
+		logger.log(Level.INFO, "Sin.elfogad() metódus, a következõ sín elemen:" + this.getID()
+				+ " a következõ visitorral: " + j.getID());
 		if (j.getElozoPozicio() == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
@@ -65,6 +79,7 @@ public class Valto extends Sin {
 	 * helyre kerül. Mindig a 0. és az 1. elem van összekötve.
 	 */
 	public void atallit() {
+		logger.log(Level.INFO, "Valto.atallit() ezen." + this.getID());
 		if (foglalt == 0) {
 			Sin temp = szomszedok[0];
 			szomszedok[0] = szomszedok[1];
@@ -72,5 +87,4 @@ public class Valto extends Sin {
 			szomszedok[2] = temp;
 		}
 	}
-
 }

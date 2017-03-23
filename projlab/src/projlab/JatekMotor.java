@@ -1,6 +1,8 @@
 package projlab;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * JatekMotor osztály:
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  * felel az ütközések ellenõrzéséért, ezáltal tudja, hogy ha veszít a játékos.
  */
 public class JatekMotor {
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok:
 
@@ -45,6 +48,7 @@ public class JatekMotor {
 	 * mint a pályák keslelteto értéke, ezáltal biztosan elindul az elsõ vonat.
 	 */
 	JatekMotor(ArrayList<Palya> p) {
+		logger.log(Level.INFO, "JatekMotor(ArrayList<Palya>) paraméterrû konstruktor elindult");
 		palyak = p;
 		prevTime = 0;
 		ujVonat = 500;
@@ -55,32 +59,34 @@ public class JatekMotor {
 	 * Vizsgáljuk az eltelt idõt. Ha eltelt egy adott idõ (1 másodperc), lekéri
 	 * az aktuális pálya (palyak 0. eleme) vonatait a getVonatok metódussal,
 	 * majd ezeknek a vonatoknak a jármûveit a getJarmuvek metódussal. Az összes
-	 * olyan jármûnek ezután meghívjuk a tick metódusát, amelyiknek a getPozicio
-	 * metódusa nem null értékkel tér vissza. A tick felel a mozgatásukért.
+	 * jármûnek ezután meghívjuk a tick metódusát, mely felel a mozgatásukért.
 	 * Ezután reseteljük az eltelt idõt.
 	 */
 	public void idoMeres() {
-		if (Math.abs(System.nanoTime() - prevTime) > 1000000000) {
-			for (Vonat vonat : palyak.get(0).getVonatok()) {
-				for (Jarmu jarmu : vonat.getJarmuvek())
-					if (jarmu.getPozicio() != null)
-						jarmu.tick();
-			}
-			prevTime = System.nanoTime();
+		logger.log(Level.INFO, "JatekMotor.idoMeres()");
+		// if (Math.abs(System.nanoTime() - prevTime) > 1000000000) {
+		for (Vonat vonat : palyak.get(0).getVonatok()) {
+			for (Jarmu jarmu : vonat.getJarmuvek())
+				if (jarmu.getPozicio() != null)
+					jarmu.tick();
 		}
+		// prevTime = System.nanoTime();
+		// }
 	}
 
 	/**
-	 * Elindítja az idõt(eállítja a prevTime értékét), majd meghívja a run
+	 * Elindítja az idõt(beállítja a prevTime értékét), majd meghívja a run
 	 * metódust.
 	 */
 	public void ujJatek() {
+		logger.log(Level.INFO, "JatekMotor.ujJatek()");
 		prevTime = System.nanoTime();
 		run();
 	}
 
 	/** Kilép az alkalmazásból. */
 	public void kilepes() {
+		logger.log(Level.INFO, "JatekMotor.kilepes()");
 		// exit
 	}
 
@@ -99,11 +105,16 @@ public class JatekMotor {
 	 * ujVonat-ot.
 	 */
 	public void vonatInditas() {
+		logger.log(Level.INFO, "JatekMotor.vonatInditas()");
 		if (vonatSzamlalo < palyak.get(0).getVonatSzam()) {
 			if (ujVonat >= palyak.get(0).getKeslelteto()) {
-				for (int i = 0; i < palyak.get(0).getKocsiSzam() + 1; i++)
+				logger.log(Level.INFO, "JatekMotor.vonatInditas() elindul a ciklus!");
+				for (int i = 0; i < palyak.get(0).getKocsiSzam() + 1; i++) {
+					logger.log(Level.INFO, "JatekMotor.vonatInditas() ezen jármû elindítása: "
+							+ palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek().get(i).getID());
 					palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek().get(i).setKezdoPoziciok(
 							palyak.get(0).getElemek().get(5 - i), palyak.get(0).getElemek().get(4 - i));
+				}
 				ujVonat = 0;
 				vonatSzamlalo++;
 			} else
@@ -119,6 +130,7 @@ public class JatekMotor {
 	 * történt, és visszatérünk igazzal, egyébként nem és visszatérünk hamissal.
 	 */
 	public boolean utkozesEllenorzes() {
+		logger.log(Level.INFO, "JatekMotor.utkozesEllenorzes()");
 		for (Sin sin : palyak.get(0).getElemek())
 			if (sin.getFoglalt() > 1)
 				return true;
@@ -140,6 +152,7 @@ public class JatekMotor {
 	 * igazzal.
 	 */
 	public boolean gyozelemEllenorzes() {
+		logger.log(Level.INFO, "JatekMotor.gyozelemEllenorzes()");
 		if (palyak.get(0).getVonatSzam() == vonatSzamlalo) {
 			for (Vonat vonat : palyak.get(0).getVonatok()) {
 				for (Jarmu jarmu : vonat.getJarmuvek())
@@ -166,11 +179,13 @@ public class JatekMotor {
 	 * metódusokat.
 	 */
 	private void run() {
+		logger.log(Level.INFO, "JatekMotor.run()");
 		while (!utkozesEllenorzes()) {
 			// GUI input kezelések
 			if (gyozelemEllenorzes()) {
 				if (palyak.size() < 2) {
 					// vissza a menube, gyozelem popup
+					logger.log(Level.INFO, "JatekMotor.run() metódusban gyõzelem történt!");
 					return;
 				} else {
 					// kiszedi a 0. elemet, és a többi elemet shifteli balra
@@ -184,6 +199,7 @@ public class JatekMotor {
 			vonatInditas();
 		}
 		// utkozes popup etc.
+		logger.log(Level.INFO, "JatekMotor.run() metódusban ütközés történt!");
 	}
 
 }
