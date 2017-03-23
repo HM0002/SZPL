@@ -17,8 +17,9 @@ import java.util.logging.Logger;
  * pozícióval,így mozog a Mozdony-unk.
  */
 public class Mozdony extends Jarmu {
-	 private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+	/** Konstruktor */
 	Mozdony(String id) {
 		super(id);
 		logger.log(Level.INFO, "Mozdony() paraméter nélküli konstruktor elindult.");
@@ -26,7 +27,7 @@ public class Mozdony extends Jarmu {
 
 	/** Visszatér 0-val, ugyanis a mozdony mindig üres. */
 	public int getSzin() {
-		logger.log(Level.INFO, "Mozdony.getSzin() ezen az elemen:"+this.getID());
+		logger.log(Level.INFO, "Mozdony.getSzin() ezen az elemen:" + this.getID());
 		return 0;
 	}
 

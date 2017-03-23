@@ -35,7 +35,7 @@ public abstract class Jarmu {
 	 */
 	private Sin elozoPozicio;
 
-	// debuggoláshoz, hogy tudjuk kicsoda
+	/** Debuggoláshoz, hogy tudjuk kicsoda. */
 	private String id;
 
 	/** Konstruktor */

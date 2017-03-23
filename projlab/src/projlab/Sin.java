@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * segítségével.
  */
 public class Sin {
-	 private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok:
 
@@ -33,7 +33,7 @@ public class Sin {
 	 */
 	protected Sin[] szomszedok;
 
-	// debuggoláshoz, hogy tudjuk kicsoda
+	/** Debuggoláshoz, hogy tudjuk kicsoda. */
 	private String id;
 
 	/** alagut: Igaz, ha alagút van építve ezen a példányon, egyébként hamis. */
@@ -87,7 +87,8 @@ public class Sin {
 	 * változójának értékét 1-el.
 	 */
 	public Sin elfogad(Jarmu j) {
-		logger.log(Level.INFO, "Sin.elfogad() metódus, a következõ sín elemen:" + this.getID()+" a következõ visitorral: " + j.getID());
+		logger.log(Level.INFO, "Sin.elfogad() metódus, a következõ sín elemen:" + this.getID()
+				+ " a következõ visitorral: " + j.getID());
 		if (alagut == true)
 			if (palya.getAlagutSzam() == 2)
 				return palya.alagut(this).getFirstSzomszed();
@@ -143,7 +144,7 @@ public class Sin {
 
 	/** Visszatér az alagut értékével. */
 	public boolean getAlagut() {
-		logger.log(Level.INFO, "Sin.getAlagut() rajta:"+this.getID()+" érték: " + alagut);
+		logger.log(Level.INFO, "Sin.getAlagut() rajta:" + this.getID() + " érték: " + alagut);
 		return alagut;
 	}
 
@@ -152,7 +153,7 @@ public class Sin {
 	 * tartózkodik.
 	 */
 	public int getFoglalt() {
-		logger.log(Level.INFO, "Sin.getFoglalt() rajta:"+this.getID()+" értéke: " + foglalt);
+		logger.log(Level.INFO, "Sin.getFoglalt() rajta:" + this.getID() + " értéke: " + foglalt);
 		return foglalt;
 	}
 
@@ -162,7 +163,7 @@ public class Sin {
 	 */
 	public void setFoglalt() {
 		logger.log(Level.INFO, "Sin.setFoglalt()");
-		logger.log(Level.FINE, this.getID()+":foglalt++");
+		logger.log(Level.FINE, this.getID() + ":foglalt++");
 		foglalt++;
 	}
 
@@ -173,7 +174,7 @@ public class Sin {
 	 */
 	public Sin getFirstSzomszed() {
 		logger.log(Level.INFO, "Sin.getFirstSzomszed() rajta" + this.getID() + " visszaadott sín: " + szomszedok[0]);
-		logger.log(Level.FINE, this.getID()+":foglalt--");
+		logger.log(Level.FINE, this.getID() + ":foglalt--");
 		foglalt--;
 		szomszedok[0].setFoglalt();
 		return szomszedok[0];
