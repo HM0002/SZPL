@@ -22,12 +22,11 @@ public class Mozdony extends Jarmu {
 	/** Konstruktor */
 	Mozdony(String id) {
 		super(id);
-		logger.log(Level.INFO, "Mozdony() paraméter nélküli konstruktor elindult.");
 	}
 
 	/** Visszatér 0-val, ugyanis a mozdony mindig üres. */
 	public int getSzin() {
-		logger.log(Level.INFO, "Mozdony.getSzin() ezen az elemen:" + this.getID());
+		logger.log(Level.INFO, this.getID() + ".getSzin(), visszaadott érték: 0");
 		return 0;
 	}
 

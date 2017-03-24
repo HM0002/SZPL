@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * kocsi színkódját, a 0 felel az üresért,ami a szürke
  */
 public class Kocsi extends Jarmu {
-	 private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok:
 
@@ -37,7 +37,7 @@ public class Kocsi extends Jarmu {
 	 */
 	Kocsi(int i, String id) {
 		super(id);
-		logger.log(Level.INFO, "Kocsi(int) paraméterrû konstruktor elindult, paraméter: " + i);
+		logger.log(Level.INFO, "paraméterei: szin = " + i);
 		szin = i;
 	}
 
@@ -46,13 +46,13 @@ public class Kocsi extends Jarmu {
 	 * felhasználó informálva van errõl azáltal, hogy a kocsi szürke.
 	 */
 	public void kiurit() {
-		logger.log(Level.INFO, "Kocsi.kiurit() ezen az elemen:"+this.getID());
+		logger.log(Level.INFO, this.getID() + ".kiurit()");
 		szin = 0;
 	}
 
 	/** Visszatér a szin attribútum értékével. */
 	public int getSzin() {
-		logger.log(Level.INFO, "Kocsi.getSzin() ezen az elemen:"+this.getID());
+		logger.log(Level.INFO, this.getID() + ".getSzin(), viszaadott érték: " + szin);
 		return szin;
 	}
 

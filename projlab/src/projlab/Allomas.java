@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * is. Nem lehet rá alagutat építeni.
  */
 public class Allomas extends Sin {
-	 private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok:
 
@@ -38,9 +38,9 @@ public class Allomas extends Sin {
 	 */
 	Allomas(int i, String id) {
 		super(id);
-		logger.log(Level.INFO, "Allomás konstruktor, paraméter: " + i);
 		szin = i;
 		aktiv = false;
+		logger.log(Level.INFO, "paraméterei: szin = " + i);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Allomas extends Sin {
 	 * építeni.
 	 */
 	public void setAlagut() {
-		logger.log(Level.INFO, "Allomas.setAlagut() ezen a elemen: "+this.getID());
+		logger.log(Level.INFO, "Allomas.setAlagut() ezen a elemen: " + this.getID());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Allomas extends Sin {
 	 * pozicio-ban lévõ Sin foglalt értékét, a setFoglalt metódussal.
 	 */
 	public Sin elfogad(Mozdony m) {
-		logger.log(Level.INFO, "Allomas.elfogad(Mozdony), paraméter: " + m.toString());
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + "), aktiv = true;");
 		aktiv = true;
 
 		if (m.getElozoPozicio() == szomszedok[0]) {
@@ -90,7 +90,7 @@ public class Allomas extends Sin {
 	 * metódussal.
 	 */
 	public Sin elfogad(Kocsi k) {
-		logger.log(Level.INFO, "Allomas.elfogad(Kocsi), paraméter: " + k.toString());
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
 		int kSzin = k.getSzin();
 		if (kSzin != szin) {
 			if (kSzin != 0)

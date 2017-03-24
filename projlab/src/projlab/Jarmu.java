@@ -40,15 +40,15 @@ public abstract class Jarmu {
 
 	/** Konstruktor */
 	Jarmu(String id) {
-		logger.log(Level.INFO, "Jarmu paraméter nélküli konstruktor elindult");
 		pozicio = null;
 		elozoPozicio = null;
 		this.id = id;
+		logger.log(Level.INFO, id + " konstruktora elindult");
 	}
 
 	/** Meghívja a latogat metódust, ezáltal jelezve, hogy mozogni kell. */
 	public void tick() {
-		logger.log(Level.INFO, "Jarmu.tick()");
+		logger.log(Level.INFO, this.getID() + ".tick()");
 		latogat();
 	}
 
@@ -58,9 +58,8 @@ public abstract class Jarmu {
 	 * (Sin példánnyal).
 	 */
 	protected void latogat() {
-		logger.log(Level.INFO, "Jarmu.latogat() ezen példány:" + this.getID());
+		logger.log(Level.INFO, this.getID() + ".latogat(" + pozicio.getID() + ")");
 		Sin temp = pozicio;
-		logger.log(Level.INFO, "Jarmu.latogat() hivas adatai:" + pozicio.getID());
 		pozicio = pozicio.elfogad(this);
 		elozoPozicio = temp;
 	}
@@ -70,7 +69,7 @@ public abstract class Jarmu {
 	 * itt tartozkodik.
 	 */
 	public Sin getPozicio() {
-		logger.log(Level.INFO, "Jarmu.getPozicio(), ezen az elemen:" + this.getID());
+		logger.log(Level.INFO, this.getID() + ".getPozicio()");
 		return pozicio;
 	}
 
@@ -79,7 +78,7 @@ public abstract class Jarmu {
 	 * Jarmu itt tartozkodott az elozo idopillanatban.
 	 */
 	public Sin getElozoPozicio() {
-		logger.log(Level.INFO, "Jarmu.getElozoPozicio() ezen az elemen:" + this.getID());
+		logger.log(Level.INFO, this.getID() + ".getElozoPozicio()");
 		return elozoPozicio;
 	}
 
@@ -89,8 +88,7 @@ public abstract class Jarmu {
 	 * foglaltra, a setFoglalt metódussal.
 	 */
 	public void setKezdoPoziciok(Sin sP, Sin sEP) {
-		logger.log(Level.INFO, "Jarmu.setKezdoPoziciok(), beállítandó pozíció: " + sP.getID()
-				+ " beallítandó kezdõpozíció: " + sEP.getID() + " ezen a Jarmu-n hívva:" + this.getID());
+		logger.log(Level.INFO, this.getID() + ".setKezdoPoziciok(" + sP.getID() + ", " + sEP.getID() + ") felhívva");
 		elozoPozicio = sEP;
 		pozicio = sP;
 		sP.setFoglalt();
@@ -99,7 +97,7 @@ public abstract class Jarmu {
 	/** Abstract, a Mozdony és Kocsi-ban ezt implementáljuk. */
 	public abstract int getSzin();
 
-	// debug method
+	/** Visszatér az id értékével. */
 	public String getID() {
 		return id;
 	}

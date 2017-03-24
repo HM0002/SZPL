@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * típusú listában, rendezve, melyet mostantól vonatnak hívhatunk.
  */
 public class Vonat {
-	 private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok
 
@@ -25,22 +25,31 @@ public class Vonat {
 	 */
 	private ArrayList<Jarmu> jarmuvek;
 
+	/** Debuggoláshoz, hogy tudjuk kicsoda. */
+	private String id;
+
 	/** Konstruktor */
-	Vonat(ArrayList<Jarmu> j) {
-		logger.log(Level.INFO, "Vonat(ArrayList<Jarmu>) paraméterû konstruktor elindult.");
+	Vonat(ArrayList<Jarmu> j, String id) {
 		jarmuvek = j;
+		this.id = id;
+		logger.log(Level.INFO, id + " konstruktora elindult");
 	}
 
 	/**
 	 * Visszatér a jarmuvek listával, ha az nem üres. Ha igen, akkor null-al.
 	 */
 	public ArrayList<Jarmu> getJarmuvek() {
-		logger.log(Level.INFO, "Vonat.getJarmuvek()");
+		logger.log(Level.INFO, this.getID() + ".getJarmuvek()");
 		if (jarmuvek.isEmpty())
 			// throw exception
 			return null;
 		else
 			return jarmuvek;
+	}
+
+	/** Visszatér az id értékével. */
+	public String getID() {
+		return id;
 	}
 
 }
