@@ -6,18 +6,18 @@ import java.util.logging.Logger;
 /**
  * Allomas osztály:
  * 
- * A Sin objektumnak egy leszármazottja, a grafikus interface-en a sín mellett
- * lesz egy állomás is kirajzolva, de logikailag a Sin-hez tartozik. Az
- * állomások színesek, (és a kocsik is) így jelöljük, milyen utasok kívánnak oda
- * utazni (az azonos színûek).
+ * A PalyaElem objektumnak egy leszármazottja, a grafikus interface-en a sín
+ * mellett lesz egy állomás is kirajzolva, de logikailag a PalyaElem-hez
+ * tartozik. Az állomások színesek, (és a kocsik is) így jelöljük, milyen utasok
+ * kívánnak oda utazni (az azonos színûek).
  * 
  * Felelõsség:
  * 
- * Felelõs az utasok leszállításáért, tehát a kocsik kiürítéséért. Mivel a Sin
- * gyereke, ezért felel még a rajtalevõ Jarmu következõ pozíciójának megadásáért
- * is. Nem lehet rá alagutat építeni.
+ * Felelõs az utasok leszállításáért, tehát a kocsik kiürítéséért. Mivel a
+ * PalyaElem gyereke, ezért felel még a rajtalevõ Jarmu következõ pozíciójának
+ * megadásáért is. Nem lehet rá alagutat építeni.
  */
-public class Allomas extends Sin {
+public class Allomas extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Attribútumok:
@@ -33,35 +33,37 @@ public class Allomas extends Sin {
 	private boolean aktiv;
 
 	/**
+	 * varakozoUtas: Itt tároljuk, hogy van-e várakozó utas az állomáson.
+	 */
+	private boolean varakozoUtas;
+
+	/**
 	 * Konstruktor, meghívjuk az õs konstruktorát, és kiegészítjük a szin, és az
 	 * aktiv értékadásával.
 	 */
-	Allomas(int i, String id) {
+	Allomas(int i, boolean b, String id) {
 		super(id);
 		szin = i;
 		aktiv = false;
+		varakozoUtas = b;
 		logger.log(Level.INFO, "paraméterei: szin = " + i);
 	}
 
 	/**
-	 * Felülírjuk az õs (Sin) setAlagut-ját, hogy ne lehesssen ide alagutat
-	 * építeni.
+	 * Üres, hogy ne lehesssen ide alagutat építeni.
 	 */
 	public void setAlagut() {
-		logger.log(Level.INFO, "Allomas.setAlagut() ezen a elemen: " + this.getID());
 	}
 
 	/**
-	 * Sin elfogad(Mozdony m): Igazra állítja az aktiv-ot, és megadja a
-	 * következõ sín példányt, ahova a Jarmu kerülni fog az új idõpillanatban,
-	 * úgy, hogy megnézi a Mozdony elozoPozicio-ját a getElozoPozicio
-	 * metódussal, és a szomszedok tömbbõl visszatér az ettõl különbözõ értékkel
-	 * az elsõ két elem közül. Mivel állmoásra nem épülhet alagút, nincs más
-	 * feltételnézés. Ezután csökkentjük a a foglalt értékét, és növeljük az új
-	 * pozicio-ban lévõ Sin foglalt értékét, a setFoglalt metódussal.
+	 * Igazra állítja az aktiv-ot, és megadja a következõ PalyaElem példányt,
+	 * ahova a Mozdony kerülni fog az új idõpillanatban, úgy, hogy megnézi a
+	 * Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok
+	 * tömbbõl visszatér az ettõl különbözõ értékkel az elsõ két elem közül.
 	 */
-	public Sin elfogad(Mozdony m) {
+	public PalyaElem elfogad(Mozdony m) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + "), aktiv = true;");
+
 		aktiv = true;
 
 		if (m.getElozoPozicio() == szomszedok[0]) {
@@ -76,29 +78,60 @@ public class Allomas extends Sin {
 	}
 
 	/**
-	 * Sin elfogad(Kocsi k): Összehasonlítja az állomás és a kocsi színkódját,
-	 * melyet a Kocsi getSzin metódusával kér le. Ha nem egyezik meg, hamisra
-	 * állítja az aktiv-ot, ha a kocsi szin attribútuma nem 0, tehát ha nem
-	 * üres. Ha megegyezik és az aktiv igaz, akkor leszállítja az utasokat,
-	 * tehát kiüríti a kocsit a Kocsi kiurit metodusával (0-ra rakja a szin-t).
-	 * mellett megadja a következõ sín példányt, ahova a Jarmu kerülni fog az új
-	 * idõpillanatban, úgy, hogy megnézi a Mozdony elozoPozicio-ját a
-	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az ettõl
-	 * különbözõ értékkel az elsõ két elem közül. Mivel állmoásra nem épülhet
-	 * alagút, nincs más feltételnézés. Ezután csökkentjük a a foglalt értékét,
-	 * és növeljük az új pozicio-ban lévõ Sin foglalt értékét, a setFoglalt
-	 * metódussal.
+	 * Összehasonlítja az állomás és a kocsi színkódját, melyet a Kocsi getSzin
+	 * metódusával kér le. Ha nem egyezik meg, hamisra állítja az aktiv-ot, ha a
+	 * kocsi szin attribútuma nem 0, tehát ha nem üres. Ha megegyezik és az
+	 * aktiv igaz, akkor leszállítja az utasokat, tehát kiüríti a kocsit a Kocsi
+	 * kiurit metodusával (0-ra rakja a szin-t). Ezután megnézzük, hogy van e
+	 * várakozó utas az állomáson, tehát hogy a varakozoUtas értéke igaz-e. Ha
+	 * nem, nincs felszállás, viszont ha igen, megnézzük a kocsi színét a
+	 * getSzin metódussal. Ha 0, tehát ha üres a kocsi, megnézzük, hogy alapból
+	 * milyen színû volt, a getEredetiSzin metódussal. Ha az eredetiSzin
+	 * megegyezik az allomásunk szin-ével, akkor felszállítjuk a várakozó
+	 * utasokat, tehát meghíjuk a kocsi setSzin metudusát, és hamisra állítjuk a
+	 * várakozó utasokat. E mellett megadja a következõ PalyaElem példányt,
+	 * ahova a Kocsi kerülni fog az új idõpillanatban, úgy, hogy megnézi a
+	 * Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok
+	 * tömbbõl visszatér az ettõl különbözõ értékkel az elsõ két elem közül.
 	 */
-	public Sin elfogad(Kocsi k) {
+	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
+
 		int kSzin = k.getSzin();
+
 		if (kSzin != szin) {
 			if (kSzin != 0)
 				aktiv = false;
 		} else if (aktiv == true)
 			k.kiurit();
 
+		if (varakozoUtas == true)
+			if (k.getSzin() == 0 && k.getEredetiSzin() == szin) {
+				k.setSzin();
+				varakozoUtas = false;
+			}
+
 		if (k.getElozoPozicio() == szomszedok[0]) {
+			foglalt--;
+			szomszedok[1].setFoglalt();
+			return szomszedok[1];
+		} else {
+			foglalt--;
+			szomszedok[0].setFoglalt();
+			return szomszedok[0];
+		}
+	}
+
+	/**
+	 * Megadja a következõ PalyaElem példányt, ahova a Szeneskocsi kerülni fog
+	 * az új idõpillanatban, úgy, hogy megnézi a Szeneskocsi elozoPozicio-ját a
+	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az ettõl
+	 * különbözõ értékkel az elsõ két elem közül.
+	 */
+	public PalyaElem elfogad(Szeneskocsi sz) {
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + "), aktiv = true;");
+
+		if (sz.getElozoPozicio() == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
 			return szomszedok[1];

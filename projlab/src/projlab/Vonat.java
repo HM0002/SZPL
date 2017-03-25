@@ -7,12 +7,13 @@ import java.util.logging.Logger;
 /**
  * Vonat osztály:
  * 
- * Itt tároljuk az egy Vonat-hoz tartozó Mozdony és Kocsi példányainkat.
+ * Itt tároljuk az egy Vonat-hoz tartozó Mozdony, Kocsi és Szeneskocsi
+ * példányainkat.
  * 
  * Felelõsség:
  *
- * Felelõssége, hogy egy Mozdony és több Kocsi példányt tároljon egy Jarmu
- * típusú listában, rendezve, melyet mostantól vonatnak hívhatunk.
+ * Felelõssége, hogy egy Mozdony és több Kocsi ill Szeneskocsi példányt tároljon
+ * egy Jarmu típusú listában, rendezve, melyet mostantól vonatnak hívhatunk.
  */
 public class Vonat {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -20,12 +21,12 @@ public class Vonat {
 	// Attribútumok
 
 	/**
-	 * jarmuvek: A 0. elemében egy Mozdony példányt, a többi elemében Kocsi
-	 * példányokat tárolunk.
+	 * jarmuvek: A 0. elemében egy Mozdony példányt, a többi elemében Kocsi és
+	 * Szeneskocsi példányokat tárolunk.
 	 */
 	private ArrayList<Jarmu> jarmuvek;
 
-	/** Debuggoláshoz, hogy tudjuk kicsoda. */
+	/** id. Debuggoláshoz, hogy tudjuk kicsoda. */
 	private String id;
 
 	/** Konstruktor */

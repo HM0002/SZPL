@@ -115,7 +115,7 @@ public class JatekMotor {
 			if (ujVonat >= palyak.get(0).getKeslelteto()) {
 				int k = palyak.get(0).getKocsiSzam();
 				ArrayList<Jarmu> j = palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek();
-				ArrayList<Sin> e = palyak.get(0).getElemek();
+				ArrayList<PalyaElem> e = palyak.get(0).getElemek();
 				logger.log(Level.INFO, "\nElindul a ciklus:\n");
 				for (int i = 0; i < k + 1; i++) {
 					logger.log(Level.INFO, "\t" + j.get(i).getID() + " elindítása:");
@@ -130,16 +130,17 @@ public class JatekMotor {
 	}
 
 	/**
-	 * Megnézi, hogy minden Sin példányon csak egy jármû van-e, ezáltal eldönti,
-	 * hogy van-e ütközés vagy sem. Lekéri az aktuális pálya (palyak 0. eleme)
-	 * Sin elemeit, a getElemek metódussal, ezután lekéri, hogy hány jármû van
-	 * ezeken az elemeken, a getFoglalt metódussal. Ha ez több mint 1, utközés
-	 * történt, és visszatérünk igazzal, egyébként nem és visszatérünk hamissal.
+	 * Megnézi, hogy minden PalyaElem példányon csak egy jármû van-e, ezáltal
+	 * eldönti, hogy van-e ütközés vagy sem. Lekéri az aktuális pálya (palyak 0.
+	 * eleme) PalyaElem elemeit, a getElemek metódussal, ezután lekéri, hogy
+	 * hány jármû van ezeken az elemeken, a getFoglalt metódussal. Ha ez több
+	 * mint 1, utközés történt, és visszatérünk igazzal, egyébként nem és
+	 * visszatérünk hamissal.
 	 */
 	public boolean utkozesEllenorzes() {
 		logger.log(Level.INFO, "JM.utkozesEllenorzes()");
-		for (Sin sin : palyak.get(0).getElemek())
-			if (sin.getFoglalt() > 1)
+		for (PalyaElem e : palyak.get(0).getElemek())
+			if (e.getFoglalt() > 1)
 				return true;
 
 		return false;

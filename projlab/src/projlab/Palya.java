@@ -7,11 +7,10 @@ import java.util.logging.Logger;
 /**
  * Palya osztály:
  * 
- * Sin, Allomas, Valto objektumokat tárol egy listában, illetve Vonat
- * objektumokat egy másikban. Tárolja, hogy hány vonat tartozik a pályához,
- * mennyi idõközönként(tick) indulnak új vonatok, hány kocsi tartozik a
- * vonatokhoz, és hogy hány alagút van építve éppen a pályán. Ez így megalkot
- * egy pályát.
+ * PalyaElem objektumokat tárol egy listában, illetve Vonat objektumokat egy
+ * másikban. Tárolja, hogy hány vonat tartozik a pályához, mennyi
+ * idõközönként(tick) indulnak új vonatok, hány kocsi tartozik a vonatokhoz, és
+ * hogy hány alagút van építve éppen a pályán. Ez így megalkot egy pályát.
  * 
  * Felelõsség:
  * 
@@ -23,8 +22,10 @@ public class Palya {
 
 	// Attribútumok:
 
-	/** elemek: Itt tároljuk, hogy mely Sin példányok tartoznak a pályához. */
-	private ArrayList<Sin> elemek;
+	/**
+	 * elemek: Itt tároljuk, hogy mely PalyaElem példányok tartoznak a pályához.
+	 */
+	private ArrayList<PalyaElem> elemek;
 
 	/**
 	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
@@ -43,8 +44,8 @@ public class Palya {
 	private int kocsiSzam;
 
 	/**
-	 * alagutSzam: Itt tároljuk, hogy az elemek-ben hány Sin példánynak igaz az
-	 * alagut változója.
+	 * alagutSzam: Itt tároljuk, hogy az elemek-ben hány PalyaElem példánynak
+	 * igaz az alagut változója.
 	 */
 	private int alagutSzam;
 
@@ -54,17 +55,17 @@ public class Palya {
 	 */
 	private int keslelteto;
 
-	/** Debuggoláshoz, hogy tudjuk kicsoda. */
+	/** id: Debuggoláshoz, hogy tudjuk kicsoda. */
 	private String id;
 
 	/**
-	 * Konstruktor, a paraméterül kapott Sin példányoknak beállítjuk, hogy ehhez
-	 * a Palya-hoz tartoznak.
+	 * Konstruktor, a paraméterül kapott PalyaElem példányoknak beállítjuk, hogy
+	 * ehhez a Palya-hoz tartoznak.
 	 */
-	Palya(int vSz, int kSz, int k, ArrayList<Sin> e, ArrayList<Vonat> v, String id) {
+	Palya(int vSz, int kSz, int k, ArrayList<PalyaElem> e, ArrayList<Vonat> v, String id) {
 		elemek = e;
-		for (Sin sin : elemek)
-			sin.setPalya(this);
+		for (PalyaElem pe : elemek)
+			pe.setPalya(this);
 		vonatok = v;
 		vonatSzam = vSz;
 		kocsiSzam = kSz;
@@ -106,7 +107,7 @@ public class Palya {
 	}
 
 	/** Visszatér az elemek listával, ha az nem üres. Ha igen, akkor null-al. */
-	public ArrayList<Sin> getElemek() {
+	public ArrayList<PalyaElem> getElemek() {
 		logger.log(Level.INFO, this.getID() + ".getElemek()");
 		if (elemek.isEmpty())
 			// throw exception
@@ -129,15 +130,16 @@ public class Palya {
 
 	/**
 	 * Csak akkor van meghívva, ha 2 alagút van a pályán. Paraméterül kap egy
-	 * olyan Sin példányt, aminek az alagut attribútumának értéke igaz. Ezután
-	 * végig megy az elemek listán, és a getAlagut metódussal alagutakat keres.
-	 * Ha talál, és az nem a paraméterül kapott Sin, visszatér vele.
+	 * olyan PalyaElem példányt, aminek az alagut attribútumának értéke igaz.
+	 * Ezután végig megy az elemek listán, és a getAlagut metódussal alagutakat
+	 * keres. Ha talál, és az nem a paraméterül kapott PalyaElem, visszatér
+	 * vele.
 	 */
-	public Sin alagut(Sin s) {
-		logger.log(Level.INFO, this.getID() + ".alagut(" + s.getID() + ")");
-		for (Sin sin : elemek) {
-			if (sin.getAlagut() == true && sin != s)
-				return sin;
+	public PalyaElem alagut(PalyaElem pe) {
+		logger.log(Level.INFO, this.getID() + ".alagut(" + pe.getID() + ")");
+		for (PalyaElem e : elemek) {
+			if (e.getAlagut() == true && e != pe)
+				return e;
 		}
 
 		// this should never happen

@@ -8,14 +8,14 @@ import java.util.logging.Logger;
  * 
  * A Mozdony és a Kocsi objektumok õse. Ez egy abstract osztály, ugyanis
  * jármûveket nem példányosítunk, csak kocsikat vagy mozdonyokat. Tároljuk
- * ezeknek a pozíciójukat és az elõzõ pozicíójukat, melyek Sin típusúak. Amelyik
- * Sin-en Jarmu van (tehát a Jarmu poziciója ez a Sin), oda nem lehet alagutat
- * építeni.
+ * ezeknek a pozíciójukat és az elõzõ pozicíójukat, melyek PalyaElem típusúak.
+ * Amelyik PalyaElem-en Jarmu van (tehát a Jarmu poziciója ez a PalyaElem), oda
+ * nem lehet alagutat építeni.
  * 
  * Felelõsség:
  * 
  * Ez az objektum felel a mozgó mozdonyok és kocsik csoportosításáért. Az idõ
- * múlásának függvényében (tick) meglátogatja a pozíciójában tárolt Sin
+ * múlásának függvényében (tick) meglátogatja a pozíciójában tárolt PalyaElem
  * példányt, melynek átadja önmagát. Ez visszatér az új pozícióval, így mozog a
  * Jarmu-vünk.
  */
@@ -25,17 +25,18 @@ public abstract class Jarmu {
 	// Attribútumok:
 
 	/**
-	 * pozicio: Itt tároljuk, hogy a jármû melyik Sin példányon helyezkedik el.
+	 * pozicio: Itt tároljuk, hogy a jármû melyik PalyaElem példányon
+	 * helyezkedik el.
 	 */
-	private Sin pozicio;
+	protected PalyaElem pozicio;
 
 	/**
-	 * elozoPozicio: Itt tároljuk, az egy ütemmel (tick) korábbi Sin példányt,
-	 * amin elhelyezkedett.
+	 * elozoPozicio: Itt tároljuk, az egy ütemmel (tick) korábbi PalyaElem
+	 * példányt, amin elhelyezkedett.
 	 */
-	private Sin elozoPozicio;
+	protected PalyaElem elozoPozicio;
 
-	/** Debuggoláshoz, hogy tudjuk kicsoda. */
+	/** id: Debuggoláshoz, hogy tudjuk kicsoda. */
 	private String id;
 
 	/** Konstruktor */
@@ -53,49 +54,49 @@ public abstract class Jarmu {
 	}
 
 	/**
-	 * A Sin típusú pozicio attribútum elfogad metódusát hívja meg, saját magát
-	 * paraméterül átadva, hogy az elfogad metódus visszatérhessen új pozícióval
-	 * (Sin példánnyal).
+	 * A latogat metódusunk abstract, melyet külön implementálunk a Mozdony,
+	 * Kocsi, Szeneskocsi osztályokban.
 	 */
-	protected void latogat() {
-		logger.log(Level.INFO, this.getID() + ".latogat(" + pozicio.getID() + ")");
-		Sin temp = pozicio;
-		pozicio = pozicio.elfogad(this);
-		elozoPozicio = temp;
-	}
+	protected abstract void latogat();
 
 	/**
-	 * Visszatér a pozicio-val ami egy Sin objektum, ezzel jelezve, hogy a Jarmu
-	 * itt tartozkodik.
+	 * Visszatér a pozicio-val ami egy PalyaElem objektum, ezzel jelezve, hogy a
+	 * Jarmu itt tartozkodik.
 	 */
-	public Sin getPozicio() {
+	public PalyaElem getPozicio() {
 		logger.log(Level.INFO, this.getID() + ".getPozicio()");
 		return pozicio;
 	}
 
 	/**
-	 * Visszatér az elozopozicio-val ami egy Sin objektum, ezzel jelezve, hogy a
-	 * Jarmu itt tartozkodott az elozo idopillanatban.
+	 * Visszatér az elozopozicio-val ami egy PalyaElem objektum, ezzel jelezve,
+	 * hogy a Jarmu itt tartozkodott az elozo idopillanatban.
 	 */
-	public Sin getElozoPozicio() {
+	public PalyaElem getElozoPozicio() {
 		logger.log(Level.INFO, this.getID() + ".getElozoPozicio()");
 		return elozoPozicio;
 	}
 
 	/**
 	 * Értékül adja a kapott pozíciót (sP) a pozicio-nak, és a kapott elõzõ
-	 * pozíciót (sEP) az elozoPozicio-nak. Ezután beállítja az Sp Sin-t
+	 * pozíciót (sEP) az elozoPozicio-nak. Ezután beállítja az Sp PalyaElem-t
 	 * foglaltra, a setFoglalt metódussal.
 	 */
-	public void setKezdoPoziciok(Sin sP, Sin sEP) {
+	public void setKezdoPoziciok(PalyaElem sP, PalyaElem sEP) {
 		logger.log(Level.INFO, this.getID() + ".setKezdoPoziciok(" + sP.getID() + ", " + sEP.getID() + ") felhívva");
 		elozoPozicio = sEP;
 		pozicio = sP;
 		sP.setFoglalt();
 	}
 
-	/** Abstract, a Mozdony és Kocsi-ban ezt implementáljuk. */
-	public abstract int getSzin();
+	/**
+	 * Visszatérünk 0-val, mert a Mozdony és a Szeneskocsi mindig üres. A Kocsi
+	 * felüldefiniálja ezt a metódust.
+	 */
+	public int getSzin() {
+		logger.log(Level.INFO, this.getID() + ".getSzin(), visszaadott érték: 0");
+		return 0;
+	}
 
 	/** Visszatér az id értékével. */
 	public String getID() {

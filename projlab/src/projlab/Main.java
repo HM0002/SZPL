@@ -15,8 +15,8 @@ public class Main {
 	// Jatekmotor létrehozása
 	static JatekMotor JM;
 
-	// Elsõ pályához Sin-eknek ArrayList létrehozása
-	static ArrayList<Sin> sinek1;
+	// Elsõ pályához PalyaElem-eknek ArrayList létrehozása
+	static ArrayList<PalyaElem> palyaElemek1;
 
 	// Jarmuveknek ArrayList
 	static ArrayList<Jarmu> vonat1;
@@ -37,40 +37,47 @@ public class Main {
 	static Vonat v2;
 
 	// Elsõ Pályához Sin-ek, Valto-k, Allomas-ok létrehozása
-	static Sin s0;
-	static Sin s1;
-	static Sin s2;
-	static Sin s3;
-	static Sin s4;
-	static Sin s5;
-	static Sin s6;
-	static Sin s7;
-	static Sin s8;
-	static Valto s9;
-	static Sin s10;
-	static Sin s11;
-	static Valto s12;
-	static Sin s13;
-	static Sin s14;
-	static Sin s15;
-	static Sin s16;
-	static Allomas s17;
-	static Sin s18;
-	static Sin s19;
-	static Allomas s20;
-	static Sin s21;
-	static Sin s22;
-	static Sin s23;
+	static Sin e0;
+	static Sin e1;
+	static Sin e2;
+	static Sin e3;
+	static Sin e4;
+	static Sin e5;
+	static Sin e6;
+	static Sin e7;
+	static Sin e8;
+	static Keresztezodes e9;
+	static Sin e10;
+	static Sin e11;
+	static Valto e12;
+	static Sin e13;
+	static Sin e14;
+	static Sin e15;
+	static Sin e16;
+	static Allomas e17;
+	static Sin e18;
+	static Valto e19;
+	static Allomas e20;
+	static Sin e21;
+	static Sin e22;
+	static Sin e23;
+	static Sin e24;
+	static Sin e25;
+	static Sin e26;
+	static Sin e27;
+	static Sin e28;
 
 	// Jarmu-vek létrehozása, elõször a vonat1 elemei
-	static Mozdony m0;
+	static Mozdony m1;
+	static Szeneskocsi sz1;
 	static Kocsi k1;
 	static Kocsi k2;
 
 	// majd a vonat2 elemei
-	static Mozdony m3;
+	static Mozdony m2;
+	static Szeneskocsi sz2;
+	static Kocsi k3;
 	static Kocsi k4;
-	static Kocsi k5;
 
 	public static void main(String[] args) {
 		for (Handler handler : logger.getParent().getHandlers()) {
@@ -86,7 +93,7 @@ public class Main {
 		while (testCase != 15) {
 			System.out.println("0: Inicializálások\n1: Új játék kezdése\n2: Új vonat indítása\n3: Vonat mozgása"
 					+ "\n4: Alagút építés\n5: Alagút lebontás\n6: Alagút belépés / kilépés"
-					+ "\n7: Váltó átállítása\n8: Állomás aktiválása\n9: Utasok leszállása\n10: Ütkozés ellenõrzés"
+					+ "\n7: Váltó átállítása\n8: Állomás aktiválása\n9: Utasok le / fel szállása\n10: Ütkozés ellenõrzés"
 					+ "\n11: Pálya megnyerése, új pálya inicializálása\n12: Kilépés\n15: Kilépés a tesztelésbõl"
 					+ "\n\nAdja meg a kívánt teszt esetet: ");
 
@@ -120,21 +127,21 @@ public class Main {
 					logger.setLevel(Level.OFF);
 					init();
 					logger.setLevel(Level.INFO);
-					s10.setAlagut();
+					e10.setAlagut();
 					break;
 				case 5:
 					logger.setLevel(Level.OFF);
 					init();
-					s10.setAlagut();
+					e10.setAlagut();
 					logger.setLevel(Level.INFO);
-					s10.setAlagut();
+					e10.setAlagut();
 					break;
 				case 6:
 					logger.setLevel(Level.OFF);
 					init();
 					JM.vonatInditas();
-					s6.setAlagut();
-					s10.setAlagut();
+					e6.setAlagut();
+					e10.setAlagut();
 					JM.idoMeres();
 					logger.setLevel(Level.INFO);
 					JM.idoMeres();
@@ -143,21 +150,22 @@ public class Main {
 					logger.setLevel(Level.OFF);
 					init();
 					logger.setLevel(Level.INFO);
-					s9.atallit();
+					e12.atallit();
 					break;
 				case 8:
 					logger.setLevel(Level.OFF);
 					init();
-					m0.setKezdoPoziciok(s17, s16);
+					m1.setKezdoPoziciok(e17, e16);
 					logger.setLevel(Level.INFO);
 					JM.idoMeres();
 					break;
 				case 9:
 					logger.setLevel(Level.OFF);
 					init();
-					m0.setKezdoPoziciok(s17, s16);
-					k1.setKezdoPoziciok(s15, s14);
-					k2.setKezdoPoziciok(s16, s15);
+					m1.setKezdoPoziciok(e17, e16);
+					sz1.setKezdoPoziciok(e14, e13);
+					k1.setKezdoPoziciok(e15, e14);
+					k2.setKezdoPoziciok(e16, e15);
 					JM.idoMeres();
 					logger.setLevel(Level.INFO);
 					JM.idoMeres();
@@ -165,8 +173,8 @@ public class Main {
 				case 10:
 					logger.setLevel(Level.OFF);
 					init();
-					k1.setKezdoPoziciok(s6, s5);
-					k2.setKezdoPoziciok(s6, s5);
+					k1.setKezdoPoziciok(e6, e5);
+					k2.setKezdoPoziciok(e6, e5);
 					logger.setLevel(Level.INFO);
 					JM.utkozesEllenorzes();
 					break;
@@ -179,10 +187,11 @@ public class Main {
 					JM.vonatInditas();
 					JM.vonatInditas();
 					JM.vonatInditas();
+					JM.vonatInditas();
 					k1.kiurit();
 					k2.kiurit();
+					k3.kiurit();
 					k4.kiurit();
-					k5.kiurit();
 					logger.setLevel(Level.INFO);
 					JM.gyozelemEllenorzes();
 					break;
@@ -206,105 +215,125 @@ public class Main {
 		logger.log(Level.INFO, "Játek elemeinek inicializálása: \n");
 
 		// Sin konstuktorok
-		s0 = new Sin("sin0");
-		s1 = new Sin("sin1");
-		s2 = new Sin("sin2");
-		s3 = new Sin("sin3");
-		s4 = new Sin("sin4");
-		s5 = new Sin("sin5");
-		s6 = new Sin("sin6");
-		s7 = new Sin("sin7");
-		s8 = new Sin("sin8");
-		s9 = new Valto("valto9");
-		s10 = new Sin("sin10");
-		s11 = new Sin("sin11");
-		s12 = new Valto("valto12");
-		s13 = new Sin("sin13");
-		s14 = new Sin("sin14");
-		s15 = new Sin("sin15");
-		s16 = new Sin("sin16");
-		s17 = new Allomas(1, "allomas17");
-		s18 = new Sin("sin18");
-		s19 = new Sin("sin19");
-		s20 = new Allomas(2, "allomas20");
-		s21 = new Sin("sin21");
-		s22 = new Sin("sin22");
-		s23 = new Sin("sin23");
+		e0 = new Sin("sin0");
+		e1 = new Sin("sin1");
+		e2 = new Sin("sin2");
+		e3 = new Sin("sin3");
+		e4 = new Sin("sin4");
+		e5 = new Sin("sin5");
+		e6 = new Sin("sin6");
+		e7 = new Sin("sin7");
+		e8 = new Sin("sin8");
+		e9 = new Keresztezodes("keresztezodes9");
+		e10 = new Sin("sin10");
+		e11 = new Sin("sin11");
+		e12 = new Valto("valto12");
+		e13 = new Sin("sin13");
+		e14 = new Sin("sin14");
+		e15 = new Sin("sin15");
+		e16 = new Sin("sin16");
+		e17 = new Allomas(1, true, "allomas17");
+		e18 = new Sin("sin18");
+		e19 = new Valto("valto19");
+		e20 = new Allomas(2, false, "allomas20");
+		e21 = new Sin("sin21");
+		e22 = new Sin("sin22");
+		e23 = new Sin("sin23");
+		e24 = new Sin("sin24");
+		e25 = new Sin("sin25");
+		e26 = new Sin("sin26");
+		e27 = new Sin("sin27");
+		e28 = new Sin("sin28");
 
-		sinek1 = new ArrayList<Sin>();
+		palyaElemek1 = new ArrayList<PalyaElem>();
 
 		// Sin-ek összekötése
-		s0.setSzomszedok(s1, s1);
-		s1.setSzomszedok(s0, s2);
-		s2.setSzomszedok(s1, s3);
-		s3.setSzomszedok(s2, s4);
-		s4.setSzomszedok(s3, s5);
-		s5.setSzomszedok(s4, s6);
-		s6.setSzomszedok(s7, s17);
-		s7.setSzomszedok(s6, s8);
-		s8.setSzomszedok(s7, s9);
-		s9.setSzomszedok(s8, s10, s18);
-		s10.setSzomszedok(s9, s11);
-		s11.setSzomszedok(s10, s12);
-		s12.setSzomszedok(s11, s13, s23);
-		s13.setSzomszedok(s12, s14);
-		s14.setSzomszedok(s13, s15);
-		s15.setSzomszedok(s14, s16);
-		s16.setSzomszedok(s15, s17);
-		s17.setSzomszedok(s16, s6);
-		s18.setSzomszedok(s9, s19);
-		s19.setSzomszedok(s18, s20);
-		s20.setSzomszedok(s19, s21);
-		s21.setSzomszedok(s20, s22);
-		s22.setSzomszedok(s21, s23);
-		s23.setSzomszedok(s22, s12);
+		e0.setSzomszedok(e1, e1, null, null);
+		e1.setSzomszedok(e0, e2, null, null);
+		e2.setSzomszedok(e1, e3, null, null);
+		e3.setSzomszedok(e2, e4, null, null);
+		e4.setSzomszedok(e3, e5, null, null);
+		e5.setSzomszedok(e4, e6, null, null);
+		e6.setSzomszedok(e7, e17, null, null);
+		e7.setSzomszedok(e6, e8, null, null);
+		e8.setSzomszedok(e7, e9, null, null);
+		e9.setSzomszedok(e8, e10, e18, e28);
+		e10.setSzomszedok(e9, e11, null, null);
+		e11.setSzomszedok(e10, e12, null, null);
+		e12.setSzomszedok(e11, e13, e23, null);
+		e13.setSzomszedok(e12, e14, null, null);
+		e14.setSzomszedok(e13, e15, null, null);
+		e15.setSzomszedok(e14, e16, null, null);
+		e16.setSzomszedok(e15, e17, null, null);
+		e17.setSzomszedok(e16, e6, null, null);
+		e18.setSzomszedok(e9, e19, null, null);
+		e19.setSzomszedok(e18, e20, e24, null);
+		e20.setSzomszedok(e19, e21, null, null);
+		e21.setSzomszedok(e20, e22, null, null);
+		e22.setSzomszedok(e21, e23, null, null);
+		e23.setSzomszedok(e12, e22, null, null);
+		e24.setSzomszedok(e19, e25, null, null);
+		e25.setSzomszedok(e24, e26, null, null);
+		e26.setSzomszedok(e25, e17, null, null);
+		e27.setSzomszedok(e26, e18, null, null);
+		e28.setSzomszedok(e27, e9, null, null);
 
-		// sinek1 listához a Sin példányok hozzáadása
-		sinek1.add(s0);
-		sinek1.add(s1);
-		sinek1.add(s2);
-		sinek1.add(s3);
-		sinek1.add(s4);
-		sinek1.add(s5);
-		sinek1.add(s6);
-		sinek1.add(s7);
-		sinek1.add(s8);
-		sinek1.add(s9);
-		sinek1.add(s10);
-		sinek1.add(s11);
-		sinek1.add(s12);
-		sinek1.add(s13);
-		sinek1.add(s14);
-		sinek1.add(s15);
-		sinek1.add(s16);
-		sinek1.add(s17);
-		sinek1.add(s18);
-		sinek1.add(s19);
-		sinek1.add(s20);
-		sinek1.add(s21);
-		sinek1.add(s22);
-		sinek1.add(s23);
+		// palyaElemek1 listához a Sin példányok hozzáadása
+		palyaElemek1.add(e0);
+		palyaElemek1.add(e1);
+		palyaElemek1.add(e2);
+		palyaElemek1.add(e3);
+		palyaElemek1.add(e4);
+		palyaElemek1.add(e5);
+		palyaElemek1.add(e6);
+		palyaElemek1.add(e7);
+		palyaElemek1.add(e8);
+		palyaElemek1.add(e9);
+		palyaElemek1.add(e10);
+		palyaElemek1.add(e11);
+		palyaElemek1.add(e12);
+		palyaElemek1.add(e13);
+		palyaElemek1.add(e14);
+		palyaElemek1.add(e15);
+		palyaElemek1.add(e16);
+		palyaElemek1.add(e17);
+		palyaElemek1.add(e18);
+		palyaElemek1.add(e19);
+		palyaElemek1.add(e20);
+		palyaElemek1.add(e21);
+		palyaElemek1.add(e22);
+		palyaElemek1.add(e23);
+		palyaElemek1.add(e24);
+		palyaElemek1.add(e25);
+		palyaElemek1.add(e26);
+		palyaElemek1.add(e27);
+		palyaElemek1.add(e28);
 
-		// Jarmu (Kocsi és Mozdony) konstruktorok
-		m0 = new Mozdony("mozdony0");
+		// Jarmu (Mozdony, Kocsi és Szeneskocsi) konstruktorok
+		m1 = new Mozdony("mozdony1");
+		sz1 = new Szeneskocsi("szenekocsi1");
 		k1 = new Kocsi(2, "kocsi1");
 		k2 = new Kocsi(1, "kocsi2");
-		m3 = new Mozdony("mozdony3");
-		k4 = new Kocsi(1, "kocsi4");
-		k5 = new Kocsi(2, "kocsi5");
+
+		m2 = new Mozdony("mozdony2");
+		sz2 = new Szeneskocsi("szenekocsi2");
+		k3 = new Kocsi(1, "kocsi3");
+		k4 = new Kocsi(2, "kocsi4");
 
 		vonat1 = new ArrayList<Jarmu>();
 		vonat2 = new ArrayList<Jarmu>();
 
 		// vonatokba a Jarmu-vek elhelyezése: vonat1
-		vonat1.add(m0);
+		vonat1.add(m1);
+		vonat1.add(sz1);
 		vonat1.add(k1);
 		vonat1.add(k2);
 
 		// vonatokba a Jarmu-vek elhelyezése: vonat2
-		vonat2.add(m3);
+		vonat2.add(m2);
+		vonat2.add(sz2);
+		vonat2.add(k3);
 		vonat2.add(k4);
-		vonat2.add(k5);
 
 		// Vonat konstruktorok
 		v1 = new Vonat(vonat1, "vonat1");
@@ -317,8 +346,8 @@ public class Main {
 		vonatok1.add(v2);
 
 		// Palya konstruktor
-		p0 = new Palya(2, 2, 4, sinek1, vonatok1, "palya1");
-		p1 = new Palya(2, 2, 4, sinek1, vonatok1, "palya2");
+		p0 = new Palya(2, 3, 5, palyaElemek1, vonatok1, "palya1");
+		p1 = new Palya(2, 3, 5, palyaElemek1, vonatok1, "palya2");
 
 		palyak = new ArrayList<Palya>();
 

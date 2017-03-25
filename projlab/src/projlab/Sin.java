@@ -6,92 +6,44 @@ import java.util.logging.Logger;
 /**
  * Sin osztály:
  * 
- * A Valto és az Allomas õse. Itt valósítjuk meg a síneket és speciálís
- * síneket(váltó, állomás), melyeken a vonatok majd mozognak. A nem speciális
- * sínek lehetnek alagutak, ezt egy boolean változóban tároljuk. Tároljuk még a
- * szomszédos Sin példányokat, egy három elemû tömbben. A harmadik elem null, ha
- * csak 2 szomszéd van. E mellett tároljuk, hogy melyik pályához tartozik ez a
- * Sin, és azt is, hogy jelenleg van e rajta jármû.
+ * A PalyaElem objektumnak egy leszármazottja. Itt valósítjuk meg az ugynevezett
+ * egyszerû síneket, és csak az ilyen egyszerû sínekre lehet alagutat építeni.
  * 
  * Felelõsség:
  * 
- * Felelõssége az alagút építés helyes mûködése, és a vonatok mozgásához a
- * helyes következõ pozíció visszaadása(algút esetén is) a szomszédok tömb
- * segítségével.
+ * Felelõssége az alagút építés helyes mûködése. Mivel a PalyaElem gyereke,
+ * ezért felel még a rajtalevõ Jarmu következõ pozíciójának megadásáért is.
+ * Lehet rá alagutat építeni (csak rá lehet).
  */
-public class Sin {
+public class Sin extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-	// Attribútumok:
-
-	/**
-	 * szomszedok: A konstruktorban 3 elemûként van létrehozva. Tartalmazza a
-	 * szomszédos Sin példányokat, az elsõ két elemben vannak az érvényes
-	 * szomszédok, tehát azok vannak összekötve, a harmadik elem üres (null). A
-	 * Valto leszármazott rak a harmadik elembe is egy példányt, és ahogyan
-	 * váltogat a felhasználó, úgy cserélõdik ebben a tömbben a sorrend.
-	 */
-	protected Sin[] szomszedok;
-
-	/** Debuggoláshoz, hogy tudjuk kicsoda. */
-	private String id;
-
-	/** alagut: Igaz, ha alagút van építve ezen a példányon, egyébként hamis. */
-	protected boolean alagut;
-
-	/** foglalt: Tároljuk, hogy hány Jarmu pozicio-ja ez a Sin példány. */
-	protected int foglalt;
-
-	/** palya: Tárolja, melyik Palya példányhoz tartozik ez a Sin példány. */
-	protected Palya palya;
 
 	/** Konstruktor */
 	Sin(String id) {
-		szomszedok = new Sin[3];
-		alagut = false;
-		palya = null;
-		foglalt = 0;
-		this.id = id;
-		logger.log(Level.INFO, id + " konstruktora elindult");
-	}
-
-	/** Értékül adjda p-t a palya-nak. */
-	public void setPalya(Palya p) {
-		palya = p;
+		super(id);
 	}
 
 	/**
-	 * Értékül adja s0-t a szomszedok 0. elemének, s1-et a szomszedok 1.
-	 * elemének, és null-t a szomszedok 3. elemének.
+	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott Mozdony
+	 * pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a Mozdony van,
+	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, lekéri a palya-tól az
+	 * alagutak számát a getAlagutSzam metódussal. Ha ez 2, felhívja a palya
+	 * alagut metódusát, mely visszatér a másik alagúttal, ami a pályán van.
+	 * Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2 alagút építve, nem
+	 * számít, hogy van-e itt alagút vagy sincs, ugyanúgy kezeljük mind kettõ
+	 * esetet. Lekérjük a kapott Mozdony elõzõ pozícióját a getElozoPozicio
+	 * metódussal, majd ezt komparáljuk a szomszedok tömb elsõ 2 elemével.
+	 * Amelyikkel nem egyezik meg, azzal térünk vissza, majd felhívjuk a
+	 * visszatért PalyaElem setFoglalt metódusát, mely növeli a foglalt értékét
+	 * 1-el. Ezután csökkentjük ennek a foglalt változójának értékét 1-el.
 	 */
-	public void setSzomszedok(Sin s0, Sin s1) {
-		logger.log(Level.INFO, this.getID() + ".setSzomszedok(" + s0.getID() + ", " + s1.getID() + ") felhívva");
-		szomszedok[0] = s0;
-		szomszedok[1] = s1;
-		szomszedok[2] = null;
-	}
-
-	/**
-	 * Visszatér egy Sin példánnyal, mely a paraméterül kapott Jarmu pozicio-ja
-	 * lesz. Megnézi, hogy ez a Sin, amin a Jarmu van, alagút-e, tehát az alagut
-	 * értéke igaz-e. Ha igen, lekéri a palya-tól az alagutak számát a
-	 * getAlagutSzam metódussal. Ha ez 2, felhívja a palya alagut metódusát,
-	 * mely visszatér a másik alagúttal, ami a pályán van. Ennek visszatérünk az
-	 * elsõ szomszédjával. Ha nincs 2 alagút építve, nem számít, hogy van-e itt
-	 * alagút vagy sincs, ugyanúgy kezeljük mind kettõ esetet. Lekérjük a kapott
-	 * Jarmu elõzõ pozícióját a getElozoPozicio metódussal, majd ezt komparáljuk
-	 * a szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik meg, azzal
-	 * térünk vissza, majd felhívjuk a visszatért Sin setFoglalt metódusát, mely
-	 * növeli a foglalt értékét 1-el. Ezután csökkentjük ennek a foglalt
-	 * változójának értékét 1-el.
-	 */
-	public Sin elfogad(Jarmu j) {
-		logger.log(Level.INFO, this.getID() + ".elfogad(" + j.getID() + ")");
+	public PalyaElem elfogad(Mozdony m) {
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + ")");
 		if (alagut == true)
 			if (palya.getAlagutSzam() == 2)
 				return palya.alagut(this).getFirstSzomszed();
 
-		if (j.getElozoPozicio() == szomszedok[0]) {
+		if (m.getElozoPozicio() == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
 			return szomszedok[1];
@@ -103,10 +55,73 @@ public class Sin {
 	}
 
 	/**
-	 * Megnézzük, van-e Jarmu ezen a Sin-en, mert ha igen, akkor nem lehet
+	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott Kocsi
+	 * pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a Kocsi van,
+	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, lekéri a palya-tól az
+	 * alagutak számát a getAlagutSzam metódussal. Ha ez 2, felhívja a palya
+	 * alagut metódusát, mely visszatér a másik alagúttal, ami a pályán van.
+	 * Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2 alagút építve, nem
+	 * számít, hogy van-e itt alagút vagy sincs, ugyanúgy kezeljük mind kettõ
+	 * esetet. Lekérjük a kapott Kocsi elõzõ pozícióját a getElozoPozicio
+	 * metódussal, majd ezt komparáljuk a szomszedok tömb elsõ 2 elemével.
+	 * Amelyikkel nem egyezik meg, azzal térünk vissza, majd felhívjuk a
+	 * visszatért PalyaElem setFoglalt metódusát, mely növeli a foglalt értékét
+	 * 1-el. Ezután csökkentjük ennek a foglalt változójának értékét 1-el.
+	 */
+	public PalyaElem elfogad(Kocsi k) {
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
+		if (alagut == true)
+			if (palya.getAlagutSzam() == 2)
+				return palya.alagut(this).getFirstSzomszed();
+
+		if (k.getElozoPozicio() == szomszedok[0]) {
+			foglalt--;
+			szomszedok[1].setFoglalt();
+			return szomszedok[1];
+		} else {
+			foglalt--;
+			szomszedok[0].setFoglalt();
+			return szomszedok[0];
+		}
+	}
+
+	/**
+	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott
+	 * Szenecskocsi pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a
+	 * Szenecskocsi van, alagút-e, tehát az alagut értéke igaz-e. Ha igen,
+	 * lekéri a palya-tól az alagutak számát a getAlagutSzam metódussal. Ha ez
+	 * 2, felhívja a palya alagut metódusát, mely visszatér a másik alagúttal,
+	 * ami a pályán van. Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2
+	 * alagút építve, nem számít, hogy van-e itt alagút vagy sincs, ugyanúgy
+	 * kezeljük mind kettõ esetet. Lekérjük a kapott Szenecskocsi elõzõ
+	 * pozícióját a getElozoPozicio metódussal, majd ezt komparáljuk a
+	 * szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik meg, azzal térünk
+	 * vissza, majd felhívjuk a visszatért PalyaElem setFoglalt metódusát, mely
+	 * növeli a foglalt értékét 1-el. Ezután csökkentjük ennek a foglalt
+	 * változójának értékét 1-el.
+	 */
+	public PalyaElem elfogad(Szeneskocsi sz) {
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + ")");
+		if (alagut == true)
+			if (palya.getAlagutSzam() == 2)
+				return palya.alagut(this).getFirstSzomszed();
+
+		if (sz.getElozoPozicio() == szomszedok[0]) {
+			foglalt--;
+			szomszedok[1].setFoglalt();
+			return szomszedok[1];
+		} else {
+			foglalt--;
+			szomszedok[0].setFoglalt();
+			return szomszedok[0];
+		}
+	}
+
+	/**
+	 * Megnézzük, van-e Jarmu ezen a PalyaElem-en, mert ha igen, akkor nem lehet
 	 * alagutat építeni. Ha nem, tehát ha a foglalt értéke 0, lekérjük a
 	 * palya-tól az alagutak számát a getAlagutSzam metódussal. Ha ez 2,
-	 * megnézzük, hogy ezen a Sin-en van e alagút, tehát az alagut változó
+	 * megnézzük, hogy ezen a PalyaElem-en van e alagút, tehát az alagut változó
 	 * értékét. Ha nincs, szóval az alagut hamis, visszatérünk, mert nem lehet 3
 	 * alagutat építeni. Ha az alagut igaz, akkor lebontjuk ezt az alagutat,
 	 * azaz beállítjuk az alagut értékét hamisra, majd meghívjuk a palya
@@ -140,44 +155,4 @@ public class Sin {
 		}
 	}
 
-	/** Visszatér az alagut értékével. */
-	public boolean getAlagut() {
-		logger.log(Level.INFO, this.getID() + ".getAlagut(), visszaadott érték: " + alagut);
-		return alagut;
-	}
-
-	/**
-	 * A foglalt változó értékét adja vissza, jelezve, hogy a Sin-en hány Jarmu
-	 * tartózkodik.
-	 */
-	public int getFoglalt() {
-		logger.log(Level.INFO, this.getID() + ".getFoglalt(), visszaadott érték: " + foglalt);
-		return foglalt;
-	}
-
-	/**
-	 * A foglalt változó értékét növeli, jelezve, hogy a Sin plusz egy Jarmu
-	 * pozicio-ja lett.
-	 */
-	public void setFoglalt() {
-		logger.log(Level.INFO, this.getID() + ".setFoglalt()");
-		foglalt++;
-	}
-
-	/**
-	 * Csökkenti a foglalt értékét 1-el, majd növeli a szomszédok 0. elemének
-	 * foglalt értékét 1-el a setFoglalt metódus segítségével. Ezután visszatér
-	 * a szomszedok tömb 0. elemével.
-	 */
-	public Sin getFirstSzomszed() {
-		logger.log(Level.INFO, this.getID() + ".getFirstSzomszed(), visszaadott érték: " + szomszedok[0].getID());
-		foglalt--;
-		szomszedok[0].setFoglalt();
-		return szomszedok[0];
-	}
-
-	/** Visszatér az id értékével. */
-	public String getID() {
-		return id;
-	}
 }

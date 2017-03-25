@@ -7,18 +7,18 @@ import java.util.logging.Logger;
  * Kocsi osztály:
  * 
  * A Jarmu leszármazottja, tároljuk a pozícióját és az elõzõ pozicíóját, melyek
- * Sin típusúak. Amelyik Sin-en Kocsi van (tehát a Kocsi poziciója ez a Sin),
- * oda nem lehet alagutat építeni.
+ * PalyaElem típusúak. Amelyik PalyaElem-en Kocsi van (tehát a Kocsi poziciója
+ * ez a PalyaElem), oda nem lehet alagutat építeni.
  * 
  * Felelõsség:
  * 
  * Felel a Kocsi mozgásáért.Az idõ múlásának függvényében meglátogatja a
- * pozíciójában tárolt Sin példányt,melynek átadja önmagát.Ez visszatér az új
- * pozícióval,így mozog a Kocsi-nk. E mellett felel az utasok szállításáért,és
- * az utasok leszállításáért.Van színe, ugyanúgy, mint az állomásoknak. A szín
- * jelzi, hogy utasok vannak a Kocsi-ban, és hogy melyik állomásra szeretnének
- * menni. Az üres kocsi szin értéke 0. Attribútumok int szin: meghatározza a
- * kocsi színkódját, a 0 felel az üresért,ami a szürke
+ * pozíciójában tárolt PalyaElem példányt,melynek átadja önmagát.Ez visszatér az
+ * új pozícióval,így mozog a Kocsi-nk. E mellett felel az utasok
+ * szállításáért,és az utasok leszállításáért.Van színe, ugyanúgy, mint az
+ * állomásoknak. A szín jelzi, hogy utasok vannak a Kocsi-ban, és hogy melyik
+ * állomásra szeretnének menni. Az üres kocsi szin értéke 0. Attribútumok int
+ * szin: meghatározza a kocsi színkódját, a 0 felel az üresért,ami a szürke
  */
 public class Kocsi extends Jarmu {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -32,6 +32,12 @@ public class Kocsi extends Jarmu {
 	private int szin;
 
 	/**
+	 * eredetiSzin: Meghatározza, milyen színû volt a kocsi az
+	 * inicializálásakor.
+	 */
+	private int eredetiSzin;
+
+	/**
 	 * Konstruktor, meghívjuk az õs konstruktorát, és kiegészítjük a szin
 	 * értékadásával.
 	 */
@@ -39,6 +45,7 @@ public class Kocsi extends Jarmu {
 		super(id);
 		logger.log(Level.INFO, "paraméterei: szin = " + i);
 		szin = i;
+		eredetiSzin = i;
 	}
 
 	/**
@@ -54,6 +61,31 @@ public class Kocsi extends Jarmu {
 	public int getSzin() {
 		logger.log(Level.INFO, this.getID() + ".getSzin(), viszaadott érték: " + szin);
 		return szin;
+	}
+
+	/** Értékül adjuk az eredetiSzin-t a szin-nek. */
+	public void setSzin() {
+		logger.log(Level.INFO, this.getID() + ".setSzin()");
+		szin = eredetiSzin;
+	}
+
+	/** Visszatér a eredetiSzin attribútum értékével. */
+	public int getEredetiSzin() {
+		logger.log(Level.INFO, this.getID() + ".getEredetiSzin(), viszaadott érték: " + eredetiSzin);
+		return eredetiSzin;
+	}
+
+	/**
+	 * A PalyaElem típusú pozicio elfogad metódusát hívja meg, saját magát
+	 * paraméterül átadva, hogy az elfogad metódus visszatérhessen új pozícióval
+	 * (PalyaElem példánnyal).
+	 */
+	protected void latogat() {
+		logger.log(Level.INFO, this.getID() + ".latogat(" + pozicio.getID() + ")");
+
+		PalyaElem temp = pozicio;
+		pozicio = pozicio.elfogad(this);
+		elozoPozicio = temp;
 	}
 
 }
