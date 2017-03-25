@@ -89,12 +89,6 @@ public abstract class PalyaElem {
 	}
 
 	/**
-	 * Abstract, a Sin, Valto, Alagut és a Keresztezodes-ben implementáljuk.
-	 * Alagút építés / lebontás logikáját tartalmazza.
-	 */
-	public abstract void setAlagut();
-
-	/**
 	 * Abstract, a Sin, Valto, Alagut és a Keresztezodes-ben implementáljuk. A
 	 * Mozdony következõ pozíciójához tartozó logika.
 	 */

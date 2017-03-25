@@ -25,12 +25,6 @@ public class Keresztezodes extends PalyaElem {
 	}
 
 	/**
-	 * Üres, hogy ne lehesssen ide alagutat építeni.
-	 */
-	public void setAlagut() {
-	}
-
-	/**
 	 * Megadja a következõ PalyaElem példányt, ahova a Szeneskocsi kerülni fog
 	 * az új idõpillanatban, úgy, hogy megnézi a Szeneskocsi elozoPozicio-ját a
 	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az elsõ

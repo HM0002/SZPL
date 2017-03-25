@@ -28,12 +28,6 @@ public class Valto extends PalyaElem {
 	}
 
 	/**
-	 * Üres, hogy ne lehesssen ide alagutat építeni.
-	 */
-	public void setAlagut() {
-	}
-
-	/**
 	 * Megadja a következõ PalyaElem példányt, ahova a Mozdony kerülni fog az új
 	 * idõpillanatban, úgy, hogy megnézi a Mozdony elozoPozicio-ját a
 	 * getElozoPozicio metódussal, és vizsgálja, hogy ez benne van-e a

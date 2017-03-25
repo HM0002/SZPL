@@ -50,12 +50,6 @@ public class Allomas extends PalyaElem {
 	}
 
 	/**
-	 * Üres, hogy ne lehesssen ide alagutat építeni.
-	 */
-	public void setAlagut() {
-	}
-
-	/**
 	 * Igazra állítja az aktiv-ot, és megadja a következõ PalyaElem példányt,
 	 * ahova a Mozdony kerülni fog az új idõpillanatban, úgy, hogy megnézi a
 	 * Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok
