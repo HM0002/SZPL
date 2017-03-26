@@ -121,7 +121,7 @@ public class Main {
 					init();
 					JM.vonatInditas();
 					logger.setLevel(Level.INFO);
-					JM.idoMeres();
+					JM.idoEltelt();
 					break;
 				case 4:
 					logger.setLevel(Level.OFF);
@@ -142,9 +142,9 @@ public class Main {
 					JM.vonatInditas();
 					e6.setAlagut();
 					e10.setAlagut();
-					JM.idoMeres();
+					JM.idoEltelt();
 					logger.setLevel(Level.INFO);
-					JM.idoMeres();
+					JM.idoEltelt();
 					break;
 				case 7:
 					logger.setLevel(Level.OFF);
@@ -157,7 +157,7 @@ public class Main {
 					init();
 					m1.setKezdoPoziciok(e17, e16);
 					logger.setLevel(Level.INFO);
-					JM.idoMeres();
+					JM.idoEltelt();
 					break;
 				case 9:
 					logger.setLevel(Level.OFF);
@@ -166,9 +166,9 @@ public class Main {
 					sz1.setKezdoPoziciok(e14, e13);
 					k1.setKezdoPoziciok(e15, e14);
 					k2.setKezdoPoziciok(e16, e15);
-					JM.idoMeres();
+					JM.idoEltelt();
 					logger.setLevel(Level.INFO);
-					JM.idoMeres();
+					JM.idoEltelt();
 					break;
 				case 10:
 					logger.setLevel(Level.OFF);
@@ -181,13 +181,11 @@ public class Main {
 				case 11:
 					logger.setLevel(Level.OFF);
 					init();
-					JM.vonatInditas();
-					JM.vonatInditas();
-					JM.vonatInditas();
-					JM.vonatInditas();
-					JM.vonatInditas();
-					JM.vonatInditas();
-					JM.vonatInditas();
+					int i = 0;
+					while (i < 14) {
+						JM.vonatInditas();
+						i++;
+					}
 					k1.kiurit();
 					k2.kiurit();
 					k3.kiurit();
@@ -346,8 +344,8 @@ public class Main {
 		vonatok1.add(v2);
 
 		// Palya konstruktor
-		p0 = new Palya(2, 3, 5, palyaElemek1, vonatok1, "palya1");
-		p1 = new Palya(2, 3, 5, palyaElemek1, vonatok1, "palya2");
+		p0 = new Palya(2, 3, 12, palyaElemek1, vonatok1, "palya1");
+		p1 = new Palya(2, 3, 12, palyaElemek1, vonatok1, "palya2");
 
 		palyak = new ArrayList<Palya>();
 

@@ -46,7 +46,7 @@ public class Allomas extends PalyaElem {
 		szin = i;
 		aktiv = false;
 		varakozoUtas = b;
-		logger.log(Level.INFO, "paraméterei: szin = " + i);
+		logger.log(Level.INFO, "paraméterei: szin = " + i + ", varakozoUtas = " + b);
 	}
 
 	/**
