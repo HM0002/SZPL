@@ -39,11 +39,18 @@ public class Sin extends PalyaElem {
 	 */
 	public PalyaElem elfogad(Mozdony m) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + ")");
-		if (alagut == true)
-			if (palya.getAlagutSzam() == 2)
-				return palya.alagut(this).getFirstSzomszed();
 
-		if (m.getElozoPozicio() == szomszedok[0]) {
+		PalyaElem elozoPozicio = m.getElozoPozicio();
+
+		if (alagut == true && !elozoPozicio.getAlagut())
+			if (palya.getAlagutSzam() == 2) {
+				foglalt--;
+				PalyaElem pe = palya.alagut(this);
+				pe.setFoglalt();
+				return pe;
+			}
+
+		if (elozoPozicio == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
 			return szomszedok[1];
@@ -70,11 +77,18 @@ public class Sin extends PalyaElem {
 	 */
 	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
-		if (alagut == true)
-			if (palya.getAlagutSzam() == 2)
-				return palya.alagut(this).getFirstSzomszed();
 
-		if (k.getElozoPozicio() == szomszedok[0]) {
+		PalyaElem elozoPozicio = k.getElozoPozicio();
+
+		if (alagut == true && !elozoPozicio.getAlagut())
+			if (palya.getAlagutSzam() == 2) {
+				foglalt--;
+				PalyaElem pe = palya.alagut(this);
+				pe.setFoglalt();
+				return pe;
+			}
+
+		if (elozoPozicio == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
 			return szomszedok[1];
@@ -102,11 +116,18 @@ public class Sin extends PalyaElem {
 	 */
 	public PalyaElem elfogad(Szeneskocsi sz) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + ")");
-		if (alagut == true)
-			if (palya.getAlagutSzam() == 2)
-				return palya.alagut(this).getFirstSzomszed();
 
-		if (sz.getElozoPozicio() == szomszedok[0]) {
+		PalyaElem elozoPozicio = sz.getElozoPozicio();
+
+		if (alagut == true && !elozoPozicio.getAlagut())
+			if (palya.getAlagutSzam() == 2) {
+				foglalt--;
+				PalyaElem pe = palya.alagut(this);
+				pe.setFoglalt();
+				return pe;
+			}
+
+		if (elozoPozicio == szomszedok[0]) {
 			foglalt--;
 			szomszedok[1].setFoglalt();
 			return szomszedok[1];

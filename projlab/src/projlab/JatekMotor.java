@@ -56,6 +56,14 @@ public class JatekMotor {
 	}
 
 	/**
+	 * Visszatér az aktuális pályával, amit mindig az elsõ helyen tárolunk a
+	 * palyak listában.
+	 */
+	public Palya getAktualisPalya() {
+		return palyak.get(0);
+	}
+
+	/**
 	 * Vizsgáljuk az eltelt idõt. Ha eltelt egy adott idõ (1 másodperc),
 	 * felhivjuk az idoEltelt metódus, majd visszatérünk igazzal, tehát hogy
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
@@ -88,6 +96,7 @@ public class JatekMotor {
 			}
 			logger.log(Level.INFO, "\nCiklus vége.");
 		}
+		Main.draw();
 		prevTime = System.currentTimeMillis();
 	}
 
@@ -131,7 +140,7 @@ public class JatekMotor {
 				logger.log(Level.INFO, "\nElindul a ciklus:\n");
 				for (int i = 0; i < k + 1; i++) {
 					logger.log(Level.INFO, "\t" + j.get(i).getID() + " elindítása:");
-					j.get(i).setKezdoPoziciok(e.get(5 - i), e.get(4 - i));
+					j.get(i).setKezdoPoziciok(e.get(4 - i), e.get(3 - i));
 				}
 				logger.log(Level.INFO, "\nCiklus vége.\n");
 				ujVonat = 0;

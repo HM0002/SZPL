@@ -32,7 +32,7 @@ public class Keresztezodes extends PalyaElem {
 	 * elemmel, ha 2 volt és egyébként a második elemmel.
 	 */
 	public PalyaElem elfogad(Mozdony m) {
-		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + "), aktiv = true;");
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + ")");
 
 		PalyaElem e = m.getElozoPozicio();
 

@@ -135,15 +135,4 @@ public abstract class PalyaElem {
 		foglalt++;
 	}
 
-	/**
-	 * Csökkenti a foglalt értékét 1-el, majd növeli a szomszédok 0. elemének
-	 * foglalt értékét 1-el a setFoglalt metódus segítségével. Ezután visszatér
-	 * a szomszedok tömb 0. elemével.
-	 */
-	public PalyaElem getFirstSzomszed() {
-		logger.log(Level.INFO, this.getID() + ".getFirstSzomszed(), visszaadott érték: " + szomszedok[0].getID());
-		foglalt--;
-		szomszedok[0].setFoglalt();
-		return szomszedok[0];
-	}
 }
