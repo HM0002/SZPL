@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +80,7 @@ public class Main {
 	static Kocsi k3;
 	static Kocsi k4;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SecurityException, IOException {
 		for (Handler handler : logger.getParent().getHandlers()) {
 			logger.getParent().removeHandler(handler);
 		}
@@ -87,6 +88,9 @@ public class Main {
 		ConsoleHandler consoleHandler = new ConsoleHandler();
 		consoleHandler.setFormatter(formatter);
 		logger.addHandler(consoleHandler);
+		
+		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");  
+	    fileHandler.setFormatter(formatter);
 
 		System.out.println("0: Inicializálások\n1: Új játék kezdése\n2: Új vonat indítása\n3: Vonat mozgása"
 				+ "\n4: Alagút építés\n5: Alagút lebontás\n6: Alagút belépés / kilépés"
@@ -95,6 +99,7 @@ public class Main {
 				+ "\n12: Utas nem száll le\n13: Keresztezõdésen áthaladás vízszintesen"
 				+ "\n14: Keresztezõdésen áthaladás függõlegesen\n15: Ütkozés ellenõrzés"
 				+ "\n16: Pálya megnyerése, új pálya inicializálása\n17: Kilépés"
+				+ "\n18: Foglalt váltó átállítása\n19: Foglalt pályaelemre alagút építés"
 				+ "\n\nAdja meg a kívánt teszt esetet: ");
 
 		try {
@@ -102,16 +107,19 @@ public class Main {
 			int testCase = Integer.parseInt(reader.readLine());
 			switch (testCase) {
 			case 0:
+			    logger.addHandler(fileHandler);
 				init();
 				break;
 			case 1:
 				init();
+			    logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.ujJatek();
 				break;
 			case 2:
 				logger.setLevel(Level.OFF);
 				init();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.vonatInditas();
 				break;
@@ -119,6 +127,7 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				JM.vonatInditas();
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -128,6 +137,7 @@ public class Main {
 			case 4:
 				logger.setLevel(Level.OFF);
 				init();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				draw();
 				e10.setAlagut();
@@ -137,6 +147,7 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				e10.setAlagut();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				draw();
 				e10.setAlagut();
@@ -148,6 +159,7 @@ public class Main {
 				JM.vonatInditas();
 				e6.setAlagut();
 				e10.setAlagut();
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -159,14 +171,21 @@ public class Main {
 			case 7:
 				logger.setLevel(Level.OFF);
 				init();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
+				draw();
 				e12.atallit();
+				draw();
+				e12.atallit();
+				draw();
+				e12.atallit();
+				draw();
 				break;
 			case 8:
 				logger.setLevel(Level.OFF);
 				init();
-				logger.setLevel(Level.INFO);
 				m1.setKezdoPoziciok(e10, e9);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -175,6 +194,7 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				m1.setKezdoPoziciok(e15, e14);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -185,6 +205,7 @@ public class Main {
 				m1.setKezdoPoziciok(e22, e23);
 				sz1.setKezdoPoziciok(e23, e12);
 				k1.setKezdoPoziciok(e12, e13);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -198,6 +219,7 @@ public class Main {
 				sz1.setKezdoPoziciok(e14, e13);
 				k2.kiurit();
 				k2.setKezdoPoziciok(e13, e12);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -211,6 +233,7 @@ public class Main {
 				sz1.setKezdoPoziciok(e14, e13);
 				k1.setKezdoPoziciok(e13, e12);
 				k2.setKezdoPoziciok(e12, e23);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -222,6 +245,7 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				m1.setKezdoPoziciok(e7, e6);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -230,6 +254,7 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				m1.setKezdoPoziciok(e11, e12);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -239,6 +264,7 @@ public class Main {
 				init();
 				k1.setKezdoPoziciok(e15, e14);
 				k2.setKezdoPoziciok(e3, e2);
+				logger.addHandler(fileHandler);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -252,18 +278,39 @@ public class Main {
 					JM.vonatInditas();
 					i++;
 				}
+				e17.setVarakozoUtas(false);
 				k1.kiurit();
 				k2.kiurit();
 				k3.kiurit();
 				k4.kiurit();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.gyozelemEllenorzes();
 				break;
 			case 17:
 				logger.setLevel(Level.OFF);
 				init();
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.kilepes();
+				break;
+			case 18:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e12, e23);
+				logger.addHandler(fileHandler);
+				logger.setLevel(Level.INFO);
+				e12.atallit();
+				draw();
+				break;
+			case 19:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e6, e5);
+				logger.addHandler(fileHandler);
+				logger.setLevel(Level.INFO);
+				e6.setAlagut();
+				draw();
 				break;
 			default:
 				logger.log(Level.INFO, "Nincs ilyen teszteset!");

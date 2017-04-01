@@ -176,6 +176,8 @@ public class Sin extends PalyaElem {
 
 			palya.setAlagutSzam(1);
 		}
+		
+		logger.log(Level.INFO, this.getID() + ": A sín foglalt, nem lehet alagutat építeni");
 	}
 
 }

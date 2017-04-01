@@ -168,20 +168,29 @@ public class JatekMotor {
 	}
 
 	/**
-	 * Lekéri az aktuális pálya (palyak 0. eleme) getVonatSzam metódusával, hogy
-	 * hány vonatot kell küldeni összesen, és ezt komparálja a
-	 * vonatSzamlalo-val. Ha a két érték különbözõ, visszatérünk hamissal,
-	 * ugyanis az azt jelenti, hogy még nem indult el az összes vonatunk, ami a
-	 * pályához tartozik. Ha a két értek megegyezik, lekérjük a pályától a
-	 * vonatokat a getVonatok metódussal, majd a vonatknak a jármûveit a
-	 * getJarmuvek metódussal. Ezután lekérjük az összes jármûvünknek a színét,
-	 * a Jarmu getSzin metódusával. Amint az egyiknek nem 0 (üres szín),
-	 * visszatérünk hamissal. Ha lekértük az összes jármû színét, és mindegyik
-	 * 0, tehát üres, akkor ez a pálya sikeresen teljesítve van, és visszatérünk
-	 * igazzal.
+	 * Lekéri az aktuális pálya (palyak 0. eleme) getElemek metódusával a
+	 * palyaElem-eket, majd végignézzük az összes Allomas-t, hogy van-e várakozó
+	 * utas. Ha van, visszatérünk hamissal. Ezutám lekéri az aktuális pálya
+	 * (palyak 0. eleme) getVonatSzam metódusával, hogy hány vonatot kell
+	 * küldeni összesen, és ezt komparálja a vonatSzamlalo-val. Ha a két érték
+	 * különbözõ, visszatérünk hamissal, ugyanis az azt jelenti, hogy még nem
+	 * indult el az összes vonatunk, ami a pályához tartozik. Ha a két értek
+	 * megegyezik, lekérjük a pályától a vonatokat a getVonatok metódussal, majd
+	 * a vonatknak a jármûveit a getJarmuvek metódussal. Ezután lekérjük az
+	 * összes jármûvünknek a színét, a Jarmu getSzin metódusával. Amint az
+	 * egyiknek nem 0 (üres szín), visszatérünk hamissal. Ha lekértük az összes
+	 * jármû színét, és mindegyik 0, tehát üres, akkor ez a pálya sikeresen
+	 * teljesítve van, és visszatérünk igazzal.
 	 */
 	public boolean gyozelemEllenorzes() {
 		logger.log(Level.INFO, "JM.gyozelemEllenorzes()");
+
+		for (PalyaElem palyaElem : palyak.get(0).getElemek())
+			if (palyaElem instanceof Allomas)
+				if (((Allomas) palyaElem).getVarakozoUtas())
+					return false;
+		logger.log(Level.INFO, "Nincsenek várakozó utasok");
+		
 		if (palyak.get(0).getVonatSzam() == vonatSzamlalo) {
 			for (Vonat vonat : palyak.get(0).getVonatok()) {
 				for (Jarmu jarmu : vonat.getJarmuvek())

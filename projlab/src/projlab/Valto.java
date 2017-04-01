@@ -124,11 +124,13 @@ public class Valto extends PalyaElem {
 	public void atallit() {
 		logger.log(Level.INFO, this.getID() + ".atallit()");
 		if (foglalt == 0) {
+			logger.log(Level.INFO, this.getID() + ": A váltót átállítottuk");
 			PalyaElem temp = szomszedok[0];
 			szomszedok[0] = szomszedok[1];
 			szomszedok[1] = szomszedok[2];
 			szomszedok[2] = temp;
 		}
+		logger.log(Level.INFO, this.getID() + ": A váltó foglalt, nem lehet állítani");
 	}
 
 	/**

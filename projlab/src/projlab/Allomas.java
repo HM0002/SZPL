@@ -153,4 +153,11 @@ public class Allomas extends PalyaElem {
 		return varakozoUtas;
 	}
 
+	/**
+	 * Értékül adja b-t a varakozoUtas-nak.
+	 */
+	public void setVarakozoUtas(boolean b) {
+		varakozoUtas = b;
+	}
+
 }
