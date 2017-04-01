@@ -63,7 +63,7 @@ public class Keresztezodes extends PalyaElem {
 	 * elemmel, ha 2 volt és egyébként a második elemmel.
 	 */
 	public PalyaElem elfogad(Kocsi k) {
-		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + "), aktiv = true;");
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
 
 		PalyaElem e = k.getElozoPozicio();
 
@@ -94,7 +94,7 @@ public class Keresztezodes extends PalyaElem {
 	 * elemmel, ha 2 volt és egyébként a második elemmel.
 	 */
 	public PalyaElem elfogad(Szeneskocsi sz) {
-		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + "), aktiv = true;");
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + ")");
 
 		PalyaElem e = sz.getElozoPozicio();
 

@@ -50,7 +50,7 @@ public class Valto extends PalyaElem {
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
 		} else {
-			setFoglalt();
+			logger.log(Level.INFO, this.getID() + " váltónál kisiklott a vonat!");
 			setFoglalt();
 			return null;
 		}
@@ -79,7 +79,8 @@ public class Valto extends PalyaElem {
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
 		} else {
-			setFoglalt();
+			// Ez tuti soha nem fut le
+			logger.log(Level.INFO, "\n\n LEFUTOTT !!!!! WTF! \n\n");
 			setFoglalt();
 			return null;
 		}
@@ -108,7 +109,8 @@ public class Valto extends PalyaElem {
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
 		} else {
-			setFoglalt();
+			// Ez tuti soha nem fut le
+			logger.log(Level.INFO, "\n\n LEFUTOTT !!!!! WTF! \n\n");
 			setFoglalt();
 			return null;
 		}
@@ -128,4 +130,15 @@ public class Valto extends PalyaElem {
 			szomszedok[2] = temp;
 		}
 	}
+
+	/**
+	 * Visszatér az elsõ két szomszéddal, tehát amik éppen össze vannak kötve.
+	 */
+	public PalyaElem[] getAllas() {
+		PalyaElem[] tmp = new PalyaElem[2];
+		tmp[0] = szomszedok[0];
+		tmp[1] = szomszedok[1];
+		return tmp;
+	}
+
 }

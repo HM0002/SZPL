@@ -26,16 +26,17 @@ public class Sin extends PalyaElem {
 	/**
 	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott Mozdony
 	 * pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a Mozdony van,
-	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, lekéri a palya-tól az
-	 * alagutak számát a getAlagutSzam metódussal. Ha ez 2, felhívja a palya
-	 * alagut metódusát, mely visszatér a másik alagúttal, ami a pályán van.
-	 * Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2 alagút építve, nem
-	 * számít, hogy van-e itt alagút vagy sincs, ugyanúgy kezeljük mind kettõ
-	 * esetet. Lekérjük a kapott Mozdony elõzõ pozícióját a getElozoPozicio
-	 * metódussal, majd ezt komparáljuk a szomszedok tömb elsõ 2 elemével.
-	 * Amelyikkel nem egyezik meg, azzal térünk vissza, majd felhívjuk a
-	 * visszatért PalyaElem setFoglalt metódusát, mely növeli a foglalt értékét
-	 * 1-el. Ezután csökkentjük ennek a foglalt változójának értékét 1-el.
+	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, és az elõzõ pozíció nem
+	 * volt alagút, lekéri a palya-tól az alagutak számát a getAlagutSzam
+	 * metódussal. Ha ez 2, felhívja a palya alagut metódusát, mely visszatér a
+	 * másik alagúttal, ami a pályán van. Ennek visszatérünk az elsõ
+	 * szomszédjával. Ha nincs 2 alagút építve, nem számít, hogy van-e itt
+	 * alagút vagy sincs, ugyanúgy kezeljük mind kettõ esetet. Lekérjük a kapott
+	 * Mozdony elõzõ pozícióját a getElozoPozicio metódussal, majd ezt
+	 * komparáljuk a szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik
+	 * meg, azzal térünk vissza, majd felhívjuk a visszatért PalyaElem
+	 * setFoglalt metódusát, mely növeli a foglalt értékét 1-el. Ezután
+	 * csökkentjük ennek a foglalt változójának értékét 1-el.
 	 */
 	public PalyaElem elfogad(Mozdony m) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + m.getID() + ")");
@@ -64,16 +65,17 @@ public class Sin extends PalyaElem {
 	/**
 	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott Kocsi
 	 * pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a Kocsi van,
-	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, lekéri a palya-tól az
-	 * alagutak számát a getAlagutSzam metódussal. Ha ez 2, felhívja a palya
-	 * alagut metódusát, mely visszatér a másik alagúttal, ami a pályán van.
-	 * Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2 alagút építve, nem
-	 * számít, hogy van-e itt alagút vagy sincs, ugyanúgy kezeljük mind kettõ
-	 * esetet. Lekérjük a kapott Kocsi elõzõ pozícióját a getElozoPozicio
-	 * metódussal, majd ezt komparáljuk a szomszedok tömb elsõ 2 elemével.
-	 * Amelyikkel nem egyezik meg, azzal térünk vissza, majd felhívjuk a
-	 * visszatért PalyaElem setFoglalt metódusát, mely növeli a foglalt értékét
-	 * 1-el. Ezután csökkentjük ennek a foglalt változójának értékét 1-el.
+	 * alagút-e, tehát az alagut értéke igaz-e. Ha igen, és az elõzõ pozíció nem
+	 * volt alagút, lekéri a palya-tól az alagutak számát a getAlagutSzam
+	 * metódussal. Ha ez 2, felhívja a palya alagut metódusát, mely visszatér a
+	 * másik alagúttal, ami a pályán van. Ennek visszatérünk az elsõ
+	 * szomszédjával. Ha nincs 2 alagút építve, nem számít, hogy van-e itt
+	 * alagút vagy sincs, ugyanúgy kezeljük mind kettõ esetet. Lekérjük a kapott
+	 * Kocsi elõzõ pozícióját a getElozoPozicio metódussal, majd ezt komparáljuk
+	 * a szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik meg, azzal
+	 * térünk vissza, majd felhívjuk a visszatért PalyaElem setFoglalt
+	 * metódusát, mely növeli a foglalt értékét 1-el. Ezután csökkentjük ennek a
+	 * foglalt változójának értékét 1-el.
 	 */
 	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
@@ -102,17 +104,17 @@ public class Sin extends PalyaElem {
 	/**
 	 * Visszatér egy PalyaElem példánnyal, mely a paraméterül kapott
 	 * Szenecskocsi pozicio-ja lesz. Megnézi, hogy ez a PalyaElem, amin a
-	 * Szenecskocsi van, alagút-e, tehát az alagut értéke igaz-e. Ha igen,
-	 * lekéri a palya-tól az alagutak számát a getAlagutSzam metódussal. Ha ez
-	 * 2, felhívja a palya alagut metódusát, mely visszatér a másik alagúttal,
-	 * ami a pályán van. Ennek visszatérünk az elsõ szomszédjával. Ha nincs 2
-	 * alagút építve, nem számít, hogy van-e itt alagút vagy sincs, ugyanúgy
-	 * kezeljük mind kettõ esetet. Lekérjük a kapott Szenecskocsi elõzõ
-	 * pozícióját a getElozoPozicio metódussal, majd ezt komparáljuk a
-	 * szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik meg, azzal térünk
-	 * vissza, majd felhívjuk a visszatért PalyaElem setFoglalt metódusát, mely
-	 * növeli a foglalt értékét 1-el. Ezután csökkentjük ennek a foglalt
-	 * változójának értékét 1-el.
+	 * Szenecskocsi van, alagút-e, tehát az alagut értéke igaz-e. Ha igen, és az
+	 * elõzõ pozíció nem volt alagút, lekéri a palya-tól az alagutak számát a
+	 * getAlagutSzam metódussal. Ha ez 2, felhívja a palya alagut metódusát,
+	 * mely visszatér a másik alagúttal, ami a pályán van. Ennek visszatérünk az
+	 * elsõ szomszédjával. Ha nincs 2 alagút építve, nem számít, hogy van-e itt
+	 * alagút vagy sincs, ugyanúgy kezeljük mind kettõ esetet. Lekérjük a kapott
+	 * Szenecskocsi elõzõ pozícióját a getElozoPozicio metódussal, majd ezt
+	 * komparáljuk a szomszedok tömb elsõ 2 elemével. Amelyikkel nem egyezik
+	 * meg, azzal térünk vissza, majd felhívjuk a visszatért PalyaElem
+	 * setFoglalt metódusát, mely növeli a foglalt értékét 1-el. Ezután
+	 * csökkentjük ennek a foglalt változójának értékét 1-el.
 	 */
 	public PalyaElem elfogad(Szeneskocsi sz) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + ")");

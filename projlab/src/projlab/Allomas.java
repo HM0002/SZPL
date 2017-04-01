@@ -99,11 +99,14 @@ public class Allomas extends PalyaElem {
 		} else if (aktiv == true)
 			k.kiurit();
 
-		if (varakozoUtas == true)
+		if (varakozoUtas == true) {
+			logger.log(Level.INFO, "Van várakozó utas");
 			if (k.getSzin() == 0 && k.getEredetiSzin() == szin) {
+				logger.log(Level.INFO, "Utas felszáll, mert üres a kocsi");
 				k.setSzin();
 				varakozoUtas = false;
 			}
+		}
 
 		if (k.getElozoPozicio() == szomszedok[0]) {
 			foglalt--;
@@ -123,7 +126,7 @@ public class Allomas extends PalyaElem {
 	 * különbözõ értékkel az elsõ két elem közül.
 	 */
 	public PalyaElem elfogad(Szeneskocsi sz) {
-		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + "), aktiv = true;");
+		logger.log(Level.INFO, this.getID() + ".elfogad(" + sz.getID() + ")");
 
 		if (sz.getElozoPozicio() == szomszedok[0]) {
 			foglalt--;
@@ -134,6 +137,20 @@ public class Allomas extends PalyaElem {
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
 		}
+	}
+
+	/**
+	 * Visszatér a szin változó értékével (állomás színe).
+	 */
+	public int getSzin() {
+		return szin;
+	}
+
+	/**
+	 * Visszatér igazzal, ha van várakozó utas, egyébként hamissal.
+	 */
+	public boolean getVarakozoUtas() {
+		return varakozoUtas;
 	}
 
 }

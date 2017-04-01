@@ -90,8 +90,11 @@ public class Main {
 
 		System.out.println("0: Inicializálások\n1: Új játék kezdése\n2: Új vonat indítása\n3: Vonat mozgása"
 				+ "\n4: Alagút építés\n5: Alagút lebontás\n6: Alagút belépés / kilépés"
-				+ "\n7: Váltó átállítása\n8: Állomás aktiválása\n9: Utasok le / fel szállása\n10: Ütkozés ellenõrzés"
-				+ "\n11: Pálya megnyerése, új pálya inicializálása\n12: Kilépés\n15: Kilépés a tesztelésbõl"
+				+ "\n7: Váltó átállítása\n8: Kisiklás a váltón\n9: Állomás aktiválása"
+				+ "\n10: Utasok leszállása (+ szeneskocsi helyes mûködése)\n11: Utasok felszállása"
+				+ "\n12: Utas nem száll le\n13: Keresztezõdésen áthaladás vízszintesen"
+				+ "\n14: Keresztezõdésen áthaladás függõlegesen\n15: Ütkozés ellenõrzés"
+				+ "\n16: Pálya megnyerése, új pálya inicializálása\n17: Kilépés"
 				+ "\n\nAdja meg a kívánt teszt esetet: ");
 
 		try {
@@ -116,7 +119,6 @@ public class Main {
 				logger.setLevel(Level.OFF);
 				init();
 				JM.vonatInditas();
-				logger.setLevel(Level.INFO);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -147,7 +149,6 @@ public class Main {
 				e6.setAlagut();
 				e10.setAlagut();
 				JM.idoEltelt();
-				logger.setLevel(Level.INFO);
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
@@ -164,30 +165,86 @@ public class Main {
 			case 8:
 				logger.setLevel(Level.OFF);
 				init();
-				m1.setKezdoPoziciok(e17, e16);
 				logger.setLevel(Level.INFO);
+				m1.setKezdoPoziciok(e10, e9);
+				JM.idoEltelt();
+				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
 			case 9:
 				logger.setLevel(Level.OFF);
 				init();
-				m1.setKezdoPoziciok(e17, e16);
-				sz1.setKezdoPoziciok(e14, e13);
-				k1.setKezdoPoziciok(e15, e14);
-				k2.setKezdoPoziciok(e16, e15);
+				m1.setKezdoPoziciok(e15, e14);
 				JM.idoEltelt();
-				logger.setLevel(Level.INFO);
+				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
 			case 10:
 				logger.setLevel(Level.OFF);
 				init();
-				k1.setKezdoPoziciok(e6, e5);
-				k2.setKezdoPoziciok(e6, e5);
-				logger.setLevel(Level.INFO);
-				JM.utkozesEllenorzes();
+				m1.setKezdoPoziciok(e22, e23);
+				sz1.setKezdoPoziciok(e23, e12);
+				k1.setKezdoPoziciok(e12, e13);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
 				break;
 			case 11:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e15, e14);
+				sz1.setKezdoPoziciok(e14, e13);
+				k2.kiurit();
+				k2.setKezdoPoziciok(e13, e12);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				break;
+			case 12:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e15, e14);
+				sz1.setKezdoPoziciok(e14, e13);
+				k1.setKezdoPoziciok(e13, e12);
+				k2.setKezdoPoziciok(e12, e23);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				break;
+			case 13:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e7, e6);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				break;
+			case 14:
+				logger.setLevel(Level.OFF);
+				init();
+				m1.setKezdoPoziciok(e11, e12);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				break;
+			case 15:
+				logger.setLevel(Level.OFF);
+				init();
+				k1.setKezdoPoziciok(e15, e14);
+				k2.setKezdoPoziciok(e3, e2);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.idoEltelt();
+				JM.utkozesEllenorzes();
+				break;
+			case 16:
 				logger.setLevel(Level.OFF);
 				init();
 				int i = 0;
@@ -202,11 +259,14 @@ public class Main {
 				logger.setLevel(Level.INFO);
 				JM.gyozelemEllenorzes();
 				break;
-			case 12:
+			case 17:
 				logger.setLevel(Level.OFF);
 				init();
 				logger.setLevel(Level.INFO);
 				JM.kilepes();
+				break;
+			default:
+				logger.log(Level.INFO, "Nincs ilyen teszteset!");
 				break;
 			}
 		} catch (IOException e) {
@@ -263,7 +323,7 @@ public class Main {
 		e9.setSzomszedok(e8, e18, e10, e28);
 		e10.setSzomszedok(e9, e11, null, null);
 		e11.setSzomszedok(e10, e12, null, null);
-		e12.setSzomszedok(e11, e13, e23, null);
+		e12.setSzomszedok(e23, e13, e11, null);
 		e13.setSzomszedok(e12, e14, null, null);
 		e14.setSzomszedok(e13, e15, null, null);
 		e15.setSzomszedok(e14, e16, null, null);
@@ -366,27 +426,22 @@ public class Main {
 	public static void draw() {
 
 		/* @formatter:off */
-		//Palya tömb	
-String palyaKep [][] = new String [][]{
-			  { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
-			  { "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
-			  { "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
-			  { " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
-			  { "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
-			  { "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " }
-			};
-			
-String palyaKepX [][] = new String [][]{
-			  { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
-			  { "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
-			  { "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
-			  { " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
-			  { "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
-			  { "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " }
-		    };		
+		String palyaKep[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
+				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
+				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
+				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
+				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
+
+		String palyaKepX[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
+				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
+				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
+				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
+				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
 		/* @formatter:on */
-		    
-		//setting vonatok
+
+		// set vonatok
 		logger.setLevel(Level.OFF);
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
@@ -401,8 +456,8 @@ String palyaKepX [][] = new String [][]{
 							}
 						}
 					}
-		
-		//setting alagutak
+
+		// set alagutak
 		logger.setLevel(Level.OFF);
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem.getAlagut()) {
@@ -410,10 +465,10 @@ String palyaKepX [][] = new String [][]{
 					for (int j = 0; j < 7; j++) {
 						if (palyaKepX[i][j].equals(palyaElem.getID()))
 							palyaKep[i][j] = " |A| ";
-							}
-						}
-		
-		//drawing palya
+					}
+			}
+
+		// draw pálya
 		for (int i = 0; i < 6; i++) {
 			String temp = "";
 			for (int j = 0; j < 7; j++)
@@ -421,6 +476,56 @@ String palyaKepX [][] = new String [][]{
 			logger.setLevel(Level.INFO);
 			logger.log(Level.INFO, temp + "\n");
 		}
+
+		// write válto állások
+		logger.log(Level.INFO, "Váltók állása:");
+		logger.setLevel(Level.OFF);
+		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+			if (palyaElem instanceof Valto) {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
+						+ ((Valto) palyaElem).getAllas()[1].getID());
+			}
+
+		// write állomás színek, várakozó utasok
+		logger.log(Level.INFO, "\nÁllomások színe:");
+		logger.setLevel(Level.OFF);
+		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+			if (palyaElem instanceof Allomas) {
+				logger.setLevel(Level.INFO);
+				String tmp;
+				if (((Allomas) palyaElem).getSzin() == 1)
+					tmp = palyaElem.getID() + ": kék";
+				else
+					tmp = palyaElem.getID() + ": piros";
+				if (((Allomas) palyaElem).getVarakozoUtas())
+					tmp = tmp + "\t Várakozó utas : van";
+				else
+					tmp = tmp + "\t Várakozó utas : nincs";
+
+				logger.log(Level.INFO, tmp);
+			}
+
+		// write kocsi színek, utasok
+		logger.log(Level.INFO, "\nKocsik színe:");
+		logger.setLevel(Level.OFF);
+		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
+			for (Jarmu jarmu : vonat.getJarmuvek())
+				if (jarmu instanceof Kocsi) {
+					String tmp;
+					if (((Kocsi) jarmu).getEredetiSzin() == 1)
+						tmp = jarmu.getID() + ": kék";
+					else
+						tmp = jarmu.getID() + ": piros";
+					if (((Kocsi) jarmu).getSzin() == 0)
+						tmp = tmp + "\t Utas : nincs";
+					else
+						tmp = tmp + "\t Utas : van";
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO, tmp);
+					logger.setLevel(Level.OFF);
+				}
+		logger.setLevel(Level.INFO);
 
 		logger.log(Level.INFO, "");
 	}
