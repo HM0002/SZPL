@@ -149,21 +149,34 @@ public class Sin extends PalyaElem {
 	 * alagutat építeni. Ha az alagut igaz, akkor lebontjuk ezt az alagutat,
 	 * azaz beállítjuk az alagut értékét hamisra, majd meghívjuk a palya
 	 * setAlagutSzam megtódusát -1 et paraméterül adva, ezután visszatérünk. Ha
-	 * nem volt 2 alagút építve, akkor invertáljuk az alagut értékét, majd attól
+	 * nem volt 2 alagút építve, akkor megnézzük, hogy van-e egy olyan másik
+	 * pályaelem, ami alagút és éppen foglalt, mert ha van akkor nem lehet ide
+	 * alagutat építeni. Egyébként invertáljuk az alagut értékét, majd attól
 	 * függõen, hogy az alagut az invertálás után hamis vagy igaz lett,
-	 * felhívjuk a palya setAlagutSzam metódusát 1 vagy -1 -et paraméterül adva.
-	 * Ezzel a megoldással az alagutSzam sose mehet 0 alá, és 2 felé.
+	 * felhívjuk a palya setAlagutSzam metódusát 1 vagy -1 -et paraméterül adva,
+	 * majd visszatérünk. Ezzel a megoldással az alagutSzam sose mehet 0 alá, és
+	 * 2 felé.
 	 */
 	public void setAlagut() {
 		logger.log(Level.INFO, this.getID() + ".setAlagut()");
+
 		if (foglalt == 0) {
 			if (palya.getAlagutSzam() == 2) {
-				if (alagut == false)
-					// throw exception, nem lehet 2 nel tobb alagut
+				if (alagut == false) {
+					logger.log(Level.INFO, this.getID() + ": Harmadik alagút építése nem engedélyezett!");
 					return;
-				else {
+				} else {
 					alagut = false;
 					palya.setAlagutSzam(-1);
+					return;
+				}
+			}
+
+			if (palya.getAlagutSzam() == 1 && alagut == false) {
+				PalyaElem tmp = palya.alagut(this);
+				if (tmp.getFoglalt() != 0) {
+					logger.log(Level.INFO,
+							this.getID() + ": Nem lehet alagutat építeni, mert a másik alagút foglalt:" + tmp.getID());
 					return;
 				}
 			}
@@ -175,8 +188,9 @@ public class Sin extends PalyaElem {
 			}
 
 			palya.setAlagutSzam(1);
+			return;
 		}
-		
+
 		logger.log(Level.INFO, this.getID() + ": A sín foglalt, nem lehet alagutat építeni");
 	}
 

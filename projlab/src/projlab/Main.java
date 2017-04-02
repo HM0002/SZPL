@@ -88,9 +88,9 @@ public class Main {
 		ConsoleHandler consoleHandler = new ConsoleHandler();
 		consoleHandler.setFormatter(formatter);
 		logger.addHandler(consoleHandler);
-		
-		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");  
-	    fileHandler.setFormatter(formatter);
+
+		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");
+		fileHandler.setFormatter(formatter);
 
 		System.out.println("0: Inicializálások\n1: Új játék kezdése\n2: Új vonat indítása\n3: Vonat mozgása"
 				+ "\n4: Alagút építés\n5: Alagút lebontás\n6: Alagút belépés / kilépés"
@@ -100,6 +100,8 @@ public class Main {
 				+ "\n14: Keresztezõdésen áthaladás függõlegesen\n15: Ütkozés ellenõrzés"
 				+ "\n16: Pálya megnyerése, új pálya inicializálása\n17: Kilépés"
 				+ "\n18: Foglalt váltó átállítása\n19: Foglalt pályaelemre alagút építés"
+				+ "\n20: Harmadik alagút építése nem történik meg"
+				+ "\n21: Alagút építés nem történik meg, ha létezik egy másik alagút, ami éppen foglalt"
 				+ "\n\nAdja meg a kívánt teszt esetet: ");
 
 		try {
@@ -107,12 +109,12 @@ public class Main {
 			int testCase = Integer.parseInt(reader.readLine());
 			switch (testCase) {
 			case 0:
-			    logger.addHandler(fileHandler);
+				logger.addHandler(fileHandler);
 				init();
 				break;
 			case 1:
 				init();
-			    logger.addHandler(fileHandler);
+				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.ujJatek();
 				break;
@@ -311,6 +313,29 @@ public class Main {
 				logger.setLevel(Level.INFO);
 				e6.setAlagut();
 				draw();
+				break;
+			case 20:
+				logger.setLevel(Level.OFF);
+				init();
+				e6.setAlagut();
+				e10.setAlagut();
+				logger.addHandler(fileHandler);
+				logger.setLevel(Level.INFO);
+				draw();
+				e14.setAlagut();
+				draw();
+				break;
+			case 21:
+				logger.setLevel(Level.OFF);
+				init();
+				e6.setAlagut();
+				sz1.setKezdoPoziciok(e3, e2);
+				m1.setKezdoPoziciok(e4, e3);
+				logger.addHandler(fileHandler);
+				JM.idoEltelt();
+				JM.idoEltelt();
+				e10.setAlagut();
+				JM.idoEltelt();
 				break;
 			default:
 				logger.log(Level.INFO, "Nincs ilyen teszteset!");
