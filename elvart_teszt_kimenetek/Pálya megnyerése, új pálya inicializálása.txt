@@ -1,0 +1,16 @@
+JM.gyozelemEllenorzes()
+palya1.getElemek()
+Nincsenek várakozó utasok
+palya1.getVonatSzam()
+palya1.getVonatok()
+vonat1.getJarmuvek()
+M01.getSzin(), visszaadott érték: 0
+C01.getSzin(), visszaadott érték: 0
+K01.getSzin(), viszaadott érték: 0
+K02.getSzin(), viszaadott érték: 0
+vonat2.getJarmuvek()
+M02.getSzin(), visszaadott érték: 0
+C02.getSzin(), visszaadott érték: 0
+K03.getSzin(), viszaadott érték: 0
+K04.getSzin(), viszaadott érték: 0
+Nyertünk a pályán, következõ betöltése!

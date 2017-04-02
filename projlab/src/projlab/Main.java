@@ -108,16 +108,19 @@ public class Main {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			int testCase = Integer.parseInt(reader.readLine());
 			switch (testCase) {
+            // Inicializálások
 			case 0:
 				logger.addHandler(fileHandler);
 				init();
 				break;
+            // Új játék kezdése
 			case 1:
 				init();
 				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
 				JM.ujJatek();
 				break;
+            // Új vonat indítása
 			case 2:
 				logger.setLevel(Level.OFF);
 				init();
@@ -125,6 +128,7 @@ public class Main {
 				logger.setLevel(Level.INFO);
 				JM.vonatInditas();
 				break;
+            // Vonat mozgása
 			case 3:
 				logger.setLevel(Level.OFF);
 				init();
@@ -136,6 +140,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Alagút építés
 			case 4:
 				logger.setLevel(Level.OFF);
 				init();
@@ -145,6 +150,7 @@ public class Main {
 				e10.setAlagut();
 				draw();
 				break;
+            // Alagút lebontás
 			case 5:
 				logger.setLevel(Level.OFF);
 				init();
@@ -155,6 +161,7 @@ public class Main {
 				e10.setAlagut();
 				draw();
 				break;
+            // Alagút belépés / kilépés
 			case 6:
 				logger.setLevel(Level.OFF);
 				init();
@@ -170,6 +177,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Váltó átállítása
 			case 7:
 				logger.setLevel(Level.OFF);
 				init();
@@ -183,6 +191,7 @@ public class Main {
 				e12.atallit();
 				draw();
 				break;
+            // Kisiklás a váltón
 			case 8:
 				logger.setLevel(Level.OFF);
 				init();
@@ -192,6 +201,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Állomás aktiválása
 			case 9:
 				logger.setLevel(Level.OFF);
 				init();
@@ -201,6 +211,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Utasok leszállása (+ szeneskocsi helyes mûködése)
 			case 10:
 				logger.setLevel(Level.OFF);
 				init();
@@ -214,6 +225,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Utasok felszállása
 			case 11:
 				logger.setLevel(Level.OFF);
 				init();
@@ -228,6 +240,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Utas nem száll le
 			case 12:
 				logger.setLevel(Level.OFF);
 				init();
@@ -243,6 +256,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Keresztezõdésen áthaladás vízszintesen
 			case 13:
 				logger.setLevel(Level.OFF);
 				init();
@@ -252,6 +266,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Keresztezõdésen áthaladás függõlegesen
 			case 14:
 				logger.setLevel(Level.OFF);
 				init();
@@ -261,6 +276,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				break;
+            // Ütközés ellenõrzés
 			case 15:
 				logger.setLevel(Level.OFF);
 				init();
@@ -272,6 +288,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.utkozesEllenorzes();
 				break;
+            // Pálya megnyerése, új pálya inicializálása
 			case 16:
 				logger.setLevel(Level.OFF);
 				init();
@@ -289,6 +306,7 @@ public class Main {
 				logger.setLevel(Level.INFO);
 				JM.gyozelemEllenorzes();
 				break;
+            // Kilépés
 			case 17:
 				logger.setLevel(Level.OFF);
 				init();
@@ -296,6 +314,7 @@ public class Main {
 				logger.setLevel(Level.INFO);
 				JM.kilepes();
 				break;
+            // Foglalt váltó átállítása
 			case 18:
 				logger.setLevel(Level.OFF);
 				init();
@@ -305,6 +324,7 @@ public class Main {
 				e12.atallit();
 				draw();
 				break;
+            // Foglalt pályaelemre alagút építés
 			case 19:
 				logger.setLevel(Level.OFF);
 				init();
@@ -314,6 +334,7 @@ public class Main {
 				e6.setAlagut();
 				draw();
 				break;
+            // Harmadik alagút építése nem történik meg
 			case 20:
 				logger.setLevel(Level.OFF);
 				init();
@@ -325,6 +346,7 @@ public class Main {
 				e14.setAlagut();
 				draw();
 				break;
+            // Alagút építés nem történik meg, ha létezik egy másik alagút, ami éppen foglalt
 			case 21:
 				logger.setLevel(Level.OFF);
 				init();

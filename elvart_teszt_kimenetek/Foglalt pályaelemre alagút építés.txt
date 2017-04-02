@@ -1,0 +1,28 @@
+ S06 .setAlagut()
+ S06 : A sín foglalt, nem lehet alagutat építeni
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+ S05    (M01)    S07     S08     K09     S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+

@@ -1,0 +1,310 @@
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+(M01)    S06     S07     S08     K09     S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+
+palya1.getVonatok()
+
+Elindul a ciklus a vonat1-re:
+
+vonat1.getJarmuvek()
+M01.getPozicio()
+	M01 léptetése:
+M01.tick()
+M01.latogat( S05 )
+ S05 .elfogad(M01)
+M01.getElozoPozicio()
+ S06 .setFoglalt()
+C01.getPozicio()
+	C01 léptetése:
+C01.tick()
+C01.latogat( S04 )
+ S04 .elfogad(C01)
+C01.getElozoPozicio()
+ S05 .setFoglalt()
+K01.getPozicio()
+	K01 léptetése:
+K01.tick()
+K01.latogat( S03 )
+ S03 .elfogad(K01)
+K01.getElozoPozicio()
+ S04 .setFoglalt()
+K02.getPozicio()
+	K02 léptetése:
+K02.tick()
+K02.latogat( S02 )
+ S02 .elfogad(K02)
+K02.getElozoPozicio()
+ S03 .setFoglalt()
+
+Ciklus vége.
+
+Elindul a ciklus a vonat2-re:
+
+vonat2.getJarmuvek()
+M02.getPozicio()
+C02.getPozicio()
+K03.getPozicio()
+K04.getPozicio()
+
+Ciklus vége.
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+(C01)   (M01)    S07     S08     K09     S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+
+palya1.getVonatok()
+
+Elindul a ciklus a vonat1-re:
+
+vonat1.getJarmuvek()
+M01.getPozicio()
+	M01 léptetése:
+M01.tick()
+M01.latogat( S06 )
+ S06 .elfogad(M01)
+M01.getElozoPozicio()
+ S07 .setFoglalt()
+C01.getPozicio()
+	C01 léptetése:
+C01.tick()
+C01.latogat( S05 )
+ S05 .elfogad(C01)
+C01.getElozoPozicio()
+ S06 .setFoglalt()
+K01.getPozicio()
+	K01 léptetése:
+K01.tick()
+K01.latogat( S04 )
+ S04 .elfogad(K01)
+K01.getElozoPozicio()
+ S05 .setFoglalt()
+K02.getPozicio()
+	K02 léptetése:
+K02.tick()
+K02.latogat( S03 )
+ S03 .elfogad(K02)
+K02.getElozoPozicio()
+ S04 .setFoglalt()
+
+Ciklus vége.
+
+Elindul a ciklus a vonat2-re:
+
+vonat2.getJarmuvek()
+M02.getPozicio()
+C02.getPozicio()
+K03.getPozicio()
+K04.getPozicio()
+
+Ciklus vége.
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+(K01)   (C01)   (M01)    S08     K09     S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+
+palya1.getVonatok()
+
+Elindul a ciklus a vonat1-re:
+
+vonat1.getJarmuvek()
+M01.getPozicio()
+	M01 léptetése:
+M01.tick()
+M01.latogat( S07 )
+ S07 .elfogad(M01)
+M01.getElozoPozicio()
+ S08 .setFoglalt()
+C01.getPozicio()
+	C01 léptetése:
+C01.tick()
+C01.latogat( S06 )
+ S06 .elfogad(C01)
+C01.getElozoPozicio()
+ S07 .setFoglalt()
+K01.getPozicio()
+	K01 léptetése:
+K01.tick()
+K01.latogat( S05 )
+ S05 .elfogad(K01)
+K01.getElozoPozicio()
+ S06 .setFoglalt()
+K02.getPozicio()
+	K02 léptetése:
+K02.tick()
+K02.latogat( S04 )
+ S04 .elfogad(K02)
+K02.getElozoPozicio()
+ S05 .setFoglalt()
+
+Ciklus vége.
+
+Elindul a ciklus a vonat2-re:
+
+vonat2.getJarmuvek()
+M02.getPozicio()
+C02.getPozicio()
+K03.getPozicio()
+K04.getPozicio()
+
+Ciklus vége.
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+(K02)   (K01)   (C01)   (M01)    K09     S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+
+palya1.getVonatok()
+
+Elindul a ciklus a vonat1-re:
+
+vonat1.getJarmuvek()
+M01.getPozicio()
+	M01 léptetése:
+M01.tick()
+M01.latogat( S08 )
+ S08 .elfogad(M01)
+M01.getElozoPozicio()
+ K09 .setFoglalt()
+C01.getPozicio()
+	C01 léptetése:
+C01.tick()
+C01.latogat( S07 )
+ S07 .elfogad(C01)
+C01.getElozoPozicio()
+ S08 .setFoglalt()
+K01.getPozicio()
+	K01 léptetése:
+K01.tick()
+K01.latogat( S06 )
+ S06 .elfogad(K01)
+K01.getElozoPozicio()
+ S07 .setFoglalt()
+K02.getPozicio()
+	K02 léptetése:
+K02.tick()
+K02.latogat( S05 )
+ S05 .elfogad(K02)
+K02.getElozoPozicio()
+ S06 .setFoglalt()
+
+Ciklus vége.
+
+Elindul a ciklus a vonat2-re:
+
+vonat2.getJarmuvek()
+M02.getPozicio()
+C02.getPozicio()
+K03.getPozicio()
+K04.getPozicio()
+
+Ciklus vége.
+         S15     S14     S13     V12     S23     S22    
+
+         S16                     S11             S21    
+
+         A17                     S10             A20    
+
+ S05    (K02)   (K01)   (C01)   (M01)    S18     V19    
+
+                                 S28             S24    
+
+                                 S27     S26     S25    
+
+Váltók állása:
+ V12 : S23 <--> S13 
+ V19 : S18 <--> A20 
+
+Állomások színe:
+ A17 : kék	 Várakozó utas : van
+ A20 : piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K01: piros	 Utas : van
+K02: kék	 Utas : van
+K03: kék	 Utas : van
+K04: piros	 Utas : van
+

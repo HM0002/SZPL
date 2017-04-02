@@ -1,0 +1,25 @@
+JM.vonatInditas()
+palya1.getVonatSzam()
+palya1.getKeslelteto()
+palya1.getKocsiSzam()
+palya1.getVonatok()
+vonat1.getJarmuvek()
+palya1.getElemek()
+
+Elindul a ciklus:
+
+	M01 elindítása:
+M01.setKezdoPoziciok( S04 ,  S03 ) felhívva
+ S04 .setFoglalt()
+	C01 elindítása:
+C01.setKezdoPoziciok( S03 ,  S02 ) felhívva
+ S03 .setFoglalt()
+	K01 elindítása:
+K01.setKezdoPoziciok( S02 ,  S01 ) felhívva
+ S02 .setFoglalt()
+	K02 elindítása:
+K02.setKezdoPoziciok( S01 ,  S00 ) felhívva
+ S01 .setFoglalt()
+
+Ciklus vége.
+
