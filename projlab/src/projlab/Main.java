@@ -118,7 +118,8 @@ public class Main {
 				init();
 				logger.addHandler(fileHandler);
 				logger.setLevel(Level.INFO);
-				JM.ujJatek();
+				draw();
+				//JM.ujJatek();
 				break;
             // Új vonat indítása
 			case 2:
@@ -200,6 +201,7 @@ public class Main {
 				JM.idoEltelt();
 				JM.idoEltelt();
 				JM.idoEltelt();
+				JM.utkozesEllenorzes();
 				break;
             // Állomás aktiválása
 			case 9:

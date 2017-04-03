@@ -113,7 +113,7 @@ public class JatekMotor {
 	/** Kilép az alkalmazásból. */
 	public void kilepes() {
 		logger.log(Level.INFO, "JM.kilepes()");
-		// exit
+		System.exit(0);
 	}
 
 	/**

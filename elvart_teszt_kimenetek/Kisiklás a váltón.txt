@@ -131,3 +131,18 @@ K02: kék	 Utas : van
 K03: kék	 Utas : van
 K04: piros	 Utas : van
 
+JM.utkozesEllenorzes()
+palya1.getElemek()
+ S00 .getFoglalt(), visszaadott érték: 0
+ S01 .getFoglalt(), visszaadott érték: 0
+ S02 .getFoglalt(), visszaadott érték: 0
+ S03 .getFoglalt(), visszaadott érték: 0
+ S04 .getFoglalt(), visszaadott érték: 0
+ S05 .getFoglalt(), visszaadott érték: 0
+ S06 .getFoglalt(), visszaadott érték: 0
+ S07 .getFoglalt(), visszaadott érték: 0
+ S08 .getFoglalt(), visszaadott érték: 0
+ K09 .getFoglalt(), visszaadott érték: 0
+ S10 .getFoglalt(), visszaadott érték: 0
+ S11 .getFoglalt(), visszaadott érték: 0
+ V12 .getFoglalt(), visszaadott érték: 2
