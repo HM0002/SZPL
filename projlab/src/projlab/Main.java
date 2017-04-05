@@ -1,17 +1,18 @@
 package projlab;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger
+			.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Jatekmotor létrehozása
 	static JatekMotor JM;
@@ -80,294 +81,41 @@ public class Main {
 	static Kocsi k3;
 	static Kocsi k4;
 
-	public static void main(String[] args) throws SecurityException, IOException {
+	public static void main(String[] args) throws SecurityException,
+			IOException {
+
 		for (Handler handler : logger.getParent().getHandlers()) {
 			logger.getParent().removeHandler(handler);
 		}
+
 		CustomRecordFormatter formatter = new CustomRecordFormatter();
-		ConsoleHandler consoleHandler = new ConsoleHandler();
-		consoleHandler.setFormatter(formatter);
-		logger.addHandler(consoleHandler);
 
 		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");
 		fileHandler.setFormatter(formatter);
+		logger.addHandler(fileHandler);
 
-		System.out.println("0: Inicializálások\n1: Új játék kezdése\n2: Új vonat indítása\n3: Vonat mozgása"
-				+ "\n4: Alagút építés\n5: Alagút lebontás\n6: Alagút belépés / kilépés"
-				+ "\n7: Váltó átállítása\n8: Kisiklás a váltón\n9: Állomás aktiválása"
-				+ "\n10: Utasok leszállása (+ szeneskocsi helyes mûködése)\n11: Utasok felszállása"
-				+ "\n12: Utas nem száll le\n13: Keresztezõdésen áthaladás vízszintesen"
-				+ "\n14: Keresztezõdésen áthaladás függõlegesen\n15: Ütkozés ellenõrzés"
-				+ "\n16: Pálya megnyerése, új pálya inicializálása\n17: Kilépés"
-				+ "\n18: Foglalt váltó átállítása\n19: Foglalt pályaelemre alagút építés"
-				+ "\n20: Harmadik alagút építése nem történik meg"
-				+ "\n21: Alagút építés nem történik meg, ha létezik egy másik alagút, ami éppen foglalt"
-				+ "\n\nAdja meg a kívánt teszt esetet: ");
+		BufferedReader br = null;
 
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			int testCase = Integer.parseInt(reader.readLine());
-			switch (testCase) {
-            // Inicializálások
-			case 0:
-				logger.addHandler(fileHandler);
-				init();
-				break;
-            // Új játék kezdése
-			case 1:
-				init();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				draw();
-				//JM.ujJatek();
-				break;
-            // Új vonat indítása
-			case 2:
-				logger.setLevel(Level.OFF);
-				init();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				JM.vonatInditas();
-				break;
-            // Vonat mozgása
-			case 3:
-				logger.setLevel(Level.OFF);
-				init();
-				JM.vonatInditas();
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Alagút építés
-			case 4:
-				logger.setLevel(Level.OFF);
-				init();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				draw();
-				e10.setAlagut();
-				draw();
-				break;
-            // Alagút lebontás
-			case 5:
-				logger.setLevel(Level.OFF);
-				init();
-				e10.setAlagut();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				draw();
-				e10.setAlagut();
-				draw();
-				break;
-            // Alagút belépés / kilépés
-			case 6:
-				logger.setLevel(Level.OFF);
-				init();
-				JM.vonatInditas();
-				e6.setAlagut();
-				e10.setAlagut();
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Váltó átállítása
-			case 7:
-				logger.setLevel(Level.OFF);
-				init();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				draw();
-				e12.atallit();
-				draw();
-				e12.atallit();
-				draw();
-				e12.atallit();
-				draw();
-				break;
-            // Kisiklás a váltón
-			case 8:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e10, e9);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.utkozesEllenorzes();
-				break;
-            // Állomás aktiválása
-			case 9:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e15, e14);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Utasok leszállása (+ szeneskocsi helyes mûködése)
-			case 10:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e22, e23);
-				sz1.setKezdoPoziciok(e23, e12);
-				k1.setKezdoPoziciok(e12, e13);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Utasok felszállása
-			case 11:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e15, e14);
-				sz1.setKezdoPoziciok(e14, e13);
-				k2.kiurit();
-				k2.setKezdoPoziciok(e13, e12);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Utas nem száll le
-			case 12:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e15, e14);
-				sz1.setKezdoPoziciok(e14, e13);
-				k1.setKezdoPoziciok(e13, e12);
-				k2.setKezdoPoziciok(e12, e23);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Keresztezõdésen áthaladás vízszintesen
-			case 13:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e7, e6);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Keresztezõdésen áthaladás függõlegesen
-			case 14:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e11, e12);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				break;
-            // Ütközés ellenõrzés
-			case 15:
-				logger.setLevel(Level.OFF);
-				init();
-				k1.setKezdoPoziciok(e15, e14);
-				k2.setKezdoPoziciok(e3, e2);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.idoEltelt();
-				JM.utkozesEllenorzes();
-				break;
-            // Pálya megnyerése, új pálya inicializálása
-			case 16:
-				logger.setLevel(Level.OFF);
-				init();
-				int i = 0;
-				while (i < 14) {
-					JM.vonatInditas();
-					i++;
-				}
-				e17.setVarakozoUtas(false);
-				k1.kiurit();
-				k2.kiurit();
-				k3.kiurit();
-				k4.kiurit();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				JM.gyozelemEllenorzes();
-				break;
-            // Kilépés
-			case 17:
-				logger.setLevel(Level.OFF);
-				init();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				JM.kilepes();
-				break;
-            // Foglalt váltó átállítása
-			case 18:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e12, e23);
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				e12.atallit();
-				draw();
-				break;
-            // Foglalt pályaelemre alagút építés
-			case 19:
-				logger.setLevel(Level.OFF);
-				init();
-				m1.setKezdoPoziciok(e6, e5);
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				e6.setAlagut();
-				draw();
-				break;
-            // Harmadik alagút építése nem történik meg
-			case 20:
-				logger.setLevel(Level.OFF);
-				init();
-				e6.setAlagut();
-				e10.setAlagut();
-				logger.addHandler(fileHandler);
-				logger.setLevel(Level.INFO);
-				draw();
-				e14.setAlagut();
-				draw();
-				break;
-            // Alagút építés nem történik meg, ha létezik egy másik alagút, ami éppen foglalt
-			case 21:
-				logger.setLevel(Level.OFF);
-				init();
-				e6.setAlagut();
-				sz1.setKezdoPoziciok(e3, e2);
-				m1.setKezdoPoziciok(e4, e3);
-				logger.addHandler(fileHandler);
-				JM.idoEltelt();
-				JM.idoEltelt();
-				e10.setAlagut();
-				JM.idoEltelt();
-				break;
-			default:
-				logger.log(Level.INFO, "Nincs ilyen teszteset!");
-				break;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (args[0].equals("K"))
+			br = new BufferedReader(new InputStreamReader(System.in));
+		else if (args[0].equals("F"))
+			br = new BufferedReader(new FileReader(
+					System.getProperty("user.home") + "\\teszt_bemenetek\\"
+							+ args[1]));
+		else {
+			System.out.println("Érvénytelen bemenet!");
+			// JM.ujJatek();
+			System.exit(0);
 		}
+
+		logger.setLevel(Level.OFF);
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			String[] lines = line.split(" ");
+			commandMapping(lines);
+		}
+
 	}
 
 	private static void init() {
@@ -522,14 +270,16 @@ public class Main {
 	public static void draw() {
 
 		/* @formatter:off */
-		String palyaKep[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+		String palyaKep[][] = new String[][] {
+				{ "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
 				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
 				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
 				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
 				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
 				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
 
-		String palyaKepX[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+		String palyaKepX[][] = new String[][] {
+				{ "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
 				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
 				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
 				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
@@ -544,7 +294,8 @@ public class Main {
 				for (int i = 0; i < 6; i++)
 					for (int j = 0; j < 7; j++) {
 						if (jarmu.getPozicio() != null) {
-							if (palyaKepX[i][j].equals(jarmu.getPozicio().getID())) {
+							if (palyaKepX[i][j].equals(jarmu.getPozicio()
+									.getID())) {
 								if (palyaKepX[i][j].equals(palyaKep[i][j]))
 									palyaKep[i][j] = "(" + jarmu.getID() + ")";
 								else
@@ -579,7 +330,8 @@ public class Main {
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Valto) {
 				logger.setLevel(Level.INFO);
-				logger.log(Level.INFO, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
+				logger.log(Level.INFO, palyaElem.getID() + ":"
+						+ ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
 						+ ((Valto) palyaElem).getAllas()[1].getID());
 			}
 
@@ -624,5 +376,94 @@ public class Main {
 		logger.setLevel(Level.INFO);
 
 		logger.log(Level.INFO, "");
+	}
+
+	public static void commandMapping(String s[]) {
+
+		switch (s[0]) {
+
+		case "loadPalya":
+			init();
+			break;
+
+		case "vonatInditas":
+			JM.vonatInditas();
+			break;
+
+		case "kirajzolas":
+			draw();
+			break;
+
+		case "kirajzolasStart":
+			logger.setLevel(Level.INFO);
+			break;
+
+		case "step":
+			JM.idoEltelt();
+			break;
+
+		case "switchValto":
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " "))
+					((Valto) palyaElem).atallit();
+			break;
+
+		case "setAlagut":
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " "))
+					((Sin) palyaElem).setAlagut();
+			break;
+
+		case "setKezdoPozicio":
+			PalyaElem p = null;
+			PalyaElem ep = null;
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[2] + " "))
+					p = palyaElem;
+
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[3] + " "))
+					ep = palyaElem;
+
+			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
+				for (Jarmu jarmu : vonat.getJarmuvek())
+					if (jarmu.getID().equals(" " + s[1] + " "))
+						jarmu.setKezdoPoziciok(p, ep);
+			break;
+
+		case "kiurit":
+			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
+				for (Jarmu jarmu : vonat.getJarmuvek())
+					if (jarmu.getID().equals(" " + s[1] + " "))
+						((Kocsi) jarmu).kiurit();
+			break;
+
+		case "utkozesEllenorzes":
+			JM.utkozesEllenorzes();
+			break;
+
+		case "setVarakouoUtas":
+			boolean temp;
+			if (s[2].equals("true"))
+				temp = true;
+			else
+				temp = false;
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " "))
+					((Allomas) palyaElem).setVarakozoUtas(temp);
+			break;
+
+		case "exit":
+			JM.kilepes();
+			break;
+
+		case "gyozelemEllenorzes":
+			JM.gyozelemEllenorzes();
+			break;
+
+		case "tesztVege":
+			System.exit(0);
+			break;
+		}
 	}
 }
