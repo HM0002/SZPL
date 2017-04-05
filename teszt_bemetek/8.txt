@@ -1,0 +1,8 @@
+loadPalya
+setKezdoPoziciok M01 S10 K09
+kirajzolStart
+step
+step
+step
+utkozesEllenorzes
+tesztVege

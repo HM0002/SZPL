@@ -1,0 +1,13 @@
+loadPalya
+setKezdoPozicio M01 S15 S14
+setKezdoPozicio C01 S14 S13
+setKezdoPozicio K01 S13 V12
+setKezdoPozicio K02 V12 S23
+kirajzolStart
+step
+step
+step
+step
+step
+step
+tesztVege

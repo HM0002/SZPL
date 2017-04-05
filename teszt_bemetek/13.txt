@@ -1,0 +1,7 @@
+loadPalya
+setKezdoPozicio M01 V06 S07
+kirajzolStart
+step
+step
+step
+tesztVege

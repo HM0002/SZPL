@@ -1,0 +1,4 @@
+loadPalya
+kirajzolasStart
+vonatInditas
+tesztVege

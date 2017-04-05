@@ -1,0 +1,13 @@
+loadPalya
+vonatInditas
+setAlagut S06
+setAlagut S10
+kirajzolStart
+step
+step
+step
+step
+step
+step
+step
+tesztVege

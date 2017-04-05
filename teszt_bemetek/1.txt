@@ -1,0 +1,4 @@
+kirajzolStart
+loadPalya
+kirajzolas
+tesztVege

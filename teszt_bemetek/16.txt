@@ -1,0 +1,23 @@
+loadPalya
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+vonatInditas
+setVarakozo A17 false
+kiurit K01
+kiurit K02
+kiurit K03
+kiurit K04
+kirajzolStart
+gyozelemEllenorzes
+tesztVege

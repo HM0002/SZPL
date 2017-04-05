@@ -1,0 +1,6 @@
+loadPalya
+setKezdoPozicio M01 S06 S05
+kirajzolStart
+setAlagut S06
+kirajzolas
+tesztVege

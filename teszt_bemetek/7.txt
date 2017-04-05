@@ -1,0 +1,10 @@
+loadPalya
+kirajzolasStart
+kirajzolas
+switchValto V12
+kirajzolas
+switchValto V12
+kirajzolas
+switchValto V12
+kirajzolas
+tesztVege

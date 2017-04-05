@@ -1,0 +1,9 @@
+loadPalya
+vonatInditas
+kirajzolasStart
+step
+step
+step
+step
+step
+tesztVege

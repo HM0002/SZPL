@@ -1,0 +1,6 @@
+loadPalya
+setKezdoPozicio M01 V12 S23
+kirajzolStart
+switchValto V12
+kirajzolas
+tesztVege

@@ -1,0 +1,7 @@
+loadPalya
+setAlagut S06
+setAlagut S10
+kirajzolStart
+setAlagut S14
+kirajzolas
+tesztVege

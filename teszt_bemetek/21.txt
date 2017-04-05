@@ -1,0 +1,10 @@
+loadPalya
+setAlagut S06
+setKezdoPozicio C01 S03 S02
+setKezdoPozicio M01 S04 S03
+kirajzolStart
+step
+step
+setAlagut S10
+step
+tesztVege

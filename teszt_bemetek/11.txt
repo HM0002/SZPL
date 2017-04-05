@@ -1,0 +1,12 @@
+loadPalya
+setKezdoPzicio M01 S15 S14
+setKezdoPzicio C01 S14 S13
+kiurit K02
+setKezdoPzicio K02 S13 V12
+kirajzolStart
+step
+step
+step
+step
+step
+tesztVege

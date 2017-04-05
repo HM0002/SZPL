@@ -1,0 +1,7 @@
+loadPalya
+setKezdoPozicio M01 S15 S14
+kirajzolStart
+step
+step
+step
+tesztVege
