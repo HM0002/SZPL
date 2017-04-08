@@ -11,8 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-	private final static Logger logger = Logger
-			.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	// Jatekmotor létrehozása
 	static JatekMotor JM;
@@ -81,8 +80,7 @@ public class Main {
 	static Kocsi k3;
 	static Kocsi k4;
 
-	public static void main(String[] args) throws SecurityException,
-			IOException {
+	public static void main(String[] args) throws SecurityException, IOException {
 
 		for (Handler handler : logger.getParent().getHandlers()) {
 			logger.getParent().removeHandler(handler);
@@ -99,9 +97,7 @@ public class Main {
 		if (args[0].equals("K"))
 			br = new BufferedReader(new InputStreamReader(System.in));
 		else if (args[0].equals("F"))
-			br = new BufferedReader(new FileReader(
-					System.getProperty("user.home") + "\\teszt_bemenetek\\"
-							+ args[1]));
+			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1]));
 		else {
 			System.out.println("Érvénytelen bemenet!");
 			// JM.ujJatek();
@@ -270,16 +266,14 @@ public class Main {
 	public static void draw() {
 
 		/* @formatter:off */
-		String palyaKep[][] = new String[][] {
-				{ "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+		String palyaKep[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
 				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
 				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
 				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
 				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
 				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
 
-		String palyaKepX[][] = new String[][] {
-				{ "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
+		String palyaKepX[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
 				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
 				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
 				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
@@ -294,8 +288,7 @@ public class Main {
 				for (int i = 0; i < 6; i++)
 					for (int j = 0; j < 7; j++) {
 						if (jarmu.getPozicio() != null) {
-							if (palyaKepX[i][j].equals(jarmu.getPozicio()
-									.getID())) {
+							if (palyaKepX[i][j].equals(jarmu.getPozicio().getID())) {
 								if (palyaKepX[i][j].equals(palyaKep[i][j]))
 									palyaKep[i][j] = "(" + jarmu.getID() + ")";
 								else
@@ -330,8 +323,7 @@ public class Main {
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Valto) {
 				logger.setLevel(Level.INFO);
-				logger.log(Level.INFO, palyaElem.getID() + ":"
-						+ ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
+				logger.log(Level.INFO, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
 						+ ((Valto) palyaElem).getAllas()[1].getID());
 			}
 
@@ -379,6 +371,7 @@ public class Main {
 	}
 
 	public static void commandMapping(String s[]) {
+		Level tmp = logger.getLevel();
 
 		switch (s[0]) {
 
@@ -403,39 +396,63 @@ public class Main {
 			break;
 
 		case "switchValto":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-				if (palyaElem.getID().equals(" " + s[1] + " "))
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
 					((Valto) palyaElem).atallit();
+				}
 			break;
 
 		case "setAlagut":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-				if (palyaElem.getID().equals(" " + s[1] + " "))
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
 					((Sin) palyaElem).setAlagut();
+				}
 			break;
 
 		case "setKezdoPozicio":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			PalyaElem p = null;
 			PalyaElem ep = null;
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-				if (palyaElem.getID().equals(" " + s[2] + " "))
+				if (palyaElem.getID().equals(" " + s[2] + " ")) {
+					logger.setLevel(tmp);
 					p = palyaElem;
+				}
 
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-				if (palyaElem.getID().equals(" " + s[3] + " "))
+				if (palyaElem.getID().equals(" " + s[3] + " ")) {
+					logger.setLevel(tmp);
 					ep = palyaElem;
+				}
 
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 				for (Jarmu jarmu : vonat.getJarmuvek())
-					if (jarmu.getID().equals(" " + s[1] + " "))
+					if (jarmu.getID().equals(" " + s[1] + " ")) {
+						logger.setLevel(tmp);
 						jarmu.setKezdoPoziciok(p, ep);
+					}
 			break;
 
 		case "kiurit":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 				for (Jarmu jarmu : vonat.getJarmuvek())
-					if (jarmu.getID().equals(" " + s[1] + " "))
+					if (jarmu.getID().equals(" " + s[1] + " ")) {
+						logger.setLevel(tmp);
 						((Kocsi) jarmu).kiurit();
+					}
 			break;
 
 		case "utkozesEllenorzes":
@@ -448,9 +465,14 @@ public class Main {
 				temp = true;
 			else
 				temp = false;
+
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-				if (palyaElem.getID().equals(" " + s[1] + " "))
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
 					((Allomas) palyaElem).setVarakozoUtas(temp);
+				}
 			break;
 
 		case "exit":
