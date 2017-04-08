@@ -17,66 +17,62 @@ public class Main {
 	static JatekMotor JM;
 
 	// Elsõ pályához PalyaElem-eknek ArrayList létrehozása
-	static ArrayList<PalyaElem> palyaElemek1;
+	static ArrayList<PalyaElem> palyaElemek0;
 
 	// Jarmuveknek ArrayList
+	static ArrayList<Jarmu> vonat0;
 	static ArrayList<Jarmu> vonat1;
-	static ArrayList<Jarmu> vonat2;
 
 	// 1. Pálya létrehozása(p0)
 	static Palya p0;
 	static Palya p1;
 
 	// Vonatoknak ArrayList
-	static ArrayList<Vonat> vonatok1;
+	static ArrayList<Vonat> vonatok0;
 
 	// Palyaknak ArrayList
 	static ArrayList<Palya> palyak;
 
 	// Vonat objektumok létrehozása
+	static Vonat v0;
 	static Vonat v1;
-	static Vonat v2;
 
 	// Elsõ Pályához Sin-ek, Valto-k, Allomas-ok létrehozása
 	static Sin e0;
 	static Sin e1;
 	static Sin e2;
 	static Sin e3;
-	static Sin e4;
+	static Keresztezodes e4;
 	static Sin e5;
 	static Sin e6;
-	static Sin e7;
+	static Valto e7;
 	static Sin e8;
-	static Keresztezodes e9;
+	static Sin e9;
 	static Sin e10;
 	static Sin e11;
-	static Valto e12;
+	static Allomas e12;
 	static Sin e13;
-	static Sin e14;
-	static Sin e15;
+	static Valto e14;
+	static Allomas e15;
 	static Sin e16;
-	static Allomas e17;
+	static Sin e17;
 	static Sin e18;
-	static Valto e19;
-	static Allomas e20;
+	static Sin e19;
+	static Sin e20;
 	static Sin e21;
 	static Sin e22;
 	static Sin e23;
-	static Sin e24;
-	static Sin e25;
-	static Sin e26;
-	static Sin e27;
-	static Sin e28;
 
 	// Jarmu-vek létrehozása, elõször a vonat1 elemei
 	static Mozdony m1;
 	static Szeneskocsi sz1;
+	static Szeneskocsi sz2;
 	static Kocsi k1;
 	static Kocsi k2;
 
 	// majd a vonat2 elemei
 	static Mozdony m2;
-	static Szeneskocsi sz2;
+	static Szeneskocsi sz3;
 	static Kocsi k3;
 	static Kocsi k4;
 
@@ -118,139 +114,126 @@ public class Main {
 		logger.log(Level.INFO, "Játek elemeinek inicializálása: \n");
 
 		// Sin konstuktorok
-		e0 = new Sin(" S00 ");
-		e1 = new Sin(" S01 ");
-		e2 = new Sin(" S02 ");
-		e3 = new Sin(" S03 ");
-		e4 = new Sin(" S04 ");
-		e5 = new Sin(" S05 ");
-		e6 = new Sin(" S06 ");
-		e7 = new Sin(" S07 ");
-		e8 = new Sin(" S08 ");
-		e9 = new Keresztezodes(" K09 ");
-		e10 = new Sin(" S10 ");
-		e11 = new Sin(" S11 ");
-		e12 = new Valto(" V12 ");
-		e13 = new Sin(" S13 ");
-		e14 = new Sin(" S14 ");
-		e15 = new Sin(" S15 ");
-		e16 = new Sin(" S16 ");
-		e17 = new Allomas(1, true, " A17 ");
-		e18 = new Sin(" S18 ");
-		e19 = new Valto(" V19 ");
-		e20 = new Allomas(2, false, " A20 ");
-		e21 = new Sin(" S21 ");
-		e22 = new Sin(" S22 ");
-		e23 = new Sin(" S23 ");
-		e24 = new Sin(" S24 ");
-		e25 = new Sin(" S25 ");
-		e26 = new Sin(" S26 ");
-		e27 = new Sin(" S27 ");
-		e28 = new Sin(" S28 ");
+		e0 = new Sin(" S000 ");
+		e1 = new Sin(" S001 ");
+		e2 = new Sin(" S002 ");
+		e3 = new Sin(" S003 ");
+		e4 = new Keresztezodes(" K004 ");
+		e5 = new Sin(" S005 ");
+		e6 = new Sin(" S006 ");
+		e7 = new Valto(" V007 ");
+		e8 = new Sin(" S008 ");
+		e9 = new Sin(" S009 ");
+		e10 = new Sin(" S010 ");
+		e11 = new Sin(" S011 ");
+		e12 = new Allomas(1, true, " A012 ");
+		e13 = new Sin(" S013 ");
+		e14 = new Valto(" V014 ");
+		e15 = new Allomas(2, false, " A015 ");
+		e16 = new Sin(" S016 ");
+		e17 = new Sin(" S017 ");
+		e18 = new Sin(" S018 ");
+		e19 = new Sin(" S019 ");
+		e20 = new Sin(" S020 ");
+		e21 = new Sin(" S021 ");
+		e22 = new Sin(" S022 ");
+		e23 = new Sin(" S023 ");
 
-		palyaElemek1 = new ArrayList<PalyaElem>();
+		palyaElemek0 = new ArrayList<PalyaElem>();
 
 		// Sin-ek összekötése
 		e0.setSzomszedok(e1, e1, null, null);
-		e1.setSzomszedok(e0, e2, null, null);
+		e1.setSzomszedok(e12, e2, null, null);
 		e2.setSzomszedok(e1, e3, null, null);
 		e3.setSzomszedok(e2, e4, null, null);
-		e4.setSzomszedok(e3, e5, null, null);
+		e4.setSzomszedok(e3, e13, e5, e23);
 		e5.setSzomszedok(e4, e6, null, null);
-		e6.setSzomszedok(e7, e17, null, null);
-		e7.setSzomszedok(e6, e8, null, null);
+		e6.setSzomszedok(e5, e7, null, null);
+		e7.setSzomszedok(e8, e18, e6, null);
 		e8.setSzomszedok(e7, e9, null, null);
-		e9.setSzomszedok(e8, e18, e10, e28);
+		e9.setSzomszedok(e8, e10, null, null);
 		e10.setSzomszedok(e9, e11, null, null);
 		e11.setSzomszedok(e10, e12, null, null);
-		e12.setSzomszedok(e23, e13, e11, null);
-		e13.setSzomszedok(e12, e14, null, null);
-		e14.setSzomszedok(e13, e15, null, null);
+		e12.setSzomszedok(e11, e1, null, null);
+		e13.setSzomszedok(e4, e14, null, null);
+		e14.setSzomszedok(e13, e15, e19, null);
 		e15.setSzomszedok(e14, e16, null, null);
 		e16.setSzomszedok(e15, e17, null, null);
-		e17.setSzomszedok(e16, e6, null, null);
-		e18.setSzomszedok(e9, e19, null, null);
-		e19.setSzomszedok(e18, e20, e24, null);
+		e17.setSzomszedok(e16, e18, null, null);
+		e18.setSzomszedok(e17, e7, null, null);
+		e19.setSzomszedok(e14, e20, null, null);
 		e20.setSzomszedok(e19, e21, null, null);
 		e21.setSzomszedok(e20, e22, null, null);
 		e22.setSzomszedok(e21, e23, null, null);
-		e23.setSzomszedok(e12, e22, null, null);
-		e24.setSzomszedok(e19, e25, null, null);
-		e25.setSzomszedok(e24, e26, null, null);
-		e26.setSzomszedok(e25, e17, null, null);
-		e27.setSzomszedok(e26, e18, null, null);
-		e28.setSzomszedok(e27, e9, null, null);
+		e23.setSzomszedok(e22, e4, null, null);
 
 		// palyaElemek1 listához a Sin példányok hozzáadása
-		palyaElemek1.add(e0);
-		palyaElemek1.add(e1);
-		palyaElemek1.add(e2);
-		palyaElemek1.add(e3);
-		palyaElemek1.add(e4);
-		palyaElemek1.add(e5);
-		palyaElemek1.add(e6);
-		palyaElemek1.add(e7);
-		palyaElemek1.add(e8);
-		palyaElemek1.add(e9);
-		palyaElemek1.add(e10);
-		palyaElemek1.add(e11);
-		palyaElemek1.add(e12);
-		palyaElemek1.add(e13);
-		palyaElemek1.add(e14);
-		palyaElemek1.add(e15);
-		palyaElemek1.add(e16);
-		palyaElemek1.add(e17);
-		palyaElemek1.add(e18);
-		palyaElemek1.add(e19);
-		palyaElemek1.add(e20);
-		palyaElemek1.add(e21);
-		palyaElemek1.add(e22);
-		palyaElemek1.add(e23);
-		palyaElemek1.add(e24);
-		palyaElemek1.add(e25);
-		palyaElemek1.add(e26);
-		palyaElemek1.add(e27);
-		palyaElemek1.add(e28);
+		palyaElemek0.add(e0);
+		palyaElemek0.add(e1);
+		palyaElemek0.add(e2);
+		palyaElemek0.add(e3);
+		palyaElemek0.add(e4);
+		palyaElemek0.add(e5);
+		palyaElemek0.add(e6);
+		palyaElemek0.add(e7);
+		palyaElemek0.add(e8);
+		palyaElemek0.add(e9);
+		palyaElemek0.add(e10);
+		palyaElemek0.add(e11);
+		palyaElemek0.add(e12);
+		palyaElemek0.add(e13);
+		palyaElemek0.add(e14);
+		palyaElemek0.add(e15);
+		palyaElemek0.add(e16);
+		palyaElemek0.add(e17);
+		palyaElemek0.add(e18);
+		palyaElemek0.add(e19);
+		palyaElemek0.add(e20);
+		palyaElemek0.add(e21);
+		palyaElemek0.add(e22);
+		palyaElemek0.add(e23);
 
 		// Jarmu (Mozdony, Kocsi és Szeneskocsi) konstruktorok
-		m1 = new Mozdony("M01");
-		sz1 = new Szeneskocsi("C01");
-		k1 = new Kocsi(2, "K01");
-		k2 = new Kocsi(1, "K02");
+		m1 = new Mozdony("M000");
+		sz1 = new Szeneskocsi("C001");
+		sz2 = new Szeneskocsi("C002");
+		k1 = new Kocsi(2, "K203");
+		k2 = new Kocsi(1, "K104");
 
-		m2 = new Mozdony("M02");
-		sz2 = new Szeneskocsi("C02");
-		k3 = new Kocsi(1, "K03");
-		k4 = new Kocsi(2, "K04");
+		m2 = new Mozdony("M010");
+		k3 = new Kocsi(1, "K111");
+		sz3 = new Szeneskocsi("C012");
+		k4 = new Kocsi(2, "K213");
 
+		vonat0 = new ArrayList<Jarmu>();
 		vonat1 = new ArrayList<Jarmu>();
-		vonat2 = new ArrayList<Jarmu>();
 
 		// vonatokba a Jarmu-vek elhelyezése: vonat1
-		vonat1.add(m1);
-		vonat1.add(sz1);
-		vonat1.add(k1);
-		vonat1.add(k2);
+		vonat0.add(m1);
+		vonat0.add(sz1);
+		vonat0.add(sz2);
+		vonat0.add(k1);
+		vonat0.add(k2);
 
 		// vonatokba a Jarmu-vek elhelyezése: vonat2
-		vonat2.add(m2);
-		vonat2.add(sz2);
-		vonat2.add(k3);
-		vonat2.add(k4);
+		vonat1.add(m2);
+		vonat1.add(sz3);
+		vonat1.add(k3);
+		vonat1.add(k4);
 
 		// Vonat konstruktorok
-		v1 = new Vonat(vonat1, "vonat1");
-		v2 = new Vonat(vonat2, "vonat2");
+		v0 = new Vonat(vonat0, "VONAT0");
+		v1 = new Vonat(vonat1, "VONAT1");
 
-		vonatok1 = new ArrayList<Vonat>();
+		vonatok0 = new ArrayList<Vonat>();
 
 		// vonatok hozzáadása a vonatlistához
-		vonatok1.add(v1);
-		vonatok1.add(v2);
+		vonatok0.add(v0);
+		vonatok0.add(v1);
 
 		// Palya konstruktor
-		p1 = new Palya(2, 3, 12, palyaElemek1, vonatok1, "palya2");
-		p0 = new Palya(2, 3, 12, palyaElemek1, vonatok1, "palya1");
+		p1 = new Palya(12, palyaElemek0, vonatok0, "palya2");
+		p0 = new Palya(12, palyaElemek0, vonatok0, "palya1");
 
 		palyak = new ArrayList<Palya>();
 
@@ -266,19 +249,21 @@ public class Main {
 	public static void draw() {
 
 		/* @formatter:off */
-		String palyaKep[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
-				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
-				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
-				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
-				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
-				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
+		String palyaKep[][] = new String[][] { 
+				{ "      ", " S010 ", " S009 ", " S008 ", " V007 ", " S018 ", " S017 " },
+				{ "      ", " S011 ", "      ", "      ", " S006 ", "      ", " S016 " },
+				{ "      ", " A012 ", "      ", "      ", " S005 ", "      ", " A015 " },
+				{ " S000 ", " S001 ", " S002 ", " S003 ", " K004 ", " S013 ", " V014 " },
+				{ "      ", "      ", "      ", "      ", " S023 ", "      ", " S019 " },
+				{ "      ", "      ", "      ", "      ", " S022 ", " S021 ", " S020 " } };
 
-		String palyaKepX[][] = new String[][] { { "     ", " S15 ", " S14 ", " S13 ", " V12 ", " S23 ", " S22 " },
-				{ "     ", " S16 ", "     ", "     ", " S11 ", "     ", " S21 " },
-				{ "     ", " A17 ", "     ", "     ", " S10 ", "     ", " A20 " },
-				{ " S05 ", " S06 ", " S07 ", " S08 ", " K09 ", " S18 ", " V19 " },
-				{ "     ", "     ", "     ", "     ", " S28 ", "     ", " S24 " },
-				{ "     ", "     ", "     ", "     ", " S27 ", " S26 ", " S25 " } };
+		String palyaKepX[][] = new String[][] { 
+				{ "      ", " S010 ", " S009 ", " S008 ", " V007 ", " S018 ", " S017 " },
+				{ "      ", " S011 ", "      ", "      ", " S006 ", "      ", " S016 " },
+				{ "      ", " A012 ", "      ", "      ", " S005 ", "      ", " A015 " },
+				{ " S000 ", " S001 ", " S002 ", " S003 ", " K004 ", " S013 ", " V014 " },
+				{ "      ", "      ", "      ", "      ", " S023 ", "      ", " S019 " },
+				{ "      ", "      ", "      ", "      ", " S022 ", " S021 ", " S020 " } };
 		/* @formatter:on */
 
 		// set vonatok
@@ -292,7 +277,7 @@ public class Main {
 								if (palyaKepX[i][j].equals(palyaKep[i][j]))
 									palyaKep[i][j] = "(" + jarmu.getID() + ")";
 								else
-									palyaKep[i][j] = "CRASH";
+									palyaKep[i][j] = "CRASH!";
 							}
 						}
 					}
@@ -304,7 +289,7 @@ public class Main {
 				for (int i = 0; i < 6; i++)
 					for (int j = 0; j < 7; j++) {
 						if (palyaKepX[i][j].equals(palyaElem.getID()))
-							palyaKep[i][j] = " |A| ";
+							palyaKep[i][j] = " |AL| ";
 					}
 			}
 

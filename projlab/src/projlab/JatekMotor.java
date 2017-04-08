@@ -96,7 +96,6 @@ public class JatekMotor {
 			}
 			logger.log(Level.INFO, "\nCiklus vége.");
 		}
-		Main.draw();
 		prevTime = System.currentTimeMillis();
 	}
 
@@ -117,37 +116,47 @@ public class JatekMotor {
 	}
 
 	/**
-	 * Lekéri az aktuális pálya (palyak 0. eleme) getVonatSzam metódusával, hogy
-	 * hány vonatot kell küldeni összesen, és ezt komparálja a
-	 * vonatSzamlalo-val. Ha a vonatSzamlalo kisebb, lekéri a pályától, hogy
-	 * mennyi idõközönként(tick) indíthat új vonatot, a getKeslelteto
-	 * metódussal. Ezt komparálja az ujVonat-tal, melyben az elõzõ vonatindítás
-	 * óta eltelt tick-ek száma van tárolva. Ha az ujVonat értéke kisebb,
-	 * növeljük 1-el. Ha nagyobb vagy egyenlõ, lekérjük a pályától a
-	 * vonatSzamlalo-adik vonat jármûveit, ugyanis egy rendezett listában vannak
-	 * a vonatok, és a vonatSzamlalo-adik vonat az, ami még nem indult el.
-	 * Ezután az így lekért jármûvek setKezdoPoziciok metódusával beállítjuk a
-	 * helyes kezdõ pozíciókat, majd növeljök a vonatSzamlalo-t, és nullázzuk az
+	 * Lekéri az aktuális pálya (palyak 0. eleme) vonatainak számát, hogy hány
+	 * vonatot kell küldeni összesen, és ezt komparálja a vonatSzamlalo-val. Ha
+	 * a vonatSzamlalo kisebb, lekéri a pályától, hogy mennyi idõközönként(tick)
+	 * indíthat új vonatot, a getKeslelteto metódussal. Ezt komparálja az
+	 * ujVonat-tal, melyben az elõzõ vonatindítás óta eltelt tick-ek száma van
+	 * tárolva. Ha az ujVonat értéke kisebb, növeljük 1-el. Ha nagyobb vagy
+	 * egyenlõ, lekérjük a pályától a vonatSzamlalo-adik vonat jármûveit,
+	 * ugyanis egy rendezett listában vannak a vonatok, és a vonatSzamlalo-adik
+	 * vonat az, ami még nem indult el. Ezután az így lekért jármûveken
+	 * végigmegyünk, és az elsõ amelyiknek a poziciója null, a setKezdoPoziciok
+	 * metódusával beállítjuk a helyes kezdõ pozíciókat, majd visszatérünk. Ha
+	 * nincs ilyen jármû, növeljök a vonatSzamlalo-t, és nullázzuk az
 	 * ujVonat-ot.
 	 */
 	public void vonatInditas() {
 		logger.log(Level.INFO, "JM.vonatInditas()");
-		if (vonatSzamlalo < palyak.get(0).getVonatSzam()) {
+		if (vonatSzamlalo < palyak.get(0).getVonatok().size()) {
 			if (ujVonat >= palyak.get(0).getKeslelteto()) {
-				int k = palyak.get(0).getKocsiSzam();
 				ArrayList<Jarmu> j = palyak.get(0).getVonatok().get(vonatSzamlalo).getJarmuvek();
 				ArrayList<PalyaElem> e = palyak.get(0).getElemek();
-				logger.log(Level.INFO, "\nElindul a ciklus:\n");
-				for (int i = 0; i < k + 1; i++) {
-					logger.log(Level.INFO, "\t" + j.get(i).getID() + " elindítása:");
-					j.get(i).setKezdoPoziciok(e.get(4 - i), e.get(3 - i));
+
+				if (e.get(0) == null) {
+					logger.log(Level.INFO, "\nHibás a pálya, hiányzik a kezdõelem (S000)!\n");
+					kilepes();
 				}
-				logger.log(Level.INFO, "\nCiklus vége.\n");
+
+				for (Jarmu jarmu : j) {
+					if (jarmu.getPozicio() == null) {
+						logger.log(Level.INFO, "\t" + jarmu.getID() + " elindítása:");
+						jarmu.setKezdoPoziciok(e.get(0), e.get(0));
+						return;
+					}
+				}
+
 				ujVonat = 0;
 				vonatSzamlalo++;
+
 			} else
 				ujVonat++;
 		}
+
 	}
 
 	/**
@@ -171,8 +180,8 @@ public class JatekMotor {
 	 * Lekéri az aktuális pálya (palyak 0. eleme) getElemek metódusával a
 	 * palyaElem-eket, majd végignézzük az összes Allomas-t, hogy van-e várakozó
 	 * utas. Ha van, visszatérünk hamissal. Ezutám lekéri az aktuális pálya
-	 * (palyak 0. eleme) getVonatSzam metódusával, hogy hány vonatot kell
-	 * küldeni összesen, és ezt komparálja a vonatSzamlalo-val. Ha a két érték
+	 * (palyak 0. eleme) vonatainak számát, tehát hogy hány vonatot kell küldeni
+	 * összesen, és ezt komparálja a vonatSzamlalo-val. Ha a két érték
 	 * különbözõ, visszatérünk hamissal, ugyanis az azt jelenti, hogy még nem
 	 * indult el az összes vonatunk, ami a pályához tartozik. Ha a két értek
 	 * megegyezik, lekérjük a pályától a vonatokat a getVonatok metódussal, majd
@@ -190,8 +199,8 @@ public class JatekMotor {
 				if (((Allomas) palyaElem).getVarakozoUtas())
 					return false;
 		logger.log(Level.INFO, "Nincsenek várakozó utasok");
-		
-		if (palyak.get(0).getVonatSzam() == vonatSzamlalo) {
+
+		if (palyak.get(0).getVonatok().size() == vonatSzamlalo) {
 			for (Vonat vonat : palyak.get(0).getVonatok()) {
 				for (Jarmu jarmu : vonat.getJarmuvek())
 					if (jarmu.getSzin() != 0)

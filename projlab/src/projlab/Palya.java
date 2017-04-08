@@ -33,17 +33,6 @@ public class Palya {
 	private ArrayList<Vonat> vonatok;
 
 	/**
-	 * vonatSzam: Tartalmazza, hogy az adott pályához hány vonat tartozik, ennyi
-	 * vonatot kell majd indítani.
-	 */
-	private int vonatSzam;
-
-	/**
-	 * kocsiSzam: Tartalmazza, hogy hány kocsi tartozik ezekhez a vonatokhoz.
-	 */
-	private int kocsiSzam;
-
-	/**
 	 * alagutSzam: Itt tároljuk, hogy az elemek-ben hány PalyaElem példánynak
 	 * igaz az alagut változója.
 	 */
@@ -62,30 +51,15 @@ public class Palya {
 	 * Konstruktor, a paraméterül kapott PalyaElem példányoknak beállítjuk, hogy
 	 * ehhez a Palya-hoz tartoznak.
 	 */
-	Palya(int vSz, int kSz, int k, ArrayList<PalyaElem> e, ArrayList<Vonat> v, String id) {
+	Palya(int k, ArrayList<PalyaElem> e, ArrayList<Vonat> v, String id) {
 		elemek = e;
 		for (PalyaElem pe : elemek)
 			pe.setPalya(this);
 		vonatok = v;
-		vonatSzam = vSz;
-		kocsiSzam = kSz;
 		keslelteto = k;
 		alagutSzam = 0;
 		this.id = id;
-		logger.log(Level.INFO, id + " konstruktora elindult.\nparaméterei: vonatSzam = " + vSz + " kocsiSzam = " + kSz
-				+ " keslelteto = " + k);
-	}
-
-	/** Visszatér a vonatSzam értékével. */
-	public int getVonatSzam() {
-		logger.log(Level.INFO, this.getID() + ".getVonatSzam()");
-		return vonatSzam;
-	}
-
-	/** Visszatér a kocsiSzam értékével. */
-	public int getKocsiSzam() {
-		logger.log(Level.INFO, this.getID() + ".getKocsiSzam()");
-		return kocsiSzam;
+		logger.log(Level.INFO, id + " konstruktora elindult.\nparaméterei: keslelteto = " + k);
 	}
 
 	/** Visszatér az alagutSzam értékével. */
