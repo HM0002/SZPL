@@ -7,7 +7,7 @@ S005,S006,S007,S008,K009,S018,V019
     ,    ,    ,    ,S027,S026,S025
 
 M001 C002 C003 K104 K105 K206
-M007 K108 C009 K210 K111 K212
+M007 K108 C009 K210 K212
 
 005 004 006
 006 005 007
@@ -17,4 +17,30 @@ M007 K108 C009 K210 K111 K212
 017 1 TRUE
 020 2 FALSE
 
-2 5 12
+12
+
+INNENTŐL KOMMENT!!!!!!!!!!!
+Első sor: a pálya-mátrix ""szélessége<szóköz>magassága"", ez hibakezeéshez input ellenőrzéshez
+
+Utána a pálya mátrix: Üres sor: 4db szóköz. Mezőelválasztó: "," (később ez alapján split string metódus!) 
+Sínek megadása (ez lesz az ID is, plusz egy szóközzel az elején és végén): első karakter nagybetűs S K V A, értelmeszerűen a típust definiálja, S:Sin V:Valto...
+utána lévő 3 karakter egy folytonos számláló, mely 001-ről indul, ez a vonatok belépési pontja, így a pálya szélén kell kötelezően lennie. 
+(Példapályán pont nem teljesül, régi verzió)
+Utána üres sor jelzi, hogy a pálya parsolás vége, utána lévő blokk a vonatok
+
+Járművek felsorolása: ID majd szóköz következő ID, ahol ID felépítése: Első karakter a típus: M:Mozdony, K:Kocsi, C:Szeneskocsi. 
+Következő karakter: M és C típusnál kötelezően 0 (üres szín), K típusnál a színt jelölő szám, 1-9 között.
+Utolsó két karakter sorfolyotonos index 01-től 99-ig.
+Majd újsor jelzi a blokk végét.
+
+Következő blokk: szomszédosségi felsorolás, szintaktika:
+<palyaelem sorszáma><szóköz><1. szomszéd sorszáma><szóköz><2. szomszéd> és opcionálisan 3. és negyedik szomszéd szóközzel elválasztva,
+hibakezelési okokból folytonosan (plusz ellenőrzés típusnak megfelelő számú szomszéd lett-e megadva!)
+Kötelezően beállítandó a S001-nek mindkét szomszédja S002!
+Blokk végén üres sor.
+
+Következő blokk állomások felsorolása, majd szóköz, színkód száma, szóköz és TRUE vagy FALSE, ami azt adja meg, van-e
+várakozó utas az állomáson.
+
+Utolsó blokk a pálya adatai: egy szám, hány időpillanat teljen el a vonatok indítása között.
+
