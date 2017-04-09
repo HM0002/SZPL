@@ -1,3 +1,3 @@
-compile.bat
+call CP.bat
 @echo Running Vonatos.jar...
 java -jar Vonatos.jar K
