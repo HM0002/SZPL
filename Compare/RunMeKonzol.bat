@@ -1,3 +1,0 @@
-call CP.bat
-@echo Running teszter.jar...
-java -jar teszter.jar

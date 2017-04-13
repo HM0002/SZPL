@@ -1,0 +1,3 @@
+call CP.bat
+@echo Running teszter.jar, 17-es teszteset ellenőrzése...
+java -jar teszter.jar 17
