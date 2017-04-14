@@ -79,6 +79,8 @@ public class Main {
 
 	static String palyaKep[][];
 	static String palyaKepX[][];
+	
+	static boolean tesztelesK = false;
 
 	
 	public static void main(String[] args) throws SecurityException, IOException {
@@ -95,8 +97,10 @@ public class Main {
 
 		BufferedReader br = null;
 
-		if (args[0].equals("K"))
+		if (args[0].equals("K")){
 			br = new BufferedReader(new InputStreamReader(System.in));
+			tesztelesK = true;
+		}
 		else if (args[0].equals("F"))
 			br = new BufferedReader(new FileReader("teszt_bemenetek\\" + args[1]));
 		else {
@@ -112,14 +116,6 @@ public class Main {
 			String[] lines = line.split(" ");
 			commandMapping(lines);
 		}
-
-		/*
-		try {
-			init2();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	private static void init2() throws Exception{
@@ -142,14 +138,9 @@ public class Main {
 
 			//logger.setLevel(Level.OFF);
 			
-			palyaElemek0 = new ArrayList<PalyaElem>(n);
+			ArrayList<PalyaElem> palyaElemek0 = new ArrayList<PalyaElem>(n);
 			for(int i = 0; i<n; i++)
 				palyaElemek0.add(new Sin("S_init_" + i));
-
-			
-			//logger.setLevel(Level.OFF);
-			//logger.setLevel(Level.INFO);
-			//logger.log(Level.INFO, "########## Pályaelemek létrehozása ##########");
 			
 			palyaKep = new String[y][x];
 			palyaKepX = new String[y][x];
@@ -171,14 +162,17 @@ public class Main {
 						palyaElemek0.remove(k);
 						palyaElemek0.add(k, new Sin(" " + lines[j] + " "));
 						break;
+					// Váltó elem
 					case 'V':
 						k = Integer.parseInt(lines[j].substring(1));
 						palyaElemek0.remove(k);
 						palyaElemek0.add(k, new Valto(" " + lines[j] + " "));			
 						break;
+					// Állomás elem
 					case 'A':
 						// A pálya nyelvébõl kifolyólag csak késõbb kerül létrehozásra
 						break;
+					// Keresztezõdés elem
 					case 'K':
 						k = Integer.parseInt(lines[j].substring(1));
 						palyaElemek0.remove(k);
@@ -187,11 +181,6 @@ public class Main {
 					}
 				}
 			}
-			
-			/*
-			logger.setLevel(Level.OFF);
-			logger.setLevel(Level.INFO);
-			logger.log(Level.INFO, "########## Vonatok létrehozása ##########");*/
 			
 			// Üres sor következik
 			line = br.readLine();
@@ -220,11 +209,6 @@ public class Main {
 				vID++;
 			}
 			
-			/*
-			logger.setLevel(Level.OFF);
-			logger.setLevel(Level.INFO);
-			logger.log(Level.INFO, "########## Állomások létrehozása ##########");*/
-			
 			// Állomások létreehozása
 			while(!(line = br.readLine()).isEmpty()){
 				lines = line.split("\\s+");
@@ -238,11 +222,6 @@ public class Main {
 				palyaElemek0.remove(i);
 				palyaElemek0.add(i, new Allomas(szin, varakozok," " + "A" + lines[0] + " "));
 			}
-			
-			/*
-			logger.setLevel(Level.OFF);
-			logger.setLevel(Level.INFO);
-			logger.log(Level.INFO, "########## Szomszédok beállítása ##########");*/
 			
 			// Szomszédok beállítása
 			while(!(line = br.readLine()).isEmpty()){
@@ -272,11 +251,6 @@ public class Main {
 					break;
 				}
 			}
-
-			/*
-			logger.setLevel(Level.OFF);
-			logger.setLevel(Level.INFO);
-			logger.log(Level.INFO, "########## Pálya létrehozása ##########");*/
 			
 			line = br.readLine();
 			int keslelteto = Integer.parseInt(line);
@@ -481,27 +455,49 @@ public class Main {
 			}
 
 		// draw pálya
+		if(tesztelesK)
+			System.out.println();
+		if(tesztelesK)
+			System.out.println("#######################################################################");
+		if(tesztelesK)
+			System.out.println();
 		for (int i = 0; i < 6; i++) {
 			String temp = "";
 			for (int j = 0; j < 7; j++)
 				temp += palyaKep[i][j] + "   ";
 			logger.setLevel(Level.INFO);
 			logger.log(Level.INFO, temp + "\n");
+			if(tesztelesK)
+				System.out.println(temp);
 		}
+
+		if(tesztelesK)
+			System.out.println();
 
 		// write válto állások
 		logger.log(Level.INFO, "Váltók állása:");
 		logger.setLevel(Level.OFF);
+		if(tesztelesK)
+			System.out.println("Váltók állása:");
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Valto) {
 				logger.setLevel(Level.INFO);
 				logger.log(Level.INFO, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
 						+ ((Valto) palyaElem).getAllas()[1].getID());
+
+				if(tesztelesK)
+					System.out.println(palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
+							+ ((Valto) palyaElem).getAllas()[1].getID());
 			}
 
+		if(tesztelesK)
+			System.out.println();
+		
 		// write állomás színek, várakozó utasok
 		logger.log(Level.INFO, "\nÁllomások színe:");
 		logger.setLevel(Level.OFF);
+		if(tesztelesK)
+			System.out.println("Állomások színe:");
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Allomas) {
 				logger.setLevel(Level.INFO);
@@ -516,8 +512,13 @@ public class Main {
 					tmp = tmp + "\t Várakozó utas : nincs";
 
 				logger.log(Level.INFO, tmp);
+				if(tesztelesK)
+					System.out.println(tmp);
 			}
 
+		if(tesztelesK)
+			System.out.println();
+		
 		// write kocsi színek, utasok
 		logger.log(Level.INFO, "\nKocsik színe:");
 		logger.setLevel(Level.OFF);
@@ -535,6 +536,8 @@ public class Main {
 						tmp = tmp + "\t Utas : van";
 					logger.setLevel(Level.INFO);
 					logger.log(Level.INFO, tmp);
+					if(tesztelesK)
+						System.out.println(tmp);
 					logger.setLevel(Level.OFF);
 				}
 		logger.setLevel(Level.INFO);
@@ -565,11 +568,13 @@ public class Main {
 
 		case "kirajzolasStart":
 			logger.setLevel(Level.INFO);
+			draw();
 			break;
 
 		case "step":
 			JM.idoEltelt();
 			JM.vonatInditas();
+			draw();
 			break;
 
 		case "switchValto":
@@ -633,7 +638,10 @@ public class Main {
 			break;
 
 		case "utkozesEllenorzes":
-			JM.utkozesEllenorzes();
+			if(JM.utkozesEllenorzes())
+				logger.log(Level.INFO, "Ütközés történt!");
+			else
+				logger.log(Level.INFO, "Nem történt ütközés!");
 			break;
 
 		case "setVarakouoUtas":
@@ -662,10 +670,6 @@ public class Main {
 
 		case "tesztVege":
 			System.exit(0);
-			break;
-			
-		case "test":
-			System.out.println(JM.getAktualisPalya().getVonatok().get(0).getJarmuvek().get(0).getPozicio().getID());
 			break;
 		}
 	}
