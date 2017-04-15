@@ -1,4 +1,4 @@
 loadPalya
-kirajzolStart
+kirajzolasStart
 exit
 tesztVege

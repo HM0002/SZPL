@@ -1,13 +1,27 @@
 loadPalya
 vonatInditas
-setAlagut S06
-setAlagut S10
-kirajzolStart
+setAlagut S002
+setAlagut S008
+kirajzolas
 step
+vonatInditas
+kirajzolas
 step
+vonatInditas
+kirajzolas
 step
+vonatInditas
+kirajzolas
 step
+vonatInditas
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
+step
+kirajzolas
+step
+kirajzolas
 step
 tesztVege

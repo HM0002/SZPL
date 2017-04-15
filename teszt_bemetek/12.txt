@@ -1,13 +1,20 @@
 loadPalya
-setKezdoPozicio M01 S15 S14
-setKezdoPozicio C01 S14 S13
-setKezdoPozicio K01 S13 V12
-setKezdoPozicio K02 V12 S23
-kirajzolStart
+setKezdoPozicio M000 S010 S009
+setKezdoPozicio C001 S009 S008
+setKezdoPozicio K203 S008 V007
+setKezdoPozicio K104 V007 S018
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
+step
+kirajzolas
 step
 tesztVege

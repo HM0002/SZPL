@@ -1,5 +1,4 @@
+kirajzolasStart
 loadPalya
-kirajzolas
-vonatInditas
 kirajzolas
 tesztVege

@@ -1,0 +1,88 @@
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001   S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : nincs
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : nincs
+K104: kék	 Utas : nincs
+K111: kék	 Utas : nincs
+K213: piros	 Utas : nincs
+
+JM.gyozelemEllenorzes()
+Palya 1.getElemek()
+Nincsenek várakozó utasok
+Palya 1.getVonatok()
+Palya 1.getVonatok()
+VONAT0.getJarmuvek()
+M000.getSzin(), visszaadott érték: 0
+C001.getSzin(), visszaadott érték: 0
+C002.getSzin(), visszaadott érték: 0
+K203.getSzin(), viszaadott érték: 0
+K104.getSzin(), viszaadott érték: 0
+VONAT1.getJarmuvek()
+M010.getSzin(), visszaadott érték: 0
+K111.getSzin(), viszaadott érték: 0
+C012.getSzin(), visszaadott érték: 0
+K213.getSzin(), viszaadott érték: 0
+Nyertünk a pályán, következõ betöltése!
+Palya 25
+
+        S010   S009   S008   V007   S018   S017                                    
+
+        S011                 S006          V016   S021                             
+
+        A012                 S005          A015          S042                      
+
+ S000   S001   S002   A003   K004   A013   V014                 S041               
+
+                             S023          S019                        S040        
+
+                             S022          S020                        S039   S038 
+
+                             S024          V032   S033   A034   S035   S036   S037 
+
+                             S025          S031                                    
+
+                             S026          S030                                    
+
+                             S027   S028   S029                                    
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: A013 <--> A015 
+V016: A015 <--> S017 
+V032: S031 <--> S033 
+
+Állomások színe:
+A003: kék	 Várakozó utas : nincs
+A012: kék	 Várakozó utas : van
+A013: piros	 Várakozó utas : nincs
+A015: piros	 Várakozó utas : nincs
+A034: piros	 Várakozó utas : van
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+K120: kék	 Utas : van
+K221: piros	 Utas : van
+

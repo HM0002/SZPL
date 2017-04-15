@@ -1,7 +1,9 @@
 loadPalya
-setKezdoPozicio M01 S11 V12
-kirajzolStart
+setKezdoPozicio M000 S023 S022
+kirajzolas
 step
+kirajzolas
 step
+kirajzolas
 step
 tesztVege

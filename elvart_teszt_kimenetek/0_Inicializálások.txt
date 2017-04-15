@@ -1,0 +1,97 @@
+Pályabetöltés elindult!
+ S010  konstruktora elindult
+ S009  konstruktora elindult
+ S008  konstruktora elindult
+ V007  konstruktora elindult
+ S018  konstruktora elindult
+ S017  konstruktora elindult
+ S011  konstruktora elindult
+ S006  konstruktora elindult
+ S016  konstruktora elindult
+ A012  konstruktora elindult
+paraméterei: szin = 1, varakozoUtas = false
+ S005  konstruktora elindult
+ A015  konstruktora elindult
+paraméterei: szin = 1, varakozoUtas = false
+ S000  konstruktora elindult
+ S001  konstruktora elindult
+ S002  konstruktora elindult
+ S003  konstruktora elindult
+ K004  konstruktora elindult
+ S013  konstruktora elindult
+ V014  konstruktora elindult
+ S023  konstruktora elindult
+ S019  konstruktora elindult
+ S022  konstruktora elindult
+ S021  konstruktora elindult
+ S020  konstruktora elindult
+M000 konstruktora elindult
+C001 konstruktora elindult
+C002 konstruktora elindult
+K203 konstruktora elindult
+paraméterei: szin = 2
+K104 konstruktora elindult
+paraméterei: szin = 1
+VONAT0 konstruktora elindult
+M010 konstruktora elindult
+K111 konstruktora elindult
+paraméterei: szin = 1
+C012 konstruktora elindult
+K213 konstruktora elindult
+paraméterei: szin = 2
+VONAT1 konstruktora elindult
+ S000 .setSzomszedok( S001 ,  S001 , null, null) felhívva
+ S001 .setSzomszedok( S002 ,  A012 , null, null) felhívva
+ S002 .setSzomszedok( S001 ,  S003 , null, null) felhívva
+ S003 .setSzomszedok( S002 ,  K004 , null, null) felhívva
+ K004 .setSzomszedok( S003 ,  S013 ,  S023 ,  S005 ) felhívva
+ S005 .setSzomszedok( K004 ,  S006 , null, null) felhívva
+ S006 .setSzomszedok( S005 ,  V007 , null, null) felhívva
+ V007 .setSzomszedok( S008 ,  S018 ,  S006 , null) felhívva
+ S008 .setSzomszedok( V007 ,  S009 , null, null) felhívva
+ S009 .setSzomszedok( S008 ,  S010 , null, null) felhívva
+ S010 .setSzomszedok( S011 ,  S009 , null, null) felhívva
+ S011 .setSzomszedok( S010 ,  A012 , null, null) felhívva
+ A012 .setSzomszedok( S011 ,  S001 , null, null) felhívva
+ S013 .setSzomszedok( K004 ,  V014 , null, null) felhívva
+ V014 .setSzomszedok( S013 ,  A015 ,  S019 , null) felhívva
+ A015 .setSzomszedok( S016 ,  V014 , null, null) felhívva
+ S016 .setSzomszedok( A015 ,  S017 , null, null) felhívva
+ S017 .setSzomszedok( S016 ,  S018 , null, null) felhívva
+ S018 .setSzomszedok( V007 ,  S017 , null, null) felhívva
+ S019 .setSzomszedok( V014 ,  S020 , null, null) felhívva
+ S020 .setSzomszedok( S019 ,  S021 , null, null) felhívva
+ S021 .setSzomszedok( S020 ,  S022 , null, null) felhívva
+ S022 .setSzomszedok( S021 ,  S023 , null, null) felhívva
+ S023 .setSzomszedok( K004 ,  S022 , null, null) felhívva
+Palya 1 konstruktora elindult.
+paraméterei: keslelteto = 12
+JM konstruktora elindult
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001   S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+

@@ -1,0 +1,196 @@
+Palya 1
+
+       (M000) (C001) (K203) (K104)  S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001   S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+       (C001) (K203) (K104)  V007   S018   S017 
+
+       (M000)                S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001   S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+       (K203) (K104)  S008   V007   S018   S017 
+
+       (C001)                S006          S016 
+
+       (M000)                S005          A015 
+
+ S000   S001   S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+       (K104)  S009   S008   V007   S018   S017 
+
+       (K203)                S006          S016 
+
+       (C001)                S005          A015 
+
+ S000  (M000)  S002   S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+       (K104)                S006          S016 
+
+       (K203)                S005          A015 
+
+ S000  (C001) (M000)  S003   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+       (K104)                S005          A015 
+
+ S000  (K203) (C001) (M000)  K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000  (K104) (K203) (C001) (M000)  S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+

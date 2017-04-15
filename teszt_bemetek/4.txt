@@ -1,6 +1,5 @@
 loadPalya
-kirajzolasStart
 kirajzolas
-setAlagut S10
+setAlagut S010
 kirajzolas
 tesztVege

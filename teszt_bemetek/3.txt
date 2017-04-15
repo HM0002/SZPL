@@ -1,5 +1,4 @@
 loadPalya
-kirajzolasStart
 kirajzolas
 vonatInditas
 kirajzolas

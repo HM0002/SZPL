@@ -1,7 +1,7 @@
 loadPalya
-setAlagut S06
-setAlagut S10
-kirajzolStart
-setAlagut S14
+setAlagut S002
+setAlagut S008
 kirajzolas
+kirajzolasStart
+setAlagut S017
 tesztVege

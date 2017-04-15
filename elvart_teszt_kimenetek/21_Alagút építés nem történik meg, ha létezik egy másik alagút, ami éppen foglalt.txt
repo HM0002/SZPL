@@ -1,0 +1,94 @@
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000  (M000)  S002   |AL|   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001  (M000)  |AL|   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+Palya 1
+
+        S010   S009   S008   V007   S018   S017 
+
+        S011                 S006          S016 
+
+        A012                 S005          A015 
+
+ S000   S001   S002   |AL|   K004   S013   V014 
+
+                             S023          S019 
+
+                             S022   S021   S020 
+
+Váltók állása:
+V007: S008 <--> S018 
+V014: S013 <--> A015 
+
+Állomások színe:
+A012: kék	 Várakozó utas : van
+A015: piros	 Várakozó utas : nincs
+
+Kocsik színe:
+K203: piros	 Utas : van
+K104: kék	 Utas : van
+K111: kék	 Utas : van
+K213: piros	 Utas : van
+
+ S017 .setAlagut()
+Palya 1.getAlagutSzam(), visszaadott érték: 1
+Palya 1.getAlagutSzam(), visszaadott érték: 1
+Palya 1.alagut( S017 )
+ S000 .getAlagut(), visszaadott érték: false
+ S001 .getAlagut(), visszaadott érték: false
+ S002 .getAlagut(), visszaadott érték: false
+ S003 .getAlagut(), visszaadott érték: true
+ S003 .getFoglalt(), visszaadott érték: 1
+ S017 : Nem lehet alagutat építeni, mert a másik alagút foglalt: S003 

@@ -1,6 +1,8 @@
 loadPalya
-setKezdoPozicio M01 V12 S23
-kirajzolStart
-switchValto V12
+setKezdoPozicio M000 S018 S017
 kirajzolas
+step
+kirajzolas
+kirajzolasStart
+switchValto V007
 tesztVege

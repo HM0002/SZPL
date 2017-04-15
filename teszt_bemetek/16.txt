@@ -1,23 +1,14 @@
 loadPalya
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-vonatInditas
-setVarakozo A17 false
-kiurit K01
-kiurit K02
-kiurit K03
-kiurit K04
-kirajzolStart
+setVonatSzamlalo
+setVonatSzamlalo
+setVarakozoUtas A012 false
+kiurit K203
+kiurit K104
+kiurit K111
+kiurit K213
+kirajzolas
+kirajzolasStart
 gyozelemEllenorzes
+palyaBetoltes
+kirajzolas
 tesztVege

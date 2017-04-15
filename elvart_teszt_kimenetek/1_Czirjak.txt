@@ -1,0 +1,91 @@
+Palya teszt
+
+                             S004 
+
+ S000   S001   S002   V003        
+
+                             S005 
+
+Váltók állása:
+V003: S004 <--> S002 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+(M000)  S001   S002   V003        
+
+                             S005 
+
+Váltók állása:
+V003: S004 <--> S002 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+(C001) (M000)  S002   V003        
+
+                             S005 
+
+Váltók állása:
+V003: S004 <--> S002 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+ S000  (C001) (M000)  V003        
+
+                             S005 
+
+Váltók állása:
+V003: S004 <--> S002 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+ S000  (C001) (M000)  V003        
+
+                             S005 
+
+Váltók állása:
+V003: S002 <--> S005 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+ S000   S001  (C001) (M000)       
+
+                             S005 
+
+Váltók állása:
+V003: S002 <--> S005 
+
+Állomások színe:
+
+Palya teszt
+
+                             S004 
+
+ S000   S001   S002  (C001)       
+
+                            (M000)
+
+Váltók állása:
+V003: S002 <--> S005 
+
+Állomások színe:
+

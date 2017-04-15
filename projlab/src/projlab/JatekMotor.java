@@ -64,6 +64,13 @@ public class JatekMotor {
 	}
 
 	/**
+	 * Növeli a vonatSzamlalo értékét.
+	 */
+	public void setVonatSzamlalo() {
+		vonatSzamlalo++;
+	}
+
+	/**
 	 * Vizsgáljuk az eltelt idõt. Ha eltelt egy adott idõ (1 másodperc),
 	 * felhivjuk az idoEltelt metódus, majd visszatérünk igazzal, tehát hogy
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
@@ -151,7 +158,7 @@ public class JatekMotor {
 				}
 
 				ujVonat = 0;
-				vonatSzamlalo++;
+				setVonatSzamlalo();
 
 			} else
 				ujVonat++;
@@ -170,8 +177,10 @@ public class JatekMotor {
 	public boolean utkozesEllenorzes() {
 		logger.log(Level.INFO, "JM.utkozesEllenorzes()");
 		for (PalyaElem e : palyak.get(0).getElemek())
-			if (e.getFoglalt() > 1)
+			if (e.getFoglalt() > 1) {
+				logger.log(Level.INFO, "Ütközés vagy kisiklás történt!");
 				return true;
+			}
 
 		return false;
 	}
@@ -221,12 +230,9 @@ public class JatekMotor {
 	 * meghíjuk a gyozelemEllenorzes metódust, ami ha igazzal tér vissza,
 	 * megnézzük, hogy van-e még pálya hátra a palyak listában. Ha nincs,
 	 * végigvittük a játékot, errõl értesítjük a felhasználót és visszatérünk a
-	 * menübe. Ha van még pálya hátra, töröljük a palyak 0. elemét, és a többi
-	 * elemét balra shifteljuk az ArrayList remove metódusával. E mellett
-	 * újrakezdjük az idõ mérését, és beállítjuk a vonatSzamlalo-t nullára,
-	 * illetve az ujVonat-ot egy nagy számra(500, egy akkora szám kell, ami
-	 * nagyobb, mint a pályáknak a keslelteto értékei, hogy elinduljon az elsõ
-	 * vonat). A gyozelemEllenorzes után felhívjuk a vonatInditas metódust.
+	 * menübe. Ha van még pálya hátra, felhívjuk a palyaBetoltes metódust, ami
+	 * betölti az új pályát. A gyozelemEllenorzes után felhívjuk a vonatInditas
+	 * metódust.
 	 */
 	private void run() {
 		logger.log(Level.INFO, "JM.run()");
@@ -243,11 +249,8 @@ public class JatekMotor {
 						// gyozelem popup
 						return;
 					} else {
-						// kiszedi a 0. elemet, és a többi elemet shifteli balra
-						palyak.remove(0);
-						prevTime = System.currentTimeMillis();
-						ujVonat = 500;
-						vonatSzamlalo = 0;
+						logger.log(Level.INFO, "Megnyertük a pályát!");
+						palyaBetoltes();
 					}
 				}
 				vonatInditas();
@@ -255,6 +258,20 @@ public class JatekMotor {
 		}
 		// utkozes popup
 		logger.log(Level.INFO, "JM.run() metódusban ütközés történt!");
+	}
+
+	/**
+	 * Töröljük a palyak 0. elemét, és a többi elemét balra shifteljuk az
+	 * ArrayList remove metódusával. E mellett újrakezdjük az idõ mérését, és
+	 * beállítjuk a vonatSzamlalo-t nullára, illetve az ujVonat-ot egy nagy
+	 * számra(500, egy akkora szám kell, ami nagyobb, mint a pályáknak a
+	 * keslelteto értékei, hogy elinduljon az elsõ vonat).
+	 */
+	public void palyaBetoltes() {
+		palyak.remove(0);
+		prevTime = System.currentTimeMillis();
+		ujVonat = 500;
+		vonatSzamlalo = 0;
 	}
 
 }

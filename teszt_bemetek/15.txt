@@ -1,9 +1,11 @@
 loadPalya
-SetKezdoPozicio K01 S15 S14
-SetKezdoPozicio K02 S03 S02
-kirajzolStart
+setKezdoPozicio M000 S011 S010
+setKezdoPozicio M010 S003 K004
+kirajzolas
 step
+kirajzolas
 step
-step
+kirajzolas
+kirajzolasStart
 utkozesEllenorzes
 tesztVege

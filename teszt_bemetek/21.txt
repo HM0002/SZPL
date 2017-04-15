@@ -1,10 +1,11 @@
 loadPalya
-setAlagut S06
-setKezdoPozicio C01 S03 S02
-setKezdoPozicio M01 S04 S03
-kirajzolStart
+setAlagut S003
+setKezdoPozicio M000 S001 S000
+kirajzolas
 step
+kirajzolas
 step
-setAlagut S10
-step
+kirajzolas
+kirajzolasStart
+setAlagut S017
 tesztVege

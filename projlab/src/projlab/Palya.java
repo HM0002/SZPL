@@ -31,7 +31,7 @@ public class Palya {
 	 * elemek képe: Itt tároljuk, hogy melyik ID-jû pályaelem hol helyezkedik el
 	 * az aktuális pályán.
 	 */
-	private String[][] palyaKepX = null;
+	private String[][] palyaKep;
 
 	/**
 	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
@@ -64,7 +64,7 @@ public class Palya {
 		vonatok = v;
 		keslelteto = k;
 		alagutSzam = 0;
-		palyaKepX = kep;
+		palyaKep = kep;
 		this.id = id;
 		logger.log(Level.INFO, id + " konstruktora elindult.\nparaméterei: keslelteto = " + k);
 	}
@@ -133,8 +133,8 @@ public class Palya {
 	}
 	
 	/** Visszatér a pályakép értékével. */
-	public String[][] getPalyaKepX() {
-		return palyaKepX;
+	public String[][] getPalyaKep() {
+		return palyaKep;
 	}
 	
 

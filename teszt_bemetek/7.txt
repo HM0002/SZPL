@@ -1,10 +1,9 @@
 loadPalya
-kirajzolasStart
 kirajzolas
-switchValto V12
+switchValto V007
 kirajzolas
-switchValto V12
+switchValto V007
 kirajzolas
-switchValto V12
+switchValto V007
 kirajzolas
 tesztVege
