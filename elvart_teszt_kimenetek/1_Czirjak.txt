@@ -6,10 +6,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S004 <--> S002 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -19,10 +19,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S004 <--> S002 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -32,10 +32,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S004 <--> S002 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -45,10 +45,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S004 <--> S002 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -58,10 +58,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S002 <--> S005 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -71,10 +71,10 @@ Palya teszt
 
                              S005 
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S002 <--> S005 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
 Palya teszt
 
@@ -84,8 +84,8 @@ Palya teszt
 
                             (M000)
 
-VÃ¡ltÃ³k Ã¡llÃ¡sa:
+Váltók állása:
 V003: S002 <--> S005 
 
-ÃllomÃ¡sok szÃ­ne:
+Állomások színe:
 
