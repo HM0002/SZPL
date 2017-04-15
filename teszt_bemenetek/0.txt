@@ -1,4 +1,3 @@
 kirajzolasStart
 loadPalya
-kirajzolas
 tesztVege
