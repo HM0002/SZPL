@@ -14,13 +14,13 @@ Következõ karakter: Hányadik vonat jármûve
 Utolsó karakter sorfolyotonos index 0-tõl 9-ig.
 Majd újsor jelzi a blokk végét.
 
-Következõ blokk állomások felsorolása, majd szóköz, színkód száma, szóköz és TRUE vagy FALSE, ami azt adja meg, van-e
-várakozó utas az állomáson.
-
 Következõ blokk: szomszédosségi felsorolás, szintaktika:
 <palyaelem sorszáma><szóköz><1. szomszéd sorszáma><szóköz><2. szomszéd> és opcionálisan 3. és negyedik szomszéd szóközzel elválasztva,
 hibakezelési okokból folytonosan (plusz ellenõrzés típusnak megfelelõ számú szomszéd lett-e megadva!)
 Kötelezõen beállítandó a S000-nek mindkét szomszédja S001! Ha nem ilyen, error!
 Blokk végén üres sor.
+
+Következõ blokk állomások felsorolása, majd szóköz, színkód száma, szóköz és TRUE vagy FALSE, ami azt adja meg, van-e
+várakozó utas az állomáson.
 
 Utolsó blokk a pálya adatai: egy szám, hány idõpillanat teljen el a vonatok indítása között.
