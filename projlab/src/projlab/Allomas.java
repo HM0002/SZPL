@@ -50,6 +50,18 @@ public class Allomas extends PalyaElem {
 	}
 
 	/**
+	 * Egyszerûsített Konstruktor, meghívjuk az õs konstruktorát, és
+	 * alapértelmezett atribútumokkal létrehozzuk az állomást
+	 */
+	Allomas(String id) {
+		super(id);
+		szin = 1;
+		aktiv = false;
+		varakozoUtas = false;
+		logger.log(Level.INFO, "paraméterei: szin = " + szin + ", varakozoUtas = " + varakozoUtas);
+	}
+
+	/**
 	 * Igazra állítja az aktiv-ot, és megadja a következõ PalyaElem példányt,
 	 * ahova a Mozdony kerülni fog az új idõpillanatban, úgy, hogy megnézi a
 	 * Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok
@@ -90,14 +102,12 @@ public class Allomas extends PalyaElem {
 	 */
 	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
-
-		int kSzin = k.getSzin();
-
-		if (kSzin != szin) {
-			if (kSzin != 0)
-				aktiv = false;
-		} else if (aktiv == true)
+		
+		if (k.getSzin() == szin && aktiv == true ) {
 			k.kiurit();
+		}
+		else if (k.getSzin() != 0) 
+			aktiv = false;
 
 		if (varakozoUtas == true) {
 			logger.log(Level.INFO, "Van várakozó utas");
@@ -144,6 +154,13 @@ public class Allomas extends PalyaElem {
 	 */
 	public int getSzin() {
 		return szin;
+	}
+	
+	/**
+	 *Beállítja a szin változó értékét (állomás színe).
+	 */
+	public void setSzin(int i) {
+		szin=i;
 	}
 
 	/**

@@ -28,6 +28,12 @@ public class Palya {
 	private ArrayList<PalyaElem> elemek;
 
 	/**
+	 * elemek képe: Itt tároljuk, hogy melyik ID-jû pályaelem hol helyezkedik el
+	 * az aktuális pályán.
+	 */
+	private String[][] palyaKepX = null;
+
+	/**
 	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
 	 */
 	private ArrayList<Vonat> vonatok;
@@ -51,13 +57,14 @@ public class Palya {
 	 * Konstruktor, a paraméterül kapott PalyaElem példányoknak beállítjuk, hogy
 	 * ehhez a Palya-hoz tartoznak.
 	 */
-	Palya(int k, ArrayList<PalyaElem> e, ArrayList<Vonat> v, String id) {
+	Palya(int k, ArrayList<PalyaElem> e, ArrayList<Vonat> v, String[][] kep, String id) {
 		elemek = e;
 		for (PalyaElem pe : elemek)
 			pe.setPalya(this);
 		vonatok = v;
 		keslelteto = k;
 		alagutSzam = 0;
+		palyaKepX = kep;
 		this.id = id;
 		logger.log(Level.INFO, id + " konstruktora elindult.\nparaméterei: keslelteto = " + k);
 	}
@@ -124,5 +131,11 @@ public class Palya {
 	public String getID() {
 		return id;
 	}
+	
+	/** Visszatér a pályakép értékével. */
+	public String[][] getPalyaKepX() {
+		return palyaKepX;
+	}
+	
 
 }

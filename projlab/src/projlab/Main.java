@@ -15,67 +15,8 @@ public class Main {
 
 	// Jatekmotor létrehozása
 	static JatekMotor JM;
-
-	// Elsõ pályához PalyaElem-eknek ArrayList létrehozása
-	static ArrayList<PalyaElem> palyaElemek0;
-
-	// Jarmuveknek ArrayList
-	static ArrayList<Jarmu> vonat0;
-	static ArrayList<Jarmu> vonat1;
-
-	// 1. Pálya létrehozása(p0)
-	static Palya p0;
-	static Palya p1;
-
-	// Vonatoknak ArrayList
-	static ArrayList<Vonat> vonatok0;
-
-	// Palyaknak ArrayList
-	static ArrayList<Palya> palyak;
-
-	// Vonat objektumok létrehozása
-	static Vonat v0;
-	static Vonat v1;
-
-	// Elsõ Pályához Sin-ek, Valto-k, Allomas-ok létrehozása
-	static Sin e0;
-	static Sin e1;
-	static Sin e2;
-	static Sin e3;
-	static Keresztezodes e4;
-	static Sin e5;
-	static Sin e6;
-	static Valto e7;
-	static Sin e8;
-	static Sin e9;
-	static Sin e10;
-	static Sin e11;
-	static Allomas e12;
-	static Sin e13;
-	static Valto e14;
-	static Allomas e15;
-	static Sin e16;
-	static Sin e17;
-	static Sin e18;
-	static Sin e19;
-	static Sin e20;
-	static Sin e21;
-	static Sin e22;
-	static Sin e23;
-
-	// Jarmu-vek létrehozása, elõször a vonat1 elemei
-	static Mozdony m1;
-	static Szeneskocsi sz1;
-	static Szeneskocsi sz2;
-	static Kocsi k1;
-	static Kocsi k2;
-
-	// majd a vonat2 elemei
-	static Mozdony m2;
-	static Szeneskocsi sz3;
-	static Kocsi k3;
-	static Kocsi k4;
-
+	public static BufferedReader br = null;
+	
 	public static void main(String[] args) throws SecurityException, IOException {
 
 		for (Handler handler : logger.getParent().getHandlers()) {
@@ -87,8 +28,6 @@ public class Main {
 		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");
 		fileHandler.setFormatter(formatter);
 		logger.addHandler(fileHandler);
-
-		BufferedReader br = null;
 
 		if (args[0].equals("K"))
 			br = new BufferedReader(new InputStreamReader(System.in));
@@ -110,136 +49,276 @@ public class Main {
 
 	}
 
-	private static void init() {
-		logger.log(Level.INFO, "Játek elemeinek inicializálása: \n");
+	private static Palya palyaBetoltes(BufferedReader a, String id) throws IOException {
 
-		// Sin konstuktorok
-		e0 = new Sin(" S000 ");
-		e1 = new Sin(" S001 ");
-		e2 = new Sin(" S002 ");
-		e3 = new Sin(" S003 ");
-		e4 = new Keresztezodes(" K004 ");
-		e5 = new Sin(" S005 ");
-		e6 = new Sin(" S006 ");
-		e7 = new Valto(" V007 ");
-		e8 = new Sin(" S008 ");
-		e9 = new Sin(" S009 ");
-		e10 = new Sin(" S010 ");
-		e11 = new Sin(" S011 ");
-		e12 = new Allomas(1, true, " A012 ");
-		e13 = new Sin(" S013 ");
-		e14 = new Valto(" V014 ");
-		e15 = new Allomas(2, false, " A015 ");
-		e16 = new Sin(" S016 ");
-		e17 = new Sin(" S017 ");
-		e18 = new Sin(" S018 ");
-		e19 = new Sin(" S019 ");
-		e20 = new Sin(" S020 ");
-		e21 = new Sin(" S021 ");
-		e22 = new Sin(" S022 ");
-		e23 = new Sin(" S023 ");
+		BufferedReader reader = a;
 
-		palyaElemek0 = new ArrayList<PalyaElem>();
+		// vedd le a kommentet az ezalatti sorról a debug-kiíráshoz!
+		// logger.setLevel(Level.INFO);
 
-		// Sin-ek összekötése
-		e0.setSzomszedok(e1, e1, null, null);
-		e1.setSzomszedok(e12, e2, null, null);
-		e2.setSzomszedok(e1, e3, null, null);
-		e3.setSzomszedok(e2, e4, null, null);
-		e4.setSzomszedok(e3, e13, e5, e23);
-		e5.setSzomszedok(e4, e6, null, null);
-		e6.setSzomszedok(e5, e7, null, null);
-		e7.setSzomszedok(e8, e18, e6, null);
-		e8.setSzomszedok(e7, e9, null, null);
-		e9.setSzomszedok(e8, e10, null, null);
-		e10.setSzomszedok(e9, e11, null, null);
-		e11.setSzomszedok(e10, e12, null, null);
-		e12.setSzomszedok(e11, e1, null, null);
-		e13.setSzomszedok(e4, e14, null, null);
-		e14.setSzomszedok(e13, e15, e19, null);
-		e15.setSzomszedok(e14, e16, null, null);
-		e16.setSzomszedok(e15, e17, null, null);
-		e17.setSzomszedok(e16, e18, null, null);
-		e18.setSzomszedok(e17, e7, null, null);
-		e19.setSzomszedok(e14, e20, null, null);
-		e20.setSzomszedok(e19, e21, null, null);
-		e21.setSzomszedok(e20, e22, null, null);
-		e22.setSzomszedok(e21, e23, null, null);
-		e23.setSzomszedok(e22, e4, null, null);
+		logger.log(Level.INFO, "Pályabetöltés elindult!");
 
-		// palyaElemek1 listához a Sin példányok hozzáadása
-		palyaElemek0.add(e0);
-		palyaElemek0.add(e1);
-		palyaElemek0.add(e2);
-		palyaElemek0.add(e3);
-		palyaElemek0.add(e4);
-		palyaElemek0.add(e5);
-		palyaElemek0.add(e6);
-		palyaElemek0.add(e7);
-		palyaElemek0.add(e8);
-		palyaElemek0.add(e9);
-		palyaElemek0.add(e10);
-		palyaElemek0.add(e11);
-		palyaElemek0.add(e12);
-		palyaElemek0.add(e13);
-		palyaElemek0.add(e14);
-		palyaElemek0.add(e15);
-		palyaElemek0.add(e16);
-		palyaElemek0.add(e17);
-		palyaElemek0.add(e18);
-		palyaElemek0.add(e19);
-		palyaElemek0.add(e20);
-		palyaElemek0.add(e21);
-		palyaElemek0.add(e22);
-		palyaElemek0.add(e23);
+		// Pálya kép lokális változó
+		String[][] palyaKep = null;
 
-		// Jarmu (Mozdony, Kocsi és Szeneskocsi) konstruktorok
-		m1 = new Mozdony("M000");
-		sz1 = new Szeneskocsi("C001");
-		sz2 = new Szeneskocsi("C002");
-		k1 = new Kocsi(2, "K203");
-		k2 = new Kocsi(1, "K104");
+		// mezõk, sorok
+		int columns, rows;
 
-		m2 = new Mozdony("M010");
-		k3 = new Kocsi(1, "K111");
-		sz3 = new Szeneskocsi("C012");
-		k4 = new Kocsi(2, "K213");
+		// elemek
+		int cnt = 0;
 
-		vonat0 = new ArrayList<Jarmu>();
-		vonat1 = new ArrayList<Jarmu>();
+		// a konzolról is olvasni tudóhoz nem kell
+		// reader = new BufferedReader(new FileReader(a));
 
-		// vonatokba a Jarmu-vek elhelyezése: vonat1
-		vonat0.add(m1);
-		vonat0.add(sz1);
-		vonat0.add(sz2);
-		vonat0.add(k1);
-		vonat0.add(k2);
+		String line = null;
+		String[] params = null;
 
-		// vonatokba a Jarmu-vek elhelyezése: vonat2
-		vonat1.add(m2);
-		vonat1.add(sz3);
-		vonat1.add(k3);
-		vonat1.add(k4);
+		// pályaelemk tömbje
+		ArrayList<PalyaElem> palyaElemek;
 
-		// Vonat konstruktorok
-		v0 = new Vonat(vonat0, "VONAT0");
-		v1 = new Vonat(vonat1, "VONAT1");
+		// vonat elem
+		Vonat v = null;
 
-		vonatok0 = new ArrayList<Vonat>();
+		// vonatok tömbje
+		ArrayList<Vonat> vonatok = new ArrayList<Vonat>();
 
-		// vonatok hozzáadása a vonatlistához
-		vonatok0.add(v0);
-		vonatok0.add(v1);
+		// palyaelem
+		PalyaElem pe = null;
 
-		// Palya konstruktor
-		p1 = new Palya(12, palyaElemek0, vonatok0, "palya2");
-		p0 = new Palya(12, palyaElemek0, vonatok0, "palya1");
+		// local String tmp
+		String tmp;
 
-		palyak = new ArrayList<Palya>();
+		line = reader.readLine();
+		params = line.split(" ");
+		columns = Integer.parseInt(params[0]);
+		rows = Integer.parseInt(params[1]);
+		cnt = Integer.parseInt(params[2]);
 
-		// Elsõ hozzáadása a pályalistához
-		palyak.add(p0);
-		palyak.add(p1);
+		palyaElemek = new ArrayList<PalyaElem>(cnt);
+		for (int i = 0; i < cnt; i++)
+			palyaElemek.add(null);
+
+		palyaKep = new String[rows][columns];
+
+		// palyakep, elemek létrehozása
+		for (int i = 0, counter = 0; i < rows; i++) {
+			line = reader.readLine();
+			params = line.split(",");
+			if (params.length != columns) {
+				logger.setLevel(Level.INFO);
+				int errorat = i + 1;
+				logger.log(Level.INFO, "Nem az elsõ sorban meghatározott méretû pálya került definiálásra! Hiba a(z) "
+						+ errorat + ". sorban!");
+				System.exit(0);
+			}
+
+			for (int j = 0; j < columns; j++) {
+				tmp = " " + params[j] + " ";
+				palyaKep[i][j] = tmp;
+
+				if (params[j].contains("S")) {
+					counter++;
+					if (counter > cnt) {
+						logger.setLevel(Level.INFO);
+						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
+						System.exit(0);
+					}
+					pe = new Sin(tmp);
+					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
+				} else if (params[j].contains("A")) {
+					counter++;
+					if (counter > cnt) {
+						logger.setLevel(Level.INFO);
+						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
+						System.exit(0);
+					}
+					pe = new Allomas(tmp);
+					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
+				} else if (params[j].contains("V")) {
+					counter++;
+					if (counter > cnt) {
+						logger.setLevel(Level.INFO);
+						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
+						System.exit(0);
+					}
+					pe = new Valto(tmp);
+					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
+				} else if (params[j].contains("K")) {
+					counter++;
+					if (counter > cnt) {
+						logger.setLevel(Level.INFO);
+						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
+						System.exit(0);
+					}
+					pe = new Keresztezodes(tmp);
+					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
+				} else if (params[j].contains("    "))
+					;
+				else {
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO, "Nem megfelelõ szintaktikájú pályaelem! " + params[j]);
+					System.exit(0);
+				}
+			}
+		}
+		// üres kell legyen
+		if (!((line = reader.readLine()).isEmpty())) {
+			logger.setLevel(Level.INFO);
+			logger.log(Level.INFO,
+					"Nem megfelelõ bemeneti FILE, a pályaelemek után üres sor kell jöjjön! Ezt találtam az üres sor helyett: "
+							+ line);
+			System.exit(0);
+		}
+		// megfelelõ mennyiségû elemnek lennie kell, nem lehet lyuk
+		for (PalyaElem p : palyaElemek)
+			if (p == null) {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO,
+						"Nem megfelelõ bemeneti FILE, nem megfelelõ számû pályaelemet találtam! Lehet, nem sorfolytonos a számozás!");
+				System.exit(0);
+			}
+
+		// Jarmuvek letrehozasa
+		for (int i = 0; !((line = reader.readLine()).isEmpty()); i++) {
+			params = line.split(" ");
+			ArrayList<Jarmu> jarmuvek = new ArrayList<Jarmu>();
+			Jarmu jarmu = null;
+
+			if (!(params[0].contains("M"))) {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO, "Minden vonat elsõ jármûvének mozdony típusúnak kell lennie!");
+				System.exit(0);
+			}
+
+			for (String s : params) {
+				if (s.contains("M"))
+					jarmu = new Mozdony(s);
+				else if (s.contains("C"))
+					jarmu = new Szeneskocsi(s);
+				else if (s.contains("K"))
+					jarmu = new Kocsi(Integer.parseInt(s.substring(1, 2)), s);
+				else {
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO, "Nem megfelelõ jármû típus! " + s);
+					System.exit(0);
+				}
+				jarmuvek.add(jarmu);
+			}
+			v = new Vonat(jarmuvek, "VONAT" + i);
+			vonatok.add(v);
+		}
+
+		// Szomszédság beállítása
+		for (int i = 0; i < cnt; i++) {
+			line = reader.readLine();
+			params = line.split(" ");
+			if (Integer.parseInt(params[0]) != i) {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO,
+						"Nem megfelelõ szomszédság elem! Lehet, nem megfelelõ sorrendben lettek megadva, vagy kimaradt valamelyik! "
+								+ palyaElemek.get(i).getID() + " szomszédaji helyett ezt találtam: " + params[0]);
+				System.exit(0);
+			}
+			if (palyaElemek.get(i).getID().contains("S") || palyaElemek.get(i).getID().contains("A")) {
+				if (params.length != 3) {
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO,
+							"Nem megfelelõ szomszédság elem! Sin és Allomas típusnak két szomszédja kell legyen! "
+									+ palyaElemek.get(i).getID());
+					System.exit(0);
+				}
+				palyaElemek.get(i).setSzomszedok(palyaElemek.get(Integer.parseInt(params[1])),
+						palyaElemek.get(Integer.parseInt(params[2])), null, null);
+			} else if (palyaElemek.get(i).getID().contains("V")) {
+				if (params.length != 4) {
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO,
+							"Nem megfelelõ szomszédság elem! Valto típusnak három szomszédja kell legyen! "
+									+ palyaElemek.get(i).getID());
+					System.exit(0);
+				}
+				palyaElemek.get(i).setSzomszedok(palyaElemek.get(Integer.parseInt(params[1])),
+						palyaElemek.get(Integer.parseInt(params[2])), palyaElemek.get(Integer.parseInt(params[3])),
+						null);
+			} else if (palyaElemek.get(i).getID().contains("K")) {
+				if (params.length != 5) {
+					logger.setLevel(Level.INFO);
+					logger.log(Level.INFO,
+							"Nem megfelelõ szomszédság elem! Keresztezodes típusnak öt szomszédja kell legyen! "
+									+ palyaElemek.get(i).getID());
+					System.exit(0);
+				}
+				palyaElemek.get(i).setSzomszedok(palyaElemek.get(Integer.parseInt(params[1])),
+						palyaElemek.get(Integer.parseInt(params[2])), palyaElemek.get(Integer.parseInt(params[3])),
+						palyaElemek.get(Integer.parseInt(params[4])));
+			}
+		}
+
+		// üres kell legyen
+		if (!((line = reader.readLine()).isEmpty())) {
+			logger.setLevel(Level.INFO);
+			logger.log(Level.INFO,
+					"Nem megfelelõ bemeneti FILE, a szomszédossági beállítások után üres sor kell jöjjön! Ezt találtam az üres sor helyett: "
+							+ line);
+			System.exit(0);
+		}
+
+		// Allomasok beallitasa
+		while (!((line = reader.readLine()).isEmpty())) {
+			params = line.split(" ");
+			if (palyaElemek.get(Integer.parseInt(params[0])).getID().contains("A"))
+				((Allomas) (palyaElemek.get(Integer.parseInt(params[0])))).setSzin(Integer.parseInt(params[1]));
+			else {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO,
+						"Ez a pályaelem nem Allomas! " + palyaElemek.get(Integer.parseInt(params[0])).getID());
+				System.exit(0);
+			}
+			// TODO szín ellenõrzése
+			if (params[2].equals("TRUE"))
+				((Allomas) (palyaElemek.get(Integer.parseInt(params[0])))).setVarakozoUtas(Boolean.TRUE);
+			else if (params[2].equals("FALSE"))
+				((Allomas) (palyaElemek.get(Integer.parseInt(params[0])))).setVarakozoUtas(Boolean.FALSE);
+			else {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.INFO,
+						"Az Allomas varakozo utas beallitasa csak \"TRUE\" vagy \"FALSE\" lehet! Ezt találtam: "
+								+ params[2]);
+				System.exit(0);
+			}
+		}
+
+		int keslelteto = Integer.parseInt(reader.readLine());
+
+		// a konzolról is olvasni tudóhoz nem kell
+		// reader.close();
+
+		return new Palya(keslelteto, palyaElemek, vonatok, palyaKep, id);
+
+	}
+
+	private static void init(int mode) throws IOException {
+
+		ArrayList<Palya> palyak = new ArrayList<Palya>();
+
+		if (mode == 1) {
+			// 1. (teszt) pálya Palya létrehozása
+			Palya p1 = palyaBetoltes(new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_1.txt")), "Palya 1");
+
+			// 1. (teszt) pálya hozzáadása a pályalistához
+			palyak.add(p1);
+		}
+
+		else if (mode == 25) {
+			// 25. pálya Palya létrehozása
+			Palya p25 = palyaBetoltes(new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_25.txt")), "Palya 25");
+
+			// 25. pálya hozzáadása a pályalistához
+			palyak.add(p25);
+
+		}
+
+		// TODO több pálya mód pályáinka létrehozása, betöltése
 
 		// JatekMotor konstruktor
 		JM = new JatekMotor(palyak);
@@ -248,30 +327,43 @@ public class Main {
 
 	public static void draw() {
 
-		/* @formatter:off */
-		String palyaKep[][] = new String[][] { 
-				{ "      ", " S010 ", " S009 ", " S008 ", " V007 ", " S018 ", " S017 " },
-				{ "      ", " S011 ", "      ", "      ", " S006 ", "      ", " S016 " },
-				{ "      ", " A012 ", "      ", "      ", " S005 ", "      ", " A015 " },
-				{ " S000 ", " S001 ", " S002 ", " S003 ", " K004 ", " S013 ", " V014 " },
-				{ "      ", "      ", "      ", "      ", " S023 ", "      ", " S019 " },
-				{ "      ", "      ", "      ", "      ", " S022 ", " S021 ", " S020 " } };
+		// Változó az eredeti pályaképnek
+		String[][] palyaKepX = null;
 
-		String palyaKepX[][] = new String[][] { 
-				{ "      ", " S010 ", " S009 ", " S008 ", " V007 ", " S018 ", " S017 " },
-				{ "      ", " S011 ", "      ", "      ", " S006 ", "      ", " S016 " },
-				{ "      ", " A012 ", "      ", "      ", " S005 ", "      ", " A015 " },
-				{ " S000 ", " S001 ", " S002 ", " S003 ", " K004 ", " S013 ", " V014 " },
-				{ "      ", "      ", "      ", "      ", " S023 ", "      ", " S019 " },
-				{ "      ", "      ", "      ", "      ", " S022 ", " S021 ", " S020 " } };
-		/* @formatter:on */
+		// mezõk, sorok
+		int columns, rows;
+
+		// palya kepenek elkerese a jatekmotortól
+		palyaKepX = JM.getAktualisPalya().getPalyaKepX();
+		columns = palyaKepX[0].length;
+		rows = palyaKepX.length;
+
+		// Változó a kirajzolandó pályaképnek az eredeti alapján
+		String[][] palyaKep = new String[rows][columns];
+
+		// aktív kiírási szint mentése
+		Level ltmp;
+		ltmp = logger.getLevel();
+
+		// Pálya nevének kiírása
+		logger.setLevel(Level.INFO);
+		logger.log(Level.WARNING, JM.getAktualisPalya().getID());
+		logger.log(Level.WARNING, "");
+		logger.setLevel(Level.OFF);
+
+		// palyakep alaphelyzetbe elemekkel feltöltése a helyes mûködéshez
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				palyaKep[i][j] = palyaKepX[i][j];
+			}
+		}
 
 		// set vonatok
 		logger.setLevel(Level.OFF);
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
-				for (int i = 0; i < 6; i++)
-					for (int j = 0; j < 7; j++) {
+				for (int i = 0; i < rows; i++)
+					for (int j = 0; j < columns; j++) {
 						if (jarmu.getPozicio() != null) {
 							if (palyaKepX[i][j].equals(jarmu.getPozicio().getID())) {
 								if (palyaKepX[i][j].equals(palyaKep[i][j]))
@@ -283,37 +375,37 @@ public class Main {
 					}
 
 		// set alagutak
-		logger.setLevel(Level.OFF);
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem.getAlagut()) {
-				for (int i = 0; i < 6; i++)
-					for (int j = 0; j < 7; j++) {
+				for (int i = 0; i < rows; i++)
+					for (int j = 0; j < columns; j++) {
 						if (palyaKepX[i][j].equals(palyaElem.getID()))
 							palyaKep[i][j] = " |AL| ";
 					}
 			}
 
 		// draw pálya
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < rows; i++) {
 			String temp = "";
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < columns - 1; j++)
 				temp += palyaKep[i][j] + "   ";
+			temp += palyaKep[i][columns - 1];
 			logger.setLevel(Level.INFO);
-			logger.log(Level.INFO, temp + "\n");
+			logger.log(Level.WARNING, temp + "\n");
 		}
 
-		// write válto állások
-		logger.log(Level.INFO, "Váltók állása:");
+		// write váltó állások
+		logger.log(Level.WARNING, "Váltók állása:");
 		logger.setLevel(Level.OFF);
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Valto) {
 				logger.setLevel(Level.INFO);
-				logger.log(Level.INFO, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
+				logger.log(Level.WARNING, palyaElem.getID() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
 						+ ((Valto) palyaElem).getAllas()[1].getID());
 			}
 
 		// write állomás színek, várakozó utasok
-		logger.log(Level.INFO, "\nÁllomások színe:");
+		logger.log(Level.WARNING, "\nÁllomások színe:");
 		logger.setLevel(Level.OFF);
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Allomas) {
@@ -328,11 +420,11 @@ public class Main {
 				else
 					tmp = tmp + "\t Várakozó utas : nincs";
 
-				logger.log(Level.INFO, tmp);
+				logger.log(Level.WARNING, tmp);
 			}
 
 		// write kocsi színek, utasok
-		logger.log(Level.INFO, "\nKocsik színe:");
+		logger.log(Level.WARNING, "\nKocsik színe:");
 		logger.setLevel(Level.OFF);
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
@@ -347,21 +439,31 @@ public class Main {
 					else
 						tmp = tmp + "\t Utas : van";
 					logger.setLevel(Level.INFO);
-					logger.log(Level.INFO, tmp);
+					logger.log(Level.WARNING, tmp);
 					logger.setLevel(Level.OFF);
 				}
 		logger.setLevel(Level.INFO);
 
-		logger.log(Level.INFO, "");
+		logger.log(Level.WARNING, "");
+		logger.setLevel(ltmp);
 	}
 
-	public static void commandMapping(String s[]) {
+	public static void commandMapping(String s[]) throws IOException {
 		Level tmp = logger.getLevel();
+		
+		
 
 		switch (s[0]) {
 
 		case "loadPalya":
-			init();
+			init(Integer.parseInt(s[1]));
+			break;
+			
+		case "Palya":
+			ArrayList<Palya> palyak = new ArrayList<Palya>();
+			Palya p_user = palyaBetoltes(br,"Palya "+s[1]);
+			palyak.add(p_user);
+			JM = new JatekMotor(palyak);
 			break;
 
 		case "vonatInditas":
