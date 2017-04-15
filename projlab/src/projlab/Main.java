@@ -31,7 +31,7 @@ public class Main {
 		if (args[0].equals("K"))
 			br = new BufferedReader(new InputStreamReader(System.in));
 		else if (args[0].equals("F"))
-			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1]));
+			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1] + ".txt"));
 		else {
 			System.out.println("Érvénytelen bemenet!");
 			// JM.ujJatek();
