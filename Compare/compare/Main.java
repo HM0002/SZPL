@@ -7,12 +7,12 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		
+
 		switch (args[0]) {
-		
+
 		case "0":
 			compare("0_Inicializálások.txt");
-			break;			
+			break;
 		case "1":
 			compare("1_Czirjak.txt");
 			break;
@@ -75,34 +75,36 @@ public class Main {
 			break;
 		case "21":
 			compare("21_Alagút építés nem történik meg, ha létezik egy másik alagút, ami éppen foglalt.txt");
-			break;			
+			break;
 		}
-		
+
 	}
 
 	public static void compare(String s) throws IOException {
-		try (BufferedReader br1 = new BufferedReader(new FileReader(
-				System.getProperty("user.home") + "\\elvart_teszt_kimenetek\\"
-						+ s));
-				BufferedReader br2 = new BufferedReader(new FileReader(
-						System.getProperty("user.home") + "\\kimenet.txt"));) {
+		try (BufferedReader br1 = new BufferedReader(
+				new FileReader(System.getProperty("user.home") + "\\elvart_teszt_kimenetek\\" + s));
+				BufferedReader br2 = new BufferedReader(
+						new FileReader(System.getProperty("user.home") + "\\kimenet.txt"));) {
 			String line1;
 			String line2;
 			int c = 0;
+
 			while ((line2 = br2.readLine()) != null) {
 				line1 = br1.readLine();
 				c++;
 				if (!line2.equals(line1)) {
-					System.out.println("A " + c
-							+ ". sor különbözik: \nkimenet: " + line2
-							+ "\nelvárt kimenet: " + line1);
+					System.out
+							.println("A " + c + ". sor különbözik: \nkimenet: " + line2 + "\nelvárt kimenet: " + line1);
 					br1.close();
 					br2.close();
 					System.exit(0);
 				}
 			}
-			System.out
-					.println("A teszt kimenete megegyezik az elvárt kimenettel.");
+
+			if (c == 0)
+				System.out.println("A kimenet.txt üres!.");
+			else
+				System.out.println("A teszt kimenete megegyezik az elvárt kimenettel.");
 		}
 	}
 }
