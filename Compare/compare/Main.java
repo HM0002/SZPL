@@ -41,7 +41,7 @@ public class Main {
 			compare("9_Állomás aktiválása.txt");
 			break;
 		case "10":
-			compare("10_Utasak leszállása(+ szeneskocsi helye mûködése).txt");
+			compare("10_Utasak leszállása(+ szeneskocsi helyes mûködése).txt");
 			break;
 		case "11":
 			compare("11_Utasok felszállása.txt");
