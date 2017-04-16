@@ -103,10 +103,12 @@ public class Allomas extends PalyaElem {
 	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
 		
-		if (k.getSzin() == szin && aktiv == true ) {
+		int kSzin = k.getSzin();
+		
+		if (kSzin == szin && aktiv == true ) {
 			k.kiurit();
 		}
-		else if (k.getSzin() != 0) 
+		else if (kSzin != 0) 
 			aktiv = false;
 
 		if (varakozoUtas == true) {
