@@ -28,15 +28,15 @@ public class Palya {
 	private ArrayList<PalyaElem> elemek;
 
 	/**
+	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
+	 */
+	private ArrayList<Vonat> vonatok;
+
+	/**
 	 * elemek képe: Itt tároljuk, hogy melyik ID-jû pályaelem hol helyezkedik el
 	 * az aktuális pályán.
 	 */
 	private String[][] palyaKep;
-
-	/**
-	 * vonatok: Itt tároljuk, hogy mely Vonat példányok tartoznak a pályához.
-	 */
-	private ArrayList<Vonat> vonatok;
 
 	/**
 	 * alagutSzam: Itt tároljuk, hogy az elemek-ben hány PalyaElem példánynak
@@ -50,7 +50,7 @@ public class Palya {
 	 */
 	private int keslelteto;
 
-	/** id: Debuggoláshoz, hogy tudjuk kicsoda. */
+	/** A palya szöveges azonosítója. */
 	private String id;
 
 	/**
@@ -131,11 +131,10 @@ public class Palya {
 	public String getID() {
 		return id;
 	}
-	
+
 	/** Visszatér a pályakép értékével. */
 	public String[][] getPalyaKep() {
 		return palyaKep;
 	}
-	
 
 }

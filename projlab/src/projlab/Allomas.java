@@ -13,9 +13,10 @@ import java.util.logging.Logger;
  * 
  * Felelõsség:
  * 
- * Felelõs az utasok leszállításáért, tehát a kocsik kiürítéséért. Mivel a
- * PalyaElem gyereke, ezért felel még a rajtalevõ Jarmu következõ pozíciójának
- * megadásáért is. Nem lehet rá alagutat építeni.
+ * Az utasok le- és felszállításáért felelõs. Felel még a rajtalevõ Jarmu
+ * következõ pozíciójának megadásáért is. Felelõs azért is, hogy utas csak
+ * sorrendben lévõ kocsikról szállhasson le, színegyezés esetén. Nem lehet rá
+ * alagutat építeni. Nyilvántartja a színét.
  */
 public class Allomas extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -94,21 +95,20 @@ public class Allomas extends PalyaElem {
 	 * getSzin metódussal. Ha 0, tehát ha üres a kocsi, megnézzük, hogy alapból
 	 * milyen színû volt, a getEredetiSzin metódussal. Ha az eredetiSzin
 	 * megegyezik az allomásunk szin-ével, akkor felszállítjuk a várakozó
-	 * utasokat, tehát meghíjuk a kocsi setSzin metudusát, és hamisra állítjuk a
-	 * várakozó utasokat. E mellett megadja a következõ PalyaElem példányt,
-	 * ahova a Kocsi kerülni fog az új idõpillanatban, úgy, hogy megnézi a
-	 * Mozdony elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok
-	 * tömbbõl visszatér az ettõl különbözõ értékkel az elsõ két elem közül.
+	 * utasokat, tehát meghívjuk a Kocsi setSzin metudusát, és hamisra állítjuk
+	 * a várakozó utasokat. E mellett megadja a következõ PalyaElem példányt,
+	 * ahova a Kocsi kerülni fog az új idõpillanatban, úgy, hogy megnézi a Kocsi
+	 * elozoPozicio-ját a getElozoPozicio metódussal, és a szomszedok tömbbõl
+	 * visszatér az ettõl különbözõ értékkel az elsõ két elem közül.
 	 */
 	public PalyaElem elfogad(Kocsi k) {
 		logger.log(Level.INFO, this.getID() + ".elfogad(" + k.getID() + ")");
-		
+
 		int kSzin = k.getSzin();
-		
-		if (kSzin == szin && aktiv == true ) {
+
+		if (kSzin == szin && aktiv == true) {
 			k.kiurit();
-		}
-		else if (kSzin != 0) 
+		} else if (kSzin != 0)
 			aktiv = false;
 
 		if (varakozoUtas == true) {
@@ -157,12 +157,12 @@ public class Allomas extends PalyaElem {
 	public int getSzin() {
 		return szin;
 	}
-	
+
 	/**
-	 *Beállítja a szin változó értékét (állomás színe).
+	 * Beállítja a szin változó értékét (állomás színe).
 	 */
 	public void setSzin(int i) {
-		szin=i;
+		szin = i;
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class Allomas extends PalyaElem {
 	}
 
 	/**
-	 * Értékül adja b-t a varakozoUtas-nak.
+	 * Értékül adja a paraméterül kapott boolean értéket a varakozoUtas-nak.
 	 */
 	public void setVarakozoUtas(boolean b) {
 		varakozoUtas = b;

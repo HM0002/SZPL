@@ -25,8 +25,8 @@ public class Keresztezodes extends PalyaElem {
 	}
 
 	/**
-	 * Megadja a következõ PalyaElem példányt, ahova a Szeneskocsi kerülni fog
-	 * az új idõpillanatban, úgy, hogy megnézi a Szeneskocsi elozoPozicio-ját a
+	 * Megadja a következõ PalyaElem példányt, ahova a Mozdony kerülni fog az új
+	 * idõpillanatban, úgy, hogy megnézi a Mozdony elozoPozicio-ját a
 	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az elsõ
 	 * elemmel, ha 0 volt, a nulladik elemmel ha 1 volt, illetve a harmadik
 	 * elemmel, ha 2 volt és egyébként a második elemmel.
@@ -56,8 +56,8 @@ public class Keresztezodes extends PalyaElem {
 	}
 
 	/**
-	 * Megadja a következõ PalyaElem példányt, ahova a Szeneskocsi kerülni fog
-	 * az új idõpillanatban, úgy, hogy megnézi a Szeneskocsi elozoPozicio-ját a
+	 * Megadja a következõ PalyaElem példányt, ahova a Kocsi kerülni fog az új
+	 * idõpillanatban, úgy, hogy megnézi a Kocsi elozoPozicio-ját a
 	 * getElozoPozicio metódussal, és a szomszedok tömbbõl visszatér az elsõ
 	 * elemmel, ha 0 volt, a nulladik elemmel ha 1 volt, illetve a harmadik
 	 * elemmel, ha 2 volt és egyébként a második elemmel.

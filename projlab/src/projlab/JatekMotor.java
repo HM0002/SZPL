@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  * Felel, hogy a pályára új vonatok érkezzenek, nézi, ha veszít vagy nyer a
  * játékos, új pályát tölt be, ha szükséges. Kezeli az idõ múlását. Továbbá
  * felel az ütközések ellenõrzéséért, ezáltal tudja, hogy ha veszít a játékos.
+ * Referenciát tárol a modell objektumaira, a pályán keresztül.
  */
 public class JatekMotor {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -124,7 +125,7 @@ public class JatekMotor {
 
 	/**
 	 * Lekéri az aktuális pálya (palyak 0. eleme) vonatainak számát, hogy hány
-	 * vonatot kell küldeni összesen, és ezt komparálja a vonatSzamlalo-val. Ha
+	 * vonatot kell indítani összesen, és ezt komparálja a vonatSzamlalo-val. Ha
 	 * a vonatSzamlalo kisebb, lekéri a pályától, hogy mennyi idõközönként(tick)
 	 * indíthat új vonatot, a getKeslelteto metódussal. Ezt komparálja az
 	 * ujVonat-tal, melyben az elõzõ vonatindítás óta eltelt tick-ek száma van
@@ -134,7 +135,7 @@ public class JatekMotor {
 	 * vonat az, ami még nem indult el. Ezután az így lekért jármûveken
 	 * végigmegyünk, és az elsõ amelyiknek a poziciója null, a setKezdoPoziciok
 	 * metódusával beállítjuk a helyes kezdõ pozíciókat, majd visszatérünk. Ha
-	 * nincs ilyen jármû, növeljök a vonatSzamlalo-t, és nullázzuk az
+	 * nincs ilyen jármû, növeljük a vonatSzamlalo-t, és nullázzuk az
 	 * ujVonat-ot.
 	 */
 	public void vonatInditas() {
@@ -170,9 +171,9 @@ public class JatekMotor {
 	 * Megnézi, hogy minden PalyaElem példányon csak egy jármû van-e, ezáltal
 	 * eldönti, hogy van-e ütközés vagy sem. Lekéri az aktuális pálya (palyak 0.
 	 * eleme) PalyaElem elemeit, a getElemek metódussal, ezután lekéri, hogy
-	 * hány jármû van ezeken az elemeken, a getFoglalt metódussal. Ha ez több
-	 * mint 1, utközés történt, és visszatérünk igazzal, egyébként nem és
-	 * visszatérünk hamissal.
+	 * hány jármû van ezeken az elemeken, a getFoglalt metódussal. Ha ez bárhol
+	 * nagyobb, mint 1, ütközés történt, és visszatérünk igazzal, egyébként nem
+	 * és visszatérünk hamissal.
 	 */
 	public boolean utkozesEllenorzes() {
 		logger.log(Level.INFO, "JM.utkozesEllenorzes()");

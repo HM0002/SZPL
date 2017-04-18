@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * 
  * Felel a Szeneskocsi mozgásáért.Az idõ múlásának függvényében meglátogatja a
  * pozíciójában tárolt PalyaElem példányt,melynek átadja önmagát.Ez visszatér az
- * új pozícióval,így mozog a Szeneskocsink.
+ * új pozícióval,így mozog a Szeneskocsi.
  */
 public class Szeneskocsi extends Jarmu {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

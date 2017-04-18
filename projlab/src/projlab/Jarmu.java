@@ -14,10 +14,11 @@ import java.util.logging.Logger;
  * 
  * Felelõsség:
  * 
- * Ez az objektum felel a mozgó mozdonyok és kocsik csoportosításáért. Az idõ
- * múlásának függvényében (tick) meglátogatja a pozíciójában tárolt PalyaElem
- * példányt, melynek átadja önmagát. Ez visszatér az új pozícióval, így mozog a
+ * Ez az objektum a mozdonyok és kocsik õsosztálya. Az idõ múlásának
+ * függvényében (tick) meglátogatja a pozíciójában tárolt PalyaElem példányt,
+ * melynek átadja önmagát. Ez visszatér az új pozícióval, így mozog a
  * Jarmu-vünk.
+ * 
  */
 public abstract class Jarmu {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -36,7 +37,7 @@ public abstract class Jarmu {
 	 */
 	protected PalyaElem elozoPozicio;
 
-	/** id: Debuggoláshoz, hogy tudjuk kicsoda. */
+	/** id: Jarmu szöveges azonosítója. */
 	private String id;
 
 	/** Konstruktor */

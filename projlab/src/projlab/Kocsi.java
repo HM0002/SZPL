@@ -14,11 +14,10 @@ import java.util.logging.Logger;
  * 
  * Felel a Kocsi mozgásáért.Az idõ múlásának függvényében meglátogatja a
  * pozíciójában tárolt PalyaElem példányt,melynek átadja önmagát.Ez visszatér az
- * új pozícióval,így mozog a Kocsi-nk. E mellett felel az utasok
- * szállításáért,és az utasok leszállításáért.Van színe, ugyanúgy, mint az
- * állomásoknak. A szín jelzi, hogy utasok vannak a Kocsi-ban, és hogy melyik
- * állomásra szeretnének menni. Az üres kocsi szin értéke 0. Attribútumok int
- * szin: meghatározza a kocsi színkódját, a 0 felel az üresért,ami a szürke
+ * új pozícióval,így mozog a Kocsi. E mellett felel az utasok szállításáért.Van
+ * színe, ugyanúgy, mint az állomásoknak. A szín jelzi, hogy utasok vannak a
+ * Kocsi-ban, és hogy melyik állomásra szeretnének menni. Az üres kocsi szin
+ * értéke 0,ami a szürke.
  */
 public class Kocsi extends Jarmu {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -26,14 +25,13 @@ public class Kocsi extends Jarmu {
 	// Attribútumok:
 
 	/**
-	 * szin: Meghatározza a kocsi színkódját, a 0 felel az üresért, ami a
+	 * szin: Tárolja a kocsi aktuális színkódját, a 0 felel az üresért, ami a
 	 * szürke.
 	 */
 	private int szin;
 
 	/**
-	 * eredetiSzin: Meghatározza, milyen színû volt a kocsi az
-	 * inicializálásakor.
+	 * eredetiSzin: Tárolja, milyen színû volt a kocsi az inicializálásakor.
 	 */
 	private int eredetiSzin;
 

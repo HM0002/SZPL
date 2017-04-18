@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * 
  * Felel a Mozdony mozgásáért.Az idõ múlásának függvényében meglátogatja a
  * pozíciójában tárolt PalyaElem példányt,melynek átadja önmagát.Ez visszatér az
- * új pozícióval,így mozog a Mozdony-unk.
+ * új pozícióval,így mozog a Mozdony.
  */
 public class Mozdony extends Jarmu {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

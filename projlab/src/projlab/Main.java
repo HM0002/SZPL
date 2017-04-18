@@ -10,12 +10,35 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Main osztály:
+ * 
+ * Inputok/Outputok kezelése, inicializálás, kirajzolás, bemeneti nyelv
+ * értélemezése
+ * 
+ * Felelõsség: Kezeli az Inputokat/Outputokat, inicializálja a pályát
+ * (pályaelemeket és vonatokat is) a kiválasztott forrásból, majd ezekkel
+ * inicializálja a játékmotort. Kirajzolja az aktuális játékállást. Értelmezi a
+ * bemeneti nyelvet, végrehajtja a kapott utasításokat.
+ */
 public class Main {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+	/**
+	 * Aktuális JatekMotor referenciája.
+	 */
 	static JatekMotor JM;
+
+	/**
+	 * Az inputok forrása
+	 */
 	public static BufferedReader br = null;
-	
+
+	/**
+	 * Létrehoz és beállít a logoláshoz, kirajzoláshoz egy statikus Logger
+	 * példányt. Beállítja a parancssori argumentumok alapján a BufferedReader
+	 * adatforrását. Ezután egy ciklusban elkezdi soronként feldolgozni a
+	 * bemenetet a commandMapping függvény segítségével.
+	 */
 	public static void main(String[] args) throws SecurityException, IOException {
 
 		for (Handler handler : logger.getParent().getHandlers()) {
@@ -31,10 +54,12 @@ public class Main {
 		if (args[0].equals("K"))
 			br = new BufferedReader(new InputStreamReader(System.in));
 		else if (args[0].equals("F"))
-			br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1] + ".txt"));
+			br = new BufferedReader(
+					new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1] + ".txt"));
 		else {
 			System.out.println("Érvénytelen bemenet!");
 			// JM.ujJatek();
+			// Majd a kész játékban.
 			System.exit(0);
 		}
 
@@ -48,6 +73,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Létrehoz majd visszaad egy palya objektumot a paraméterül kapott
+	 * BufferedReader adatforrásból az id azonosítóval.
+	 */
 	private static Palya palyaBetoltes(BufferedReader a, String id) throws IOException {
 
 		BufferedReader reader = a;
@@ -105,7 +134,7 @@ public class Main {
 					}
 					pe = new Sin(tmp);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
-					
+
 				} else if (params[j].contains("A")) {
 					counter++;
 					if (counter > cnt) {
@@ -115,7 +144,7 @@ public class Main {
 					}
 					pe = new Allomas(tmp);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
-					
+
 				} else if (params[j].contains("V")) {
 					counter++;
 					if (counter > cnt) {
@@ -125,7 +154,7 @@ public class Main {
 					}
 					pe = new Valto(tmp);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
-					
+
 				} else if (params[j].contains("K")) {
 					counter++;
 					if (counter > cnt) {
@@ -135,10 +164,10 @@ public class Main {
 					}
 					pe = new Keresztezodes(tmp);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
-					
+
 				} else if (params[j].contains("    "))
 					;
-				
+
 				else {
 					logger.setLevel(Level.INFO);
 					logger.log(Level.INFO, "Nem megfelelõ szintaktikájú pályaelem! " + params[j]);
@@ -146,7 +175,7 @@ public class Main {
 				}
 			}
 		}
-		
+
 		// üres kell legyen
 		if (!((line = reader.readLine()).isEmpty())) {
 			logger.setLevel(Level.INFO);
@@ -155,7 +184,7 @@ public class Main {
 							+ line);
 			System.exit(0);
 		}
-		
+
 		// megfelelõ mennyiségû elemnek lennie kell, nem lehet lyuk
 		for (PalyaElem p : palyaElemek)
 			if (p == null) {
@@ -191,7 +220,7 @@ public class Main {
 				}
 				jarmuvek.add(jarmu);
 			}
-			
+
 			v = new Vonat(jarmuvek, "VONAT" + i);
 			vonatok.add(v);
 		}
@@ -217,8 +246,7 @@ public class Main {
 				}
 				palyaElemek.get(i).setSzomszedok(palyaElemek.get(Integer.parseInt(params[1])),
 						palyaElemek.get(Integer.parseInt(params[2])), null, null);
-			} 
-			else if (palyaElemek.get(i).getID().contains("V")) {
+			} else if (palyaElemek.get(i).getID().contains("V")) {
 				if (params.length != 4) {
 					logger.setLevel(Level.INFO);
 					logger.log(Level.INFO,
@@ -229,8 +257,7 @@ public class Main {
 				palyaElemek.get(i).setSzomszedok(palyaElemek.get(Integer.parseInt(params[1])),
 						palyaElemek.get(Integer.parseInt(params[2])), palyaElemek.get(Integer.parseInt(params[3])),
 						null);
-			} 
-			else if (palyaElemek.get(i).getID().contains("K")) {
+			} else if (palyaElemek.get(i).getID().contains("K")) {
 				if (params.length != 5) {
 					logger.setLevel(Level.INFO);
 					logger.log(Level.INFO,
@@ -283,21 +310,33 @@ public class Main {
 
 	}
 
+	/**
+	 * A pályák listáját állítja elõ elõre definiált forrásokból. a
+	 * palyaBetoltes fuggvény segítsegevel.
+	 */
 	private static void init() throws IOException {
 
 		ArrayList<Palya> palyak = new ArrayList<Palya>();
 
-		Palya p1 = palyaBetoltes(new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_1.txt")), "Palya 1");
+		Palya p1 = palyaBetoltes(
+				new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_1.txt")),
+				"Palya 1");
 		palyak.add(p1);
 
-		Palya p25 = palyaBetoltes(new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_25.txt")), "Palya 25");
+		Palya p25 = palyaBetoltes(
+				new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_25.txt")),
+				"Palya 25");
 		palyak.add(p25);
-			
+
 		JM = new JatekMotor(palyak);
 
 	}
 
-	public static void draw() {
+	/**
+	 * Az aktuális pálya és játék állás kimenetre kirajzolásáért felelõs
+	 * függvény.
+	 */
+	private static void draw() {
 
 		// Változó az eredeti pályaképnek
 		String[][] palyaKep = null;
@@ -372,8 +411,8 @@ public class Main {
 		for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 			if (palyaElem instanceof Valto) {
 				logger.setLevel(Level.INFO);
-				logger.log(Level.WARNING, palyaElem.getID().trim() + ":" + ((Valto) palyaElem).getAllas()[0].getID() + "<-->"
-						+ ((Valto) palyaElem).getAllas()[1].getID());
+				logger.log(Level.WARNING, palyaElem.getID().trim() + ":" + ((Valto) palyaElem).getAllas()[0].getID()
+						+ "<-->" + ((Valto) palyaElem).getAllas()[1].getID());
 			}
 
 		// write állomás színek, várakozó utasok
@@ -420,137 +459,140 @@ public class Main {
 		logger.setLevel(ltmp);
 	}
 
-	public static void commandMapping(String s[]) throws IOException {
+	/**
+	 * A felhasználói parancsokat értelmezõ és végrehajtó függvény.
+	 */
+	private static void commandMapping(String s[]) throws IOException {
 		Level tmp = logger.getLevel();
-		
+
 		switch (s[0]) {
 
-			case "loadPalya":
-				init();
-				break;
-				
-			case "Palya":
-				ArrayList<Palya> palyak = new ArrayList<Palya>();
-				Palya p_user = palyaBetoltes(br,"Palya "+s[1]);
-				palyak.add(p_user);
-				JM = new JatekMotor(palyak);
-				break;
-	
-			case "vonatInditas":
-				JM.vonatInditas();
-				break;
-	
-			case "kirajzolas":
-				draw();
-				break;
-	
-			case "kirajzolasStart":
-				logger.setLevel(Level.INFO);
-				break;
-	
-			case "step":
-				JM.idoEltelt();
-				break;
-	
-			case "switchValto":
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-					if (palyaElem.getID().equals(" " + s[1] + " ")) {
+		case "loadPalya":
+			init();
+			break;
+
+		case "Palya":
+			ArrayList<Palya> palyak = new ArrayList<Palya>();
+			Palya p_user = palyaBetoltes(br, "Palya " + s[1]);
+			palyak.add(p_user);
+			JM = new JatekMotor(palyak);
+			break;
+
+		case "vonatInditas":
+			JM.vonatInditas();
+			break;
+
+		case "kirajzolas":
+			draw();
+			break;
+
+		case "kirajzolasStart":
+			logger.setLevel(Level.INFO);
+			break;
+
+		case "step":
+			JM.idoEltelt();
+			break;
+
+		case "switchValto":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
+					((Valto) palyaElem).atallit();
+				}
+			break;
+
+		case "setAlagut":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
+					((Sin) palyaElem).setAlagut();
+				}
+			break;
+
+		case "setKezdoPozicio":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			PalyaElem p = null;
+			PalyaElem ep = null;
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[2] + " ")) {
+					logger.setLevel(tmp);
+					p = palyaElem;
+				}
+
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[3] + " ")) {
+					logger.setLevel(tmp);
+					ep = palyaElem;
+				}
+
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
+				for (Jarmu jarmu : vonat.getJarmuvek())
+					if (jarmu.getID().equals(s[1])) {
 						logger.setLevel(tmp);
-						((Valto) palyaElem).atallit();
+						jarmu.setKezdoPoziciok(p, ep);
 					}
-				break;
-	
-			case "setAlagut":
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-					if (palyaElem.getID().equals(" " + s[1] + " ")) {
+			break;
+
+		case "kiurit":
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (Vonat vonat : JM.getAktualisPalya().getVonatok())
+				for (Jarmu jarmu : vonat.getJarmuvek())
+					if (jarmu.getID().equals(s[1])) {
 						logger.setLevel(tmp);
-						((Sin) palyaElem).setAlagut();
+						((Kocsi) jarmu).kiurit();
 					}
-				break;
-	
-			case "setKezdoPozicio":
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				PalyaElem p = null;
-				PalyaElem ep = null;
-				for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-					if (palyaElem.getID().equals(" " + s[2] + " ")) {
-						logger.setLevel(tmp);
-						p = palyaElem;
-					}
-	
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-					if (palyaElem.getID().equals(" " + s[3] + " ")) {
-						logger.setLevel(tmp);
-						ep = palyaElem;
-					}
-	
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (Vonat vonat : JM.getAktualisPalya().getVonatok())
-					for (Jarmu jarmu : vonat.getJarmuvek())
-						if (jarmu.getID().equals(s[1])) {
-							logger.setLevel(tmp);
-							jarmu.setKezdoPoziciok(p, ep);
-						}
-				break;
-	
-			case "kiurit":
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (Vonat vonat : JM.getAktualisPalya().getVonatok())
-					for (Jarmu jarmu : vonat.getJarmuvek())
-						if (jarmu.getID().equals(s[1])) {
-							logger.setLevel(tmp);
-							((Kocsi) jarmu).kiurit();
-						}
-				break;
-	
-			case "utkozesEllenorzes":
-				JM.utkozesEllenorzes();
-				break;
-	
-			case "setVarakozoUtas":
-				boolean temp;
-				if (s[2].equals("true"))
-					temp = true;
-				else
-					temp = false;
-	
-				tmp = logger.getLevel();
-				logger.setLevel(Level.OFF);
-				for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
-					if (palyaElem.getID().equals(" " + s[1] + " ")) {
-						logger.setLevel(tmp);
-						((Allomas) palyaElem).setVarakozoUtas(temp);
-					}
-				break;
-				
-			case "setVonatSzamlalo":
-				JM.setVonatSzamlalo();
-				break;
-				
-			case "palyaBetoltes":
-				JM.palyaBetoltes();
-				break;
-	
-			case "exit":
-				JM.kilepes();
-				break;
-	
-			case "gyozelemEllenorzes":
-				JM.gyozelemEllenorzes();
-				break;
-	
-			case "tesztVege":
-				System.exit(0);
-				break;
+			break;
+
+		case "utkozesEllenorzes":
+			JM.utkozesEllenorzes();
+			break;
+
+		case "setVarakozoUtas":
+			boolean temp;
+			if (s[2].equals("true"))
+				temp = true;
+			else
+				temp = false;
+
+			tmp = logger.getLevel();
+			logger.setLevel(Level.OFF);
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(" " + s[1] + " ")) {
+					logger.setLevel(tmp);
+					((Allomas) palyaElem).setVarakozoUtas(temp);
+				}
+			break;
+
+		case "setVonatSzamlalo":
+			JM.setVonatSzamlalo();
+			break;
+
+		case "palyaBetoltes":
+			JM.palyaBetoltes();
+			break;
+
+		case "exit":
+			JM.kilepes();
+			break;
+
+		case "gyozelemEllenorzes":
+			JM.gyozelemEllenorzes();
+			break;
+
+		case "tesztVege":
+			System.exit(0);
+			break;
 		}
 	}
 }

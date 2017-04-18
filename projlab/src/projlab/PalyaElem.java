@@ -16,10 +16,10 @@ import java.util.logging.Logger;
  * 
  * Felelõsség:
  * 
- * Ez az osztály felel a 4 fajta pályaelem (sín, váltó, alagút, keresztezõdés)
- * csoportosításáért. E mellett felelõssége a vonatok mozgásához a helyes
- * következõ pozíció visszaadása(algút esetén is) a szomszédok tömb
- * segítségével.
+ * Ez az osztály a 4 fajta pályaelem (sín, váltó, alagút, keresztezõdés)
+ * õsosztálya. E mellett felelõssége a vonatok mozgásához a helyes következõ
+ * pozíció visszaadása(algút esetén is) a szomszédok tömb segítségével. Tárolja,
+ * hány jármû tartózkodik rajta, valmaint alagút építve van-e rá.
  */
 public abstract class PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -38,9 +38,6 @@ public abstract class PalyaElem {
 	 */
 	protected PalyaElem[] szomszedok;
 
-	/** id: Debuggoláshoz, hogy tudjuk kicsoda. */
-	private String id;
-
 	/** alagut: Igaz, ha alagút van építve ezen a példányon, egyébként hamis. */
 	protected boolean alagut;
 
@@ -52,6 +49,9 @@ public abstract class PalyaElem {
 	 */
 	protected Palya palya;
 
+	/** A PalyaElem szöveges azonosítója */
+	private String id;
+
 	/** Konstruktor */
 	PalyaElem(String id) {
 		szomszedok = new PalyaElem[4];
@@ -60,11 +60,6 @@ public abstract class PalyaElem {
 		foglalt = 0;
 		this.id = id;
 		logger.log(Level.INFO, id + " konstruktora elindult");
-	}
-
-	/** Visszatér az id értékével. */
-	public String getID() {
-		return id;
 	}
 
 	/**
@@ -133,6 +128,11 @@ public abstract class PalyaElem {
 	public void setFoglalt() {
 		logger.log(Level.INFO, this.getID() + ".setFoglalt()");
 		foglalt++;
+	}
+
+	/** Visszatér az id értékével. */
+	public String getID() {
+		return id;
 	}
 
 }

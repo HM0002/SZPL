@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Felel azért, hogy az elágazódás PalyaElem példányai közül kettõt összekössön,
  * és ezáltal a helyes új pozicio-val térjen vissza. Mivel a PalyaElem gyereke,
  * ezért felel még a rajtalevõ Jarmu következõ pozíciójának megadásáért is. Nem
- * lehet rá alagutat építeni.
+ * lehet rá alagutat építeni. Felelõssége megvalósítani a váltásokat.
  */
 public class Valto extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
