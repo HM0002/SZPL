@@ -1,20 +1,105 @@
 package projlab;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JFrame;
 
 public class View {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+	Frame enAblakom;
+	Panel gombPanel;
+	Button ujJatekGomb;
+	Button exitGomb;
+	SajatGrafika jatekPanel;
+	Controller ctrl;
+
+	/**
+	 * View konstruktor
+	 */
+	View(Controller ctrl, JatekMotor JM) {
+
+		this.ctrl = ctrl;
+				
+		// Az ablak
+		enAblakom = new Frame("Vonatos játék by Team Delta");
+		enAblakom.setSize(700, 700);
+
+		// layout
+		enAblakom.setLayout(new BorderLayout());
+
+		// panel az ablakoknak
+		gombPanel = new Panel(new FlowLayout());
+		enAblakom.add(gombPanel, BorderLayout.NORTH);
+
+		// Újjáték gomb az ablakra
+		ujJatekGomb = new Button("Új játék");
+		gombPanel.add(ujJatekGomb);
+
+		// Kilépés gomb az ablakra
+		exitGomb = new Button("Kilépés");
+		gombPanel.add(exitGomb);
+
+		// panel az ablakoknak
+		jatekPanel = new SajatGrafika(JM);
+		jatekPanel.setSize(600, 600);
+		enAblakom.add(jatekPanel, BorderLayout.CENTER);
+
+		// Bezárás event handler ablak
+		enAblakom.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+
+		// Bezárás event handler kilépés gomb
+		exitGomb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				System.exit(0);
+			}
+		});
+
+		// Új játék gomb event handler
+		ujJatekGomb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				try {
+					ctrl.ujJatekKezdes();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			enAblakom.dispose();	
+			}
+		});
+		enAblakom.setVisible(true);
+	}
+
 	public void draw(JatekMotor JM) {
-		if (true)
-			konzolDraw(JM);
-		else
-			guiDraw(JM);
+
+		// Ultimate ötlet, rajzoljon ide is oda is
+		konzolDraw(JM);
+		guiDraw(JM);
 	}
 
 	private void guiDraw(JatekMotor JM) {
-		// TODO Auto-generated method stub
+		jatekPanel.repaint();
+
 	}
 
 	/**

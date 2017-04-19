@@ -18,7 +18,7 @@ public class Controller {
 	/**
 	 * Aktuális kirajzoló objektum.
 	 */
-	View view=new View();
+	View view=new View(this, JM);
 
 	/**
 	 * Egy segéd változónk van, az utkozes. Értéke hamis, és egy loop-ban
@@ -477,5 +477,11 @@ public class Controller {
 
 		return new Palya(keslelteto, palyaElemek, vonatok, palyaKep, id);
 
+	}
+	
+	public void ujJatekKezdes() throws IOException{
+		init();
+		view=new View(this, JM);
+		view.draw(JM);
 	}
 }
