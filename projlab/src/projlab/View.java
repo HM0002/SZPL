@@ -1,15 +1,7 @@
 package projlab;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,15 +10,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class View {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	Frame enAblakom;
-	Panel gombPanel;
-	Button ujJatekGomb;
-	Button exitGomb;
+	JFrame enAblakom;
+	JPanel gombPanel;
+	JButton ujJatekGomb;
+	JButton exitGomb;
 	SajatGrafika jatekPanel;
 	Controller ctrl;
 
@@ -38,22 +32,22 @@ public class View {
 		this.ctrl = ctrl;
 				
 		// Az ablak
-		enAblakom = new Frame("Vonatos játék by Team Delta");
+		enAblakom = new JFrame("Vonatos játék by Team Delta");
 		enAblakom.setSize(700, 700);
 
 		// layout
 		enAblakom.setLayout(new BorderLayout());
 
 		// panel az ablakoknak
-		gombPanel = new Panel(new FlowLayout());
+		gombPanel = new JPanel(new FlowLayout());
 		enAblakom.add(gombPanel, BorderLayout.NORTH);
 
 		// Újjáték gomb az ablakra
-		ujJatekGomb = new Button("Új játék");
+		ujJatekGomb = new JButton("Új játék");
 		gombPanel.add(ujJatekGomb);
 
 		// Kilépés gomb az ablakra
-		exitGomb = new Button("Kilépés");
+		exitGomb = new JButton("Kilépés");
 		gombPanel.add(exitGomb);
 
 		// panel az ablakoknak
