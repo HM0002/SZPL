@@ -42,8 +42,8 @@ public class Allomas extends PalyaElem {
 	 * Konstruktor, meghívjuk az õs konstruktorát, és kiegészítjük a szin, és az
 	 * aktiv értékadásával.
 	 */
-	Allomas(int i, boolean b, String id) {
-		super(id);
+	Allomas(int i, boolean b, String id, int[] p) {
+		super(id, p);
 		szin = i;
 		aktiv = false;
 		varakozoUtas = b;
@@ -54,8 +54,8 @@ public class Allomas extends PalyaElem {
 	 * Egyszerûsített Konstruktor, meghívjuk az õs konstruktorát, és
 	 * alapértelmezett atribútumokkal létrehozzuk az állomást
 	 */
-	Allomas(String id) {
-		super(id);
+	Allomas(String id, int[] p) {
+		super(id, p);
 		szin = 1;
 		aktiv = false;
 		varakozoUtas = false;

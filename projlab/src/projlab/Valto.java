@@ -23,8 +23,8 @@ public class Valto extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	/** Konstruktor */
-	Valto(String id) {
-		super(id);
+	Valto(String id, int[] p) {
+		super(id, p);
 	}
 
 	/**

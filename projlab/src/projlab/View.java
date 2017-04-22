@@ -1,18 +1,30 @@
 package projlab;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 
 public class View {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -21,8 +33,16 @@ public class View {
 	JPanel gombPanel;
 	JButton ujJatekGomb;
 	JButton exitGomb;
-	SajatGrafika jatekPanel;
+	MyPanel jatekPanel;
 	Controller ctrl;
+	JLabel statusz;
+	JLabel palya;
+
+	// Változó az eredeti pályaképnek
+	String[][] palyaKep = null;
+
+	// mezõk, sorok
+	int columns, rows;
 
 	/**
 	 * View konstruktor
@@ -30,7 +50,7 @@ public class View {
 	View(Controller ctrl, JatekMotor JM) {
 
 		this.ctrl = ctrl;
-				
+
 		// Az ablak
 		enAblakom = new JFrame("Vonatos játék by Team Delta");
 		enAblakom.setSize(700, 700);
@@ -42,6 +62,10 @@ public class View {
 		gombPanel = new JPanel(new FlowLayout());
 		enAblakom.add(gombPanel, BorderLayout.NORTH);
 
+		palya = new JLabel();
+		gombPanel.add(palya);
+		gombPanel.add(new JLabel("        "));
+		
 		// Újjáték gomb az ablakra
 		ujJatekGomb = new JButton("Új játék");
 		gombPanel.add(ujJatekGomb);
@@ -51,9 +75,10 @@ public class View {
 		gombPanel.add(exitGomb);
 
 		// panel az ablakoknak
-		jatekPanel = new SajatGrafika(JM);
-		jatekPanel.setSize(600, 600);
+		jatekPanel = new MyPanel(JM);
 		enAblakom.add(jatekPanel, BorderLayout.CENTER);
+		jatekPanel.setMaximumSize(new Dimension(500, 500));
+		jatekPanel.setPreferredSize(new Dimension(500, 500));
 
 		// Bezárás event handler ablak
 		enAblakom.addWindowListener(new WindowAdapter() {
@@ -78,10 +103,106 @@ public class View {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			enAblakom.dispose();	
+				enAblakom.dispose();
 			}
 		});
+
+		// palya kepenek elkerese a jatekmotortól
+		palyaKep = JM.getAktualisPalya().getPalyaKep();
+		columns = palyaKep[0].length;
+		rows = palyaKep.length;
+		
+		//Sinek lekérése
+		ArrayList<PalyaElem> sinek=JM.getAktualisPalya().getElemek();
+
+		//Pálya nevének kiírása
+		palya.setText(JM.getAktualisPalya().getID());
+
+		//Pálya elemek orientációjának beállítása
+		jatekPanel.setLayout(new GridBagLayout());
+
+		//GridBagConstraints elem az elrendezéshez
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		//Ciklus végigmenni az elemeken
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				
+				//GridBagConstraints beállítása
+				gbc.gridx = j;
+				gbc.gridy = i;
+
+				//Üres cella létrehozása
+				Cell cell = new Cell();
+				
+				//üres határoló
+				Border border = null;
+				
+				//határolók beállítása
+				if (i < rows - 1) {
+					if (j < columns - 1) {
+						border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
+					} else {
+						border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
+					}
+				} else {
+					if (j < columns - 1) {
+						border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
+					} else {
+						border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
+					}
+				}
+				
+				//Határoló átadása a cellának
+				cell.setBorder(border);
+				
+				//Cellakép beállítása
+				//Cellakép, ha keresztezõdés
+				if(palyaKep[i][j].contains("K"))
+					try {
+						cell.setImage(ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\keresztezodes.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				//cellakép, ha egyenes sín elem
+				else if(palyaKep[i][j].contains("S")){
+					
+					//ha egyenes, akkor a megfelelõ kép
+					try {
+						cell.setImage(ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+					//Cellakép orientáció beállítása
+					
+					//szomszédok lekérése
+					PalyaElem[] szomszedok=sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1))).szomszedok;
+					//megnézi, függõlegesen egy vonalban vannak-e
+					if (szomszedok[0].getPoz()[1]==szomszedok[1].getPoz()[1])
+						//ha igen, elforgatja a sínt
+						cell.setOrientation(90.0);
+					
+					
+					
+					
+				}
+			
+				
+				
+				
+				
+				
+				jatekPanel.add(cell, gbc);
+			}
+		}
+
+		enAblakom.pack();
+		enAblakom.setLocationRelativeTo(null);
 		enAblakom.setVisible(true);
+
 	}
 
 	public void draw(JatekMotor JM) {
@@ -101,17 +222,6 @@ public class View {
 	 * függvény.
 	 */
 	private void konzolDraw(JatekMotor JM) {
-
-		// Változó az eredeti pályaképnek
-		String[][] palyaKep = null;
-
-		// mezõk, sorok
-		int columns, rows;
-
-		// palya kepenek elkerese a jatekmotortól
-		palyaKep = JM.getAktualisPalya().getPalyaKep();
-		columns = palyaKep[0].length;
-		rows = palyaKep.length;
 
 		// Változó a kirajzolandó pályaképnek az eredeti alapján
 		String[][] aktualisPalyaKep = new String[rows][columns];

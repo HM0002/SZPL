@@ -20,8 +20,8 @@ public class Keresztezodes extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	/** Konstruktor */
-	Keresztezodes(String id) {
-		super(id);
+	Keresztezodes(String id, int[] p) {
+		super(id, p);
 	}
 
 	/**

@@ -19,8 +19,8 @@ public class Sin extends PalyaElem {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	/** Konstruktor */
-	Sin(String id) {
-		super(id);
+	Sin(String id, int[] p) {
+		super(id, p);
 	}
 
 	/**

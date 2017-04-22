@@ -18,7 +18,7 @@ public class Controller {
 	/**
 	 * Aktuális kirajzoló objektum.
 	 */
-	View view=new View(this, JM);
+	View view = null;
 
 	/**
 	 * Egy segéd változónk van, az utkozes. Értéke hamis, és egy loop-ban
@@ -100,6 +100,7 @@ public class Controller {
 			Palya p_user = palyaBetoltes(br, "Palya " + s[1]);
 			palyak.add(p_user);
 			JM = new JatekMotor(palyak);
+			view = new View(this, JM);
 			break;
 
 		case "vonatInditas":
@@ -239,6 +240,7 @@ public class Controller {
 		palyak.add(p25);
 
 		JM = new JatekMotor(palyak);
+		view = new View(this, JM);
 
 	}
 
@@ -293,6 +295,7 @@ public class Controller {
 			for (int j = 0; j < columns; j++) {
 				tmp = " " + params[j] + " ";
 				palyaKep[i][j] = tmp;
+				int[] poz = {i,j};
 
 				if (params[j].contains("S")) {
 					counter++;
@@ -301,7 +304,7 @@ public class Controller {
 						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
 						System.exit(0);
 					}
-					pe = new Sin(tmp);
+					pe = new Sin(tmp, poz);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
 
 				} else if (params[j].contains("A")) {
@@ -311,7 +314,7 @@ public class Controller {
 						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
 						System.exit(0);
 					}
-					pe = new Allomas(tmp);
+					pe = new Allomas(tmp, poz);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
 
 				} else if (params[j].contains("V")) {
@@ -321,7 +324,7 @@ public class Controller {
 						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
 						System.exit(0);
 					}
-					pe = new Valto(tmp);
+					pe = new Valto(tmp, poz);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
 
 				} else if (params[j].contains("K")) {
@@ -331,7 +334,7 @@ public class Controller {
 						logger.log(Level.INFO, "Nem az elsõ sorban meghatározott számú pályaelem került definiálásra!");
 						System.exit(0);
 					}
-					pe = new Keresztezodes(tmp);
+					pe = new Keresztezodes(tmp, poz);
 					palyaElemek.set(Integer.parseInt(params[j].substring(1)), pe);
 
 				} else if (params[j].contains("    "))
@@ -478,10 +481,8 @@ public class Controller {
 		return new Palya(keslelteto, palyaElemek, vonatok, palyaKep, id);
 
 	}
-	
-	public void ujJatekKezdes() throws IOException{
+
+	public void ujJatekKezdes() throws IOException {
 		init();
-		view=new View(this, JM);
-		view.draw(JM);
 	}
 }

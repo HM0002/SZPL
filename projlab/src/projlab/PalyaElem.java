@@ -38,6 +38,9 @@ public abstract class PalyaElem {
 	 */
 	protected PalyaElem[] szomszedok;
 
+	/** A pályaelem pályán való elhelyezkedése. */
+	private int[] poz;
+
 	/** alagut: Igaz, ha alagút van építve ezen a példányon, egyébként hamis. */
 	protected boolean alagut;
 
@@ -53,12 +56,13 @@ public abstract class PalyaElem {
 	private String id;
 
 	/** Konstruktor */
-	PalyaElem(String id) {
+	PalyaElem(String id, int[] p) {
 		szomszedok = new PalyaElem[4];
 		alagut = false;
 		palya = null;
 		foglalt = 0;
 		this.id = id;
+		poz = p;
 		logger.log(Level.INFO, id + " konstruktora elindult");
 	}
 
@@ -133,6 +137,10 @@ public abstract class PalyaElem {
 	/** Visszatér az id értékével. */
 	public String getID() {
 		return id;
+	}
+
+	int[] getPoz() {
+		return poz;
 	}
 
 }
