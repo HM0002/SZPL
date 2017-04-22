@@ -4,16 +4,40 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Controller {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+	Controller() {
+
+		TimerTask timerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				if (jatekFut) {
+					gameRun();
+					logger.setLevel(Level.INFO);
+					logger.log(Level.WARNING, "TimerTask futott!");
+				}
+			}
+		};
+
+		Timer timer = new Timer();
+
+		timer.scheduleAtFixedRate(timerTask, 0, 100);
+	}
+
 	/**
 	 * Aktuális JatekMotor referenciája.
 	 */
 	JatekMotor JM;
+
+	/** A játék futó/várakozó állapotát tárolja */
+	Boolean jatekFut = false;
 
 	/**
 	 * Aktuális kirajzoló objektum.
@@ -33,30 +57,34 @@ public class Controller {
 	 * betölti az új pályát. A gyozelemEllenorzes után felhívjuk a vonatInditas
 	 * metódust.
 	 */
-	private void run() {
-		logger.log(Level.INFO, "Controller.run()");
+	void gameRun() {
+		logger.log(Level.INFO, "Controller.gameRun()");
+		
+		
+		boolean utkozes = JM.utkozesEllenorzes();
 
-		boolean utkozes = false;
-
-		while (!utkozes) {
+		if (!utkozes) {
 			if (idoMeres()) {
-				utkozes = JM.utkozesEllenorzes();
+				
 				// GUI input kezelések
 				if (JM.gyozelemEllenorzes()) {
 					if (JM.getPalyaSzam() < 2) {
 						logger.log(Level.INFO, "Megnyertük a játékot!");
-						// gyozelem popup
+						view.tajekoztatUser(1);
 						return;
 					} else {
 						logger.log(Level.INFO, "Megnyertük a pályát!");
 						JM.palyaBetoltes();
+						view.dispose();
+						view = new View(this, JM);
 					}
 				}
 				JM.vonatInditas();
 			}
 		}
 		// utkozes popup
-		logger.log(Level.INFO, "Controller.run() metódusban ütközés történt!");
+		logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
+		view.tajekoztatUser(2);
 	}
 
 	/**
@@ -65,7 +93,7 @@ public class Controller {
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
 	 */
 	public boolean idoMeres() {
-		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 1000) {
+		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 100) {
 			JM.idoEltelt();
 			view.draw(JM);
 			return true;
@@ -74,13 +102,14 @@ public class Controller {
 	}
 
 	/**
-	 * Elindítja az idõt(beállítja a prevTime értékét), majd meghívja a run
+	 * Elindítja az idõt(beállítja a prevTime értékét), majd meghívja a gameRun
 	 * metódust.
 	 */
 	public void ujJatek() {
 		logger.log(Level.INFO, "Controller.ujJatek()");
 		JM.setPrevTime(System.currentTimeMillis());
-		run();
+		jatekFut = true;
+		gameRun();
 	}
 
 	/**
@@ -100,6 +129,7 @@ public class Controller {
 			Palya p_user = palyaBetoltes(br, "Palya " + s[1]);
 			palyak.add(p_user);
 			JM = new JatekMotor(palyak);
+			if (view!=null) view.dispose();
 			view = new View(this, JM);
 			break;
 
@@ -205,6 +235,8 @@ public class Controller {
 
 		case "palyaBetoltes":
 			JM.palyaBetoltes();
+			view.dispose();
+			view=new View(this,JM);
 			break;
 
 		case "exit":
@@ -295,7 +327,7 @@ public class Controller {
 			for (int j = 0; j < columns; j++) {
 				tmp = " " + params[j] + " ";
 				palyaKep[i][j] = tmp;
-				int[] poz = {i,j};
+				int[] poz = { j, i };
 
 				if (params[j].contains("S")) {
 					counter++;
@@ -484,5 +516,13 @@ public class Controller {
 
 	public void ujJatekKezdes() throws IOException {
 		init();
+	}
+
+	public void setJatekFutas() {
+		jatekFut = !jatekFut;
+	}
+
+	public Boolean getJatekFut() {
+		return jatekFut;
 	}
 }

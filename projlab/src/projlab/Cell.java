@@ -25,7 +25,15 @@ public class Cell extends JLabel {
 	 */
 	double orientacio = 0.0;
 
+	/**
+	 * A létrehozáskor beállított keret
+	 */
 	Border originalBorder;
+	
+	/**
+	 * A létrehozáskor beállított eredeti kép
+	 */
+	Image EredetiKep;
 
 	/**
 	 * A Label képe
@@ -97,6 +105,9 @@ public class Cell extends JLabel {
 
 	public void setImage(Image img) {
 		kep = img;
-
+	}
+	
+	public void setEredetiImage() {
+		EredetiKep = kep;
 	}
 }

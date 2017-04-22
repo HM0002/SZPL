@@ -31,8 +31,10 @@ public class View {
 
 	JFrame enAblakom;
 	JPanel gombPanel;
+	JPanel statuszPanel;
 	JButton ujJatekGomb;
 	JButton exitGomb;
+	JButton startStop;
 	MyPanel jatekPanel;
 	Controller ctrl;
 	JLabel statusz;
@@ -65,10 +67,14 @@ public class View {
 		palya = new JLabel();
 		gombPanel.add(palya);
 		gombPanel.add(new JLabel("        "));
-		
+
 		// Újjáték gomb az ablakra
 		ujJatekGomb = new JButton("Új játék");
 		gombPanel.add(ujJatekGomb);
+
+		// Kilépés gomb az ablakra
+		startStop = new JButton("  Start  ");
+		gombPanel.add(startStop);
 
 		// Kilépés gomb az ablakra
 		exitGomb = new JButton("Kilépés");
@@ -79,6 +85,12 @@ public class View {
 		enAblakom.add(jatekPanel, BorderLayout.CENTER);
 		jatekPanel.setMaximumSize(new Dimension(500, 500));
 		jatekPanel.setPreferredSize(new Dimension(500, 500));
+
+		// Státusz ablak
+		statusz = new JLabel("<Status Bar>");
+		statuszPanel = new JPanel();
+		statuszPanel.add(statusz);
+		enAblakom.add(statuszPanel, BorderLayout.SOUTH);
 
 		// Bezárás event handler ablak
 		enAblakom.addWindowListener(new WindowAdapter() {
@@ -92,6 +104,18 @@ public class View {
 			public void actionPerformed(ActionEvent ae) {
 				System.exit(0);
 			}
+		});
+
+		// Start/Stop gomb event handler
+		startStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				ctrl.setJatekFutas();
+				if (ctrl.getJatekFut() == true)
+					startStop.setText("  Pause  ");
+				else
+					startStop.setText("  Start  ");
+			}
+
 		});
 
 		// Új játék gomb event handler
@@ -111,34 +135,34 @@ public class View {
 		palyaKep = JM.getAktualisPalya().getPalyaKep();
 		columns = palyaKep[0].length;
 		rows = palyaKep.length;
-		
-		//Sinek lekérése
-		ArrayList<PalyaElem> sinek=JM.getAktualisPalya().getElemek();
 
-		//Pálya nevének kiírása
+		// Sinek lekérése
+		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
+
+		// Pálya nevének kiírása
 		palya.setText(JM.getAktualisPalya().getID());
 
-		//Pálya elemek orientációjának beállítása
+		// Pálya elemek orientációjának beállítása
 		jatekPanel.setLayout(new GridBagLayout());
 
-		//GridBagConstraints elem az elrendezéshez
+		// GridBagConstraints elem az elrendezéshez
 		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Ciklus végigmenni az elemeken
+
+		// Ciklus végigmenni az elemeken
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				
-				//GridBagConstraints beállítása
+
+				// GridBagConstraints beállítása
 				gbc.gridx = j;
 				gbc.gridy = i;
 
-				//Üres cella létrehozása
+				// Üres cella létrehozása
 				Cell cell = new Cell();
-				
-				//üres határoló
+
+				// üres határoló
 				Border border = null;
-				
-				//határolók beállítása
+
+				// határolók beállítása
 				if (i < rows - 1) {
 					if (j < columns - 1) {
 						border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
@@ -152,49 +176,164 @@ public class View {
 						border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
 					}
 				}
-				
-				//Határoló átadása a cellának
+
+				// Határoló átadása a cellának
 				cell.setBorder(border);
-				
-				//Cellakép beállítása
-				//Cellakép, ha keresztezõdés
-				if(palyaKep[i][j].contains("K"))
-					try {
-						cell.setImage(ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\keresztezodes.png")));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				//cellakép, ha egyenes sín elem
-				else if(palyaKep[i][j].contains("S")){
-					
-					//ha egyenes, akkor a megfelelõ kép
-					try {
-						cell.setImage(ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-					//Cellakép orientáció beállítása
-					
-					//szomszédok lekérése
-					PalyaElem[] szomszedok=sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1))).szomszedok;
-					//megnézi, függõlegesen egy vonalban vannak-e
-					if (szomszedok[0].getPoz()[1]==szomszedok[1].getPoz()[1])
-						//ha igen, elforgatja a sínt
+
+				// Cellakép beállítása
+
+				// S000 speciális sín beállítása
+				if (palyaKep[i][j].contains("000")) {
+					// ha a bal szélen van
+					if (sinek.get(0).getPoz()[0] == 0)
+						try {
+							cell.setImage(ImageIO
+									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					else {
+						try {
+							cell.setImage(ImageIO
+									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						cell.setOrientation(90.0);
-					
-					
-					
-					
+					}
 				}
-			
-				
-				
-				
-				
-				
+
+				// Cellakép, ha keresztezõdés
+				else if (palyaKep[i][j].contains("K")) {
+					try {
+						cell.setImage(ImageIO
+								.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\keresztezodes.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				// cellakép, ha egyenes sín elem
+				else if (palyaKep[i][j].contains("S")||palyaKep[i][j].contains("V")) {
+
+					// Elem lekérése
+					PalyaElem sin = sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1)));
+
+					// szomszédok lekérése
+					PalyaElem[] szomszedok = sin.szomszedok;
+
+					// ha egyenes, akkor a megfelelõ kép
+					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
+							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
+						try {
+							cell.setImage(ImageIO
+									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						// Cellakép orientáció beállítása
+
+						// megnézi, függõlegesen egy vonalban vannak-e, mert
+						// akkor forgatni kell a képen
+						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
+							// ha igen, elforgatja a sínt
+							cell.setOrientation(90.0);
+					}
+					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
+					else {
+						try {
+							cell.setImage(ImageIO
+									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\kanyar.png")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						// És akkor csak azt kell eldönteni, merrõl merre nézzen
+						// Elõször szomszéd alatta és a másik tõle balra vagy
+						// fordítva
+						if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setOrientation(0.0);
+						}
+						// Elõször szomszéd felette és a másik tõle
+						// jobbra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1]
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1)
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1]
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1)) {
+							cell.setOrientation(180.0);
+						}
+						// Elõször szomszéd alatta és a másik tõle
+						// jobbra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setOrientation(270.0);
+						}
+						// Elõször szomszéd felette és a másik tõle
+						// balra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setOrientation(90.0);
+						}
+					}
+
+				}
+				else if (palyaKep[i][j].contains("A")){
+					// Elem lekérése
+					PalyaElem sin = sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1)));
+
+					// szomszédok lekérése
+					PalyaElem[] szomszedok = sin.szomszedok;
+
+					// ha egyenes, akkor a megfelelõ kép
+					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
+							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
+						try {
+							cell.setImage(ImageIO
+									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\allomas_"+((Allomas)sin).getSzin()+".png")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						// Cellakép orientáció beállítása
+
+						// megnézi, függõlegesen egy vonalban vannak-e, mert
+						// akkor forgatni kell a képen
+						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
+							// ha igen, elforgatja a sínt
+							cell.setOrientation(90.0);
+					}
+				}
+				cell.setEredetiImage();
 				jatekPanel.add(cell, gbc);
 			}
 		}
@@ -331,6 +470,19 @@ public class View {
 
 		logger.log(Level.WARNING, "");
 		logger.setLevel(ltmp);
+	}
+
+	public void tajekoztatUser(int event) {
+		if (event == 1)
+			statusz.setText("Gyõztél!");
+		else if (event == 2)
+			statusz.setText("Ütközés történt, vesztettél!");
+		enAblakom.repaint();
+	}
+
+	public void dispose() {
+		enAblakom.dispose();
+
 	}
 
 }
