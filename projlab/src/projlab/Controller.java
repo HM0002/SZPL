@@ -83,9 +83,11 @@ public class Controller {
 				view.draw(JM);
 			}
 		}
+		else {
 		// utkozes popup
 		logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
 		view.tajekoztatUser(2);
+		}
 
 	}
 

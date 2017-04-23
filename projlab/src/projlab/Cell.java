@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
@@ -15,10 +17,14 @@ import javax.swing.border.Border;
 public class Cell extends JLabel {
 
 	/**
-	 * A forgatás értéke
+	 * Az elem alap képének forgatás értéke
 	 */
-	double orientacio = 0.0;
-	double eredetiOrientacio = 0.0;
+	double alapOrientacio = 0.0;
+
+	/**
+	 * Az elemre rárajzolt kép (tipikusan a jármûvek) forgatás értéke
+	 */
+	double raRajzoltOrientacio = 0.0;
 
 	/**
 	 * A létrehozáskor beállított keret
@@ -26,14 +32,14 @@ public class Cell extends JLabel {
 	Border originalBorder;
 
 	/**
-	 * A létrehozáskor beállított eredeti kép
+	 * Az alap képe a cellának
 	 */
-	Image eredetiKep;
+	Image alapKep;
 
 	/**
 	 * A Label képe
 	 */
-	Image kep;
+	Image raRajzoltKep = null;
 
 	/**
 	 * Auto generated
@@ -67,12 +73,14 @@ public class Cell extends JLabel {
 	}
 
 	public void paintComponent(Graphics g) {
-
+	
 		// õs kirajzolás elõször
 		super.paintComponent(g);
 
 		// Graphics 2D alakítás
 		Graphics2D g2d = (Graphics2D) g;
+		
+		AffineTransform trans = g2d.getTransform();
 
 		// Antialias beálítás
 		RenderingHints renderingHint = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
@@ -86,29 +94,43 @@ public class Cell extends JLabel {
 		// Forgatás az ablak közepén
 		int w2 = getWidth() / 2;
 		int h2 = getHeight() / 2;
-		g2d.rotate(Math.toRadians(orientacio), w2, h2);
 
-		g.drawImage(kep, 0, 0, null);
+		// alap kép elforgatása, kirajzolása
+		g2d.rotate(Math.toRadians(alapOrientacio), w2, h2);
+		g.drawImage(alapKep, 0, 0, null);
+		
+		// rárajzolt kép elforgatása, kirajzolása
+		if (raRajzoltKep != null) {
+			//transzformáció visszaállítása
+			g2d.setTransform(trans);
+
+			g2d.rotate(Math.toRadians(raRajzoltOrientacio), w2, h2);
+			g.drawImage(raRajzoltKep, 0, 0, null);
+		}
 	}
 
 	/**
 	 * Setter az orientáció változóhoz
 	 */
-	void setOrientation(Double tmp) {
-		orientacio = tmp;
+	void setAlapOrientation(Double tmp) {
+		alapOrientacio = tmp;
 	}
 
 	public void setImage(Image img) {
-		kep = img;
+		alapKep = img;
 	}
 
-	public void setEredetiImage() {
-		eredetiKep = kep;
-		eredetiOrientacio = orientacio;
+	public void restoreAlapImage() {
+		raRajzoltOrientacio = 0.0;
+		raRajzoltKep = null;
 	}
 
-	public void restoreEredetiImage() {
-		kep = eredetiKep;
-		orientacio = eredetiOrientacio;
+	public void setRaRajzoltOrientacio(Double or) {
+		raRajzoltOrientacio = or;
 	}
+
+	public void setRaRajzoltKep(Image img) {
+		raRajzoltKep = img;
+	}
+
 }

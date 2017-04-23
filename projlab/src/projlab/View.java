@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -26,24 +27,37 @@ import javax.swing.border.MatteBorder;
 
 public class View {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
+	/** Használható színek száma */
+	private final int szinSzam = 3;
 
-	JFrame enAblakom;
-	JPanel gombPanel;
-	JPanel statuszPanel;
-	JButton ujJatekGomb;
-	JButton exitGomb;
-	JButton startStop;
-	MyPanel jatekPanel;
-	Controller ctrl;
-	JLabel statusz;
-	JLabel palya;
-	ArrayList<Cell> cells;
+	/** Gui elemek tárolói */
+	private JFrame enAblakom;
+	private JPanel gombPanel;
+	private JPanel statuszPanel;
+	private JButton ujJatekGomb;
+	private JButton exitGomb;
+	private JButton startStop;
+	private MyPanel jatekPanel;
+	private Controller ctrl;
+	private JLabel statusz;
+	private JLabel palya;
+	private ArrayList<Cell> cells;
+	private Image uresKep;
+	private ArrayList<Image> kocsiKepek;
+	private ArrayList<Image> allomasKepek;
+	private Image mozdonyKep;
+	private Image szenesKocsiKep;
+	private Image egyenesSinKep;
+	private Image kanyarKep;
+	private Image keresztezoSinKep;
+	private Image boomKep;
 
 	// Változó az eredeti pályaképnek
-	String[][] palyaKep = null;
+	private String[][] palyaKep = null;
 
 	// mezõk, sorok
-	int columns, rows;
+	private int columns, rows;
 
 	/**
 	 * View konstruktor
@@ -135,7 +149,34 @@ public class View {
 				enAblakom.dispose();
 			}
 		});
-
+		
+		try{
+		//Képek betöltése
+		uresKep =ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\ures.png"));
+		kocsiKepek=new ArrayList<Image>();
+		allomasKepek= new ArrayList<Image>();
+		mozdonyKep = ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\mozdony.png"));
+		szenesKocsiKep = ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\szeneskocsi.png"));
+		egyenesSinKep = ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png"));
+		kanyarKep = ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\kanyar.png"));
+		keresztezoSinKep=ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\keresztezodes.png"));
+		boomKep= ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\boom.png"));
+		
+		//Állomásképek tömb feltöltése
+		allomasKepek.add(null);
+		for (int i=1; i<=szinSzam; i++) {
+			allomasKepek.add(ImageIO.read(new File(System.getProperty("user.home")+"\\elemek_kepei\\allomas_"+i+".png")));
+				}
+		//Kocsi képek tömb feltöltése
+		for (int i=0; i<=szinSzam; i++) {
+						kocsiKepek.add(ImageIO.read(new File(System.getProperty("user.home")+"\\elemek_kepei\\kocsi_"+i+".png")));
+		}
+		} catch (IOException e) {
+			logger.setLevel(Level.INFO);
+			logger.log(Level.INFO,"Nem sikerült a képeket beolvasni!");
+			System.exit(0);
+		}
+		
 		// palya kepenek elkerese a jatekmotortól
 		palyaKep = JM.getAktualisPalya().getPalyaKep();
 		columns = palyaKep[0].length;
@@ -193,37 +234,19 @@ public class View {
 
 				// S000 speciális sín beállítása
 				if (palyaKep[i][j].contains("000")) {
-					// ha a bal szélen van
-					if (sinek.get(0).getPoz()[0] == 0)
-						try {
-							cell.setImage(ImageIO
-									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
+					// ha a oldalt szélen van
+					if (sinek.get(0).getPoz()[0] == 0||sinek.get(0).getPoz()[0] == columns)
+						cell.setImage(egyenesSinKep);
+				    
 					else {
-						try {
-							cell.setImage(ImageIO
-									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						cell.setOrientation(90.0);
+						cell.setImage(egyenesSinKep);
+						cell.setAlapOrientation(90.0);
 					}
 				}
 
 				// Cellakép, ha keresztezõdés
 				else if (palyaKep[i][j].contains("K")) {
-					try {
-						cell.setImage(ImageIO
-								.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\keresztezodes.png")));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					cell.setImage(keresztezoSinKep);
 				}
 				// cellakép, ha egyenes sín elem
 				else if (palyaKep[i][j].contains("S") || palyaKep[i][j].contains("V")) {
@@ -237,13 +260,7 @@ public class View {
 					// ha egyenes, akkor a megfelelõ kép
 					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
 							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-						try {
-							cell.setImage(ImageIO
-									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\egyenes.png")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+													cell.setImage(egyenesSinKep);
 
 						// Cellakép orientáció beállítása
 
@@ -251,18 +268,12 @@ public class View {
 						// akkor forgatni kell a képen
 						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
 							// ha igen, elforgatja a sínt
-							cell.setOrientation(90.0);
+							cell.setAlapOrientation(90.0);
 					}
 					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 					else {
-						try {
-							cell.setImage(ImageIO
-									.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\kanyar.png")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
+						cell.setImage(kanyarKep);
+						
 						// És akkor csak azt kell eldönteni, merrõl merre nézzen
 						// Elõször szomszéd alatta és a másik tõle balra vagy
 						// fordítva
@@ -274,7 +285,7 @@ public class View {
 										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
 										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
 										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-							cell.setOrientation(0.0);
+							cell.setAlapOrientation(0.0);
 						}
 						// Elõször szomszéd felette és a másik tõle
 						// jobbra vagy fordítva
@@ -286,7 +297,7 @@ public class View {
 										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1]
 										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0]
 										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1)) {
-							cell.setOrientation(180.0);
+							cell.setAlapOrientation(180.0);
 						}
 						// Elõször szomszéd alatta és a másik tõle
 						// jobbra vagy fordítva
@@ -298,7 +309,7 @@ public class View {
 										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
 										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
 										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-							cell.setOrientation(270.0);
+							cell.setAlapOrientation(270.0);
 						}
 						// Elõször szomszéd felette és a másik tõle
 						// balra vagy fordítva
@@ -310,7 +321,7 @@ public class View {
 										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1
 										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
 										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-							cell.setOrientation(90.0);
+							cell.setAlapOrientation(90.0);
 						}
 					}
 
@@ -324,13 +335,8 @@ public class View {
 					// ha egyenes, akkor a megfelelõ kép
 					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
 							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-						try {
-							cell.setImage(ImageIO.read(new File(System.getProperty("user.home")
-									+ "\\elemek_kepei\\allomas_" + ((Allomas) sin).getSzin() + ".png")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						cell.setImage(allomasKepek.get(((Allomas)sin).getSzin()));
+						
 
 						// Cellakép orientáció beállítása
 
@@ -338,19 +344,12 @@ public class View {
 						// akkor forgatni kell a képen
 						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
 							// ha igen, elforgatja a sínt
-							cell.setOrientation(90.0);
+							cell.setAlapOrientation(90.0);
 					}
 				} else if (palyaKep[i][j].contains("    ")) {
-					try {
-						cell.setImage(
-								ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\ures.png")));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+						cell.setImage(uresKep);
+								}
 
-				cell.setEredetiImage();
 				jatekPanel.add(cell, gbc);
 
 				if (!palyaKep[i][j].trim().isEmpty())
@@ -358,9 +357,7 @@ public class View {
 			}
 		}
 
-		enAblakom.pack();
-		enAblakom.setLocationRelativeTo(null);
-		enAblakom.setVisible(true);
+	enAblakom.pack();enAblakom.setLocationRelativeTo(null);enAblakom.setVisible(true);
 
 	}
 
@@ -375,7 +372,7 @@ public class View {
 
 		// Cellák eredeti képre visszaállítása
 		for (Cell cell : cells)
-			cell.restoreEredetiImage();
+			cell.restoreAlapImage();
 
 		Cell celltmp = null;
 
@@ -387,50 +384,57 @@ public class View {
 					{
 						// Ha mozdony, rajzoljunk azt
 						if (jarmu.getID().contains("M")) {
-							try {
-								celltmp.setImage(ImageIO.read(
-										new File(System.getProperty("user.home") + "\\elemek_kepei\\mozdony.png")));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							
+								celltmp.setRaRajzoltKep(mozdonyKep);
+							
 						}
 						// szeneskocsi
 						else if (jarmu.getID().contains("C")) {
-							try {
-								celltmp.setImage(ImageIO.read(
-										new File(System.getProperty("user.home") + "\\elemek_kepei\\szeneskocsi.png")));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							celltmp.setRaRajzoltKep(szenesKocsiKep);							
 						}
 						// kocsi
-						else if (jarmu.getID().contains("K")) {
-							try {
-								celltmp.setImage(ImageIO.read(new File(System.getProperty("user.home")
-										+ "\\elemek_kepei\\kocsi_" + jarmu.getSzin() + ".png")));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
+						else if (jarmu.getID().contains("K")) {							
+								celltmp.setRaRajzoltKep(kocsiKepek.get(jarmu.getSzin()));
+													}
 
 						// Orientáció beállítása
+						
+						//S000 speciális elem
+						if (jarmu.getPozicio().getID().contains("S000"))  {
+							if(jarmu.getPozicio().getPoz()[1]==0 )
+								celltmp.setRaRajzoltOrientacio(270.0);
+							else if(jarmu.getPozicio().getPoz()[1]==rows)
+								celltmp.setRaRajzoltOrientacio(90.0);
+							else if (jarmu.getPozicio().getPoz()[0]==0)
+								celltmp.setRaRajzoltOrientacio(180.0);
+							else if (jarmu.getPozicio().getPoz()[0]==columns)
+								celltmp.setRaRajzoltOrientacio(0.0);
+						}							
+						
+						if (jarmu.getPozicio().getID().contains("S001"))  {
+							if(jarmu.getPozicio().getPoz()[1]==1 )
+								celltmp.setRaRajzoltOrientacio(270.0);
+							else if(jarmu.getPozicio().getPoz()[1]==rows-1)
+								celltmp.setRaRajzoltOrientacio(90.0);
+							else if (jarmu.getPozicio().getPoz()[0]==1)
+								celltmp.setRaRajzoltOrientacio(180.0);
+							else if (jarmu.getPozicio().getPoz()[0]==columns-1)
+								celltmp.setRaRajzoltOrientacio(0.0);
+						}							
 						// X egyezik, Y nõ --> vonat lefelé megy
-						if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
+						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] > jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setOrientation(270.0);
+							celltmp.setRaRajzoltOrientacio(270.0);
 
 						// X csökken, Y nem változik --> vonat balra megy
 						else if (jarmu.getPozicio().getPoz()[0] > jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] == jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setOrientation(180.0);
+							celltmp.setRaRajzoltOrientacio(180.0);
 
 						// X nem változik, Y csökken --> vonat felfelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] < jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setOrientation(90.0);
+							celltmp.setRaRajzoltOrientacio(90.0);
 					}
 				}
 
@@ -438,13 +442,9 @@ public class View {
 		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
 			if (pe.getFoglalt() > 1)
 				try {
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setImage(
-							ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\boom.png")));
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setOrientation(0.0);
+					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltKep(boomKep);
+					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltOrientacio(0.0);
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
