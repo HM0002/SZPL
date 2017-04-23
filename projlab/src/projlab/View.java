@@ -58,7 +58,7 @@ public class View {
 	private Image boomKep;
 	private Image alagutKep;
 	private Image varakozoUtasKep;
-	
+
 	// Változó az eredeti pályaképnek
 	private String[][] palyaKep = null;
 
@@ -107,8 +107,8 @@ public class View {
 		// panel az ablakoknak
 		jatekPanel = new JPanel();
 		enAblakom.add(jatekPanel, BorderLayout.CENTER);
-		jatekPanel.setMaximumSize(new Dimension(500, 500));
-		jatekPanel.setPreferredSize(new Dimension(500, 500));
+		jatekPanel.setMaximumSize(new Dimension(650, 550));
+		jatekPanel.setPreferredSize(new Dimension(650, 550));
 		jatekPanel.setDoubleBuffered(true);
 
 		// Státusz ablak
@@ -186,9 +186,8 @@ public class View {
 					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_egyenes.png"));
 			kanyarValtoKep = ImageIO
 					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_kanyar.png"));
-			varakozoUtasKep = ImageIO
-					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\utas.png"));
-			
+			varakozoUtasKep = ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\utas.png"));
+
 		} catch (IOException e) {
 			logger.setLevel(Level.INFO);
 			logger.log(Level.INFO, "Nem sikerült a képeket beolvasni!");
@@ -483,8 +482,8 @@ public class View {
 		// Sinek lekérése
 		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
 		for (PalyaElem sin : sinek) {
-			Image tmpkep=uresKep;
-			double tmpor=0.0;
+			Image tmpkep = uresKep;
+			double tmpor = 0.0;
 			if (sin.getID().contains("V")) {
 				Cell cell = cells.get(Integer.parseInt(sin.getID().trim().substring(1)));
 
@@ -563,35 +562,34 @@ public class View {
 				if (pe.getAlagut()) {
 					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, alagutKep);
 				}
-		
-		//Várakozó utasok
+
+		// Várakozó utasok
 		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
-			if (pe.getID().contains("A")&&((Allomas)pe).getVarakozoUtas()) {
+			if (pe.getID().contains("A") && ((Allomas) pe).getVarakozoUtas()) {
 				cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, varakozoUtasKep);
-		}
-		
+			}
 
 		// Vonatok rárajzolása
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
 				if (jarmu.getPozicio() != null) {
-					Image tmpkep=uresKep;
-					double tmpor=0.0;
+					Image tmpkep = uresKep;
+					double tmpor = 0.0;
 					celltmp = cells.get(Integer.parseInt(jarmu.getPozicio().getID().trim().substring(1)));
 					{
 						// Ha mozdony, rajzoljunk azt
 						if (jarmu.getID().contains("M")) {
 
-							tmpkep= mozdonyKep;
+							tmpkep = mozdonyKep;
 
 						}
 						// kocsi
 						else if (jarmu.getID().contains("K")) {
-							tmpkep=(kocsiKepek.get(jarmu.getSzin()));
+							tmpkep = (kocsiKepek.get(jarmu.getSzin()));
 						}
 						// szeneskocsi
 						else {
-							tmpkep=szenesKocsiKep;
+							tmpkep = szenesKocsiKep;
 						}
 
 						// Orientáció beállítása
@@ -599,42 +597,42 @@ public class View {
 						// S000 speciális elem
 						if (jarmu.getPozicio().getID().contains("S000")) {
 							if (jarmu.getPozicio().getPoz()[1] == 0)
-								tmpor=270.0;
+								tmpor = 270.0;
 							else if (jarmu.getPozicio().getPoz()[1] == rows)
-								tmpor=90.0;
+								tmpor = 90.0;
 							else if (jarmu.getPozicio().getPoz()[0] == 0)
-								tmpor=180.0;
-							else 
-								tmpor= 0.0;
+								tmpor = 180.0;
+							else
+								tmpor = 0.0;
 						}
 
 						else if (jarmu.getPozicio().getID().contains("S001")) {
 							if (jarmu.getPozicio().getPoz()[1] == 1)
-								tmpor=270.0;
+								tmpor = 270.0;
 							else if (jarmu.getPozicio().getPoz()[1] == rows - 1)
-								tmpor=90.0;
+								tmpor = 90.0;
 							else if (jarmu.getPozicio().getPoz()[0] == 1)
-								tmpor=180.0;
+								tmpor = 180.0;
 							else
-								tmpor=0.0;
+								tmpor = 0.0;
 						}
 						// X egyezik, Y nõ --> vonat lefelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] > jarmu.getElozoPozicio().getPoz()[1])
-							tmpor=270.0;
+							tmpor = 270.0;
 
 						// X csökken, Y nem változik --> vonat balra megy
 						else if (jarmu.getPozicio().getPoz()[0] > jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] == jarmu.getElozoPozicio().getPoz()[1])
-							tmpor=180.0;
+							tmpor = 180.0;
 
 						// X nem változik, Y csökken --> vonat felfelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] < jarmu.getElozoPozicio().getPoz()[1])
-							tmpor=90.0;
+							tmpor = 90.0;
 						// X nõ változik, Y nem változik --> vonat jobbra megy
 						else
-							tmpor=0.0;
+							tmpor = 0.0;
 					}
 					celltmp.setRaRajzolas(tmpor, tmpkep);
 				}
@@ -643,12 +641,18 @@ public class View {
 		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
 			if (pe.getFoglalt() > 1)
 				try {
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0,boomKep);
+					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, boomKep);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
+		//StartStop gomb ellenõrzése
+		if (ctrl.getJatekFut() == true)
+			startStop.setText("  Pause  ");
+		else
+			startStop.setText("  Start  ");
+		
 		// Komplett panel újrarajzolása a beállítások alapján
 		jatekPanel.repaint();
 

@@ -74,6 +74,7 @@ public class Controller {
 					if (JM.getPalyaSzam() < 2) {
 						logger.log(Level.INFO, "Megnyertük a játékot!");
 						view.tajekoztatUser(1);
+						setJatekFutas();
 						return;
 					} else {
 						logger.log(Level.INFO, "Megnyertük a pályát!");
@@ -263,7 +264,8 @@ public class Controller {
 
 	/**
 	 * A pályák listáját állítja elõ elõre definiált forrásokból. a
-	 * palyaBetoltes fuggvény segítsegevel.
+	 * palyaBetoltes fuggvény segítsegevel. Ezután létrehozza a JatekMotor-t és
+	 * a View-t.
 	 */
 	private void init() throws IOException {
 

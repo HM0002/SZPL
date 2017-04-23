@@ -33,7 +33,7 @@ public class Cell extends JLabel {
 	String id = "Ures";
 
 	/**
-	 * Az elemre rárajzolt kép (tipikusan a jármûvek) forgatás értéke
+	 * Az elemre rárajzolt képek forgatás értéke
 	 */
 	ArrayList<Double> raRajzoltOrientacio;
 
