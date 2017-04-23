@@ -32,7 +32,7 @@ public class Controller {
 		 * Az idõzítõ beállítása, elindítása.
 		 */
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 0, 100);
+		timer.scheduleAtFixedRate(timerTask, 0, 200);
 	}
 
 	/**

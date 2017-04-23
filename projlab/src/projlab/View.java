@@ -154,8 +154,6 @@ public class View {
 				enAblakom.dispose();
 			}
 		});
-		
-
 
 		try {
 			// Képek betöltése
@@ -183,9 +181,11 @@ public class View {
 				kocsiKepek.add(ImageIO
 						.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\kocsi_" + i + ".png")));
 			}
-			egyenesValtoSinKep=ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_egyenes.png"));
-			kanyarValtoKep=ImageIO.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_kanyar.png"));
-			
+			egyenesValtoSinKep = ImageIO
+					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_egyenes.png"));
+			kanyarValtoKep = ImageIO
+					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_kanyar.png"));
+
 		} catch (IOException e) {
 			logger.setLevel(Level.INFO);
 			logger.log(Level.INFO, "Nem sikerült a képeket beolvasni!");
@@ -343,87 +343,87 @@ public class View {
 						}
 					}
 				}
-				//Váltó pályakép
-					else if (palyaKep[i][j].contains("V")) {
-						cell.setID(palyaKep[i][j]);
+				// Váltó pályakép
+				else if (palyaKep[i][j].contains("V")) {
+					cell.setID(palyaKep[i][j]);
 
-						// Elem lekérése
-						PalyaElem sin = sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1)));
+					// Elem lekérése
+					PalyaElem sin = sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1)));
 
-						// szomszédok lekérése
-						PalyaElem[] szomszedok = sin.szomszedok;
+					// szomszédok lekérése
+					PalyaElem[] szomszedok = sin.szomszedok;
 
-						// ha egyenes, akkor a megfelelõ kép
-						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
-								|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-							cell.setImage(egyenesValtoSinKep);
+					// ha egyenes, akkor a megfelelõ kép
+					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
+							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
+						cell.setImage(egyenesValtoSinKep);
 
-							// Cellakép orientáció beállítása
+						// Cellakép orientáció beállítása
 
-							// megnézi, függõlegesen egy vonalban vannak-e, mert
-							// akkor forgatni kell a képen
-							if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
-								// ha igen, elforgatja a sínt
-								cell.setAlapOrientation(90.0);
+						// megnézi, függõlegesen egy vonalban vannak-e, mert
+						// akkor forgatni kell a képen
+						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
+							// ha igen, elforgatja a sínt
+							cell.setAlapOrientation(90.0);
+					}
+					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
+					else {
+						cell.setImage(kanyarValtoKep);
+
+						// És akkor csak azt kell eldönteni, merrõl merre nézzen
+						// Elõször szomszéd alatta és a másik tõle balra vagy
+						// fordítva
+						if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setAlapOrientation(0.0);
 						}
-						// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
-						else {
-							cell.setImage(kanyarValtoKep);
-
-							// És akkor csak azt kell eldönteni, merrõl merre nézzen
-							// Elõször szomszéd alatta és a másik tõle balra vagy
-							// fordítva
-							if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
-									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
-									&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
-									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
-									|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
-											&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
-											&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
-											&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-								cell.setAlapOrientation(0.0);
-							}
-							// Elõször szomszéd felette és a másik tõle
-							// jobbra vagy fordítva
-							else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
-									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1]
-									&& szomszedok[1].getPoz()[0] == sin.getPoz()[0]
-									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1)
-									|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
-											&& szomszedok[1].getPoz()[1] == sin.getPoz()[1]
-											&& szomszedok[0].getPoz()[0] == sin.getPoz()[0]
-											&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1)) {
-								cell.setAlapOrientation(180.0);
-							}
-							// Elõször szomszéd alatta és a másik tõle
-							// jobbra vagy fordítva
-							else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
-									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
-									&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
-									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
-									|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
-											&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
-											&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
-											&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-								cell.setAlapOrientation(270.0);
-							}
-							// Elõször szomszéd felette és a másik tõle
-							// balra vagy fordítva
-							else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
-									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1
-									&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
-									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
-									|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
-											&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1
-											&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
-											&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-								cell.setAlapOrientation(90.0);
-							}
+						// Elõször szomszéd felette és a másik tõle
+						// jobbra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1]
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1)
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1]
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1)) {
+							cell.setAlapOrientation(180.0);
 						}
-
+						// Elõször szomszéd alatta és a másik tõle
+						// jobbra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] + 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] + 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setAlapOrientation(270.0);
+						}
+						// Elõször szomszéd felette és a másik tõle
+						// balra vagy fordítva
+						else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
+								&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1
+								&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
+								&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
+								|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
+										&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1
+										&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
+										&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
+							cell.setAlapOrientation(90.0);
+						}
 					}
 
-				 else if (palyaKep[i][j].contains("A")) {
+				}
+
+				else if (palyaKep[i][j].contains("A")) {
 					cell.setID(palyaKep[i][j]);
 					// Elem lekérése
 					PalyaElem sin = sinek.get(Integer.parseInt(palyaKep[i][j].trim().substring(1)));
@@ -480,7 +480,8 @@ public class View {
 		// Sinek lekérése
 		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
 		for (PalyaElem sin : sinek) {
-
+			Image tmpkep;
+			double tmpor;
 			if (sin.getID().contains("V")) {
 				Cell cell = cells.get(Integer.parseInt(sin.getID().trim().substring(1)));
 
@@ -490,8 +491,7 @@ public class View {
 				// ha egyenes, akkor a megfelelõ kép
 				if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
 						|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-					cell.setRaRajzoltKep(egyenesValtoSinKep);
-					cell.setRaRajzoltOrientacio(0.0);
+					tmpkep = egyenesValtoSinKep;
 
 					// Cellakép orientáció beállítása
 
@@ -499,11 +499,13 @@ public class View {
 					// akkor forgatni kell a képen
 					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
 						// ha igen, elforgatja a sínt
-						cell.setRaRajzoltOrientacio(90.0);
+						tmpor = 90.0;
+					else
+						tmpor = 0.0;
 				}
 				// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 				else {
-					cell.setRaRajzoltKep(kanyarValtoKep);
+					tmpkep = kanyarValtoKep;
 
 					// És akkor csak azt kell eldönteni, merrõl merre nézzen
 					// Elõször szomszéd alatta és a másik tõle balra vagy
@@ -516,7 +518,7 @@ public class View {
 									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
 									&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
 									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-						cell.setRaRajzoltOrientacio(0.0);
+						tmpor = 0.0;
 					}
 					// Elõször szomszéd felette és a másik tõle
 					// jobbra vagy fordítva
@@ -528,7 +530,7 @@ public class View {
 									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1]
 									&& szomszedok[0].getPoz()[0] == sin.getPoz()[0]
 									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1)) {
-						cell.setRaRajzoltOrientacio(180.0);
+						tmpor = 180.0;
 					}
 					// Elõször szomszéd alatta és a másik tõle
 					// jobbra vagy fordítva
@@ -540,21 +542,15 @@ public class View {
 									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] + 1
 									&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] + 1
 									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-						cell.setRaRajzoltOrientacio(270.0);
+						tmpor = 270.0;
 					}
 					// Elõször szomszéd felette és a másik tõle
 					// balra vagy fordítva
-					else if ((szomszedok[0].getPoz()[0] == sin.getPoz()[0]
-							&& szomszedok[0].getPoz()[1] == sin.getPoz()[1] - 1
-							&& szomszedok[1].getPoz()[0] == sin.getPoz()[0] - 1
-							&& szomszedok[1].getPoz()[1] == sin.getPoz()[1])
-							|| (szomszedok[1].getPoz()[0] == sin.getPoz()[0]
-									&& szomszedok[1].getPoz()[1] == sin.getPoz()[1] - 1
-									&& szomszedok[0].getPoz()[0] == sin.getPoz()[0] - 1
-									&& szomszedok[0].getPoz()[1] == sin.getPoz()[1])) {
-						cell.setRaRajzoltOrientacio(90.0);
+					else {
+						tmpor = 90.0;
 					}
 				}
+				cell.setRaRajzolas(tmpor, tmpkep);
 			}
 		}
 
@@ -562,29 +558,30 @@ public class View {
 		if (JM.getAktualisPalya().getAlagutSzam() > 0)
 			for (PalyaElem pe : JM.getAktualisPalya().getElemek())
 				if (pe.getAlagut()) {
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltKep(alagutKep);
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltOrientacio(0.0);
+					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, alagutKep);
 				}
 
 		// Vonatok rárajzolása
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
 				if (jarmu.getPozicio() != null) {
+					Image tmpkep;
+					double tmpor;
 					celltmp = cells.get(Integer.parseInt(jarmu.getPozicio().getID().trim().substring(1)));
 					{
 						// Ha mozdony, rajzoljunk azt
 						if (jarmu.getID().contains("M")) {
 
-							celltmp.setRaRajzoltKep(mozdonyKep);
+							tmpkep= mozdonyKep;
 
-						}
-						// szeneskocsi
-						else if (jarmu.getID().contains("C")) {
-							celltmp.setRaRajzoltKep(szenesKocsiKep);
 						}
 						// kocsi
 						else if (jarmu.getID().contains("K")) {
-							celltmp.setRaRajzoltKep(kocsiKepek.get(jarmu.getSzin()));
+							tmpkep=(kocsiKepek.get(jarmu.getSzin()));
+						}
+						// szeneskocsi
+						else {
+							tmpkep=szenesKocsiKep;
 						}
 
 						// Orientáció beállítása
@@ -592,54 +589,57 @@ public class View {
 						// S000 speciális elem
 						if (jarmu.getPozicio().getID().contains("S000")) {
 							if (jarmu.getPozicio().getPoz()[1] == 0)
-								celltmp.setRaRajzoltOrientacio(270.0);
+								tmpor=270.0;
 							else if (jarmu.getPozicio().getPoz()[1] == rows)
-								celltmp.setRaRajzoltOrientacio(90.0);
+								tmpor=90.0;
 							else if (jarmu.getPozicio().getPoz()[0] == 0)
-								celltmp.setRaRajzoltOrientacio(180.0);
-							else if (jarmu.getPozicio().getPoz()[0] == columns)
-								celltmp.setRaRajzoltOrientacio(0.0);
+								tmpor=180.0;
+							else 
+								tmpor= 0.0;
 						}
 
-						if (jarmu.getPozicio().getID().contains("S001")) {
+						else if (jarmu.getPozicio().getID().contains("S001")) {
 							if (jarmu.getPozicio().getPoz()[1] == 1)
-								celltmp.setRaRajzoltOrientacio(270.0);
+								tmpor=270.0;
 							else if (jarmu.getPozicio().getPoz()[1] == rows - 1)
-								celltmp.setRaRajzoltOrientacio(90.0);
+								tmpor=90.0;
 							else if (jarmu.getPozicio().getPoz()[0] == 1)
-								celltmp.setRaRajzoltOrientacio(180.0);
-							else if (jarmu.getPozicio().getPoz()[0] == columns - 1)
-								celltmp.setRaRajzoltOrientacio(0.0);
+								tmpor=180.0;
+							else
+								tmpor=0.0;
 						}
 						// X egyezik, Y nõ --> vonat lefelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] > jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setRaRajzoltOrientacio(270.0);
+							tmpor=270.0;
 
 						// X csökken, Y nem változik --> vonat balra megy
 						else if (jarmu.getPozicio().getPoz()[0] > jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] == jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setRaRajzoltOrientacio(180.0);
+							tmpor=180.0;
 
 						// X nem változik, Y csökken --> vonat felfelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
 								&& jarmu.getPozicio().getPoz()[1] < jarmu.getElozoPozicio().getPoz()[1])
-							celltmp.setRaRajzoltOrientacio(90.0);
+							tmpor=90.0;
+						// X nõ változik, Y nem változik --> vonat jobbra megy
+						else
+							tmpor=0.0;
 					}
+					celltmp.setRaRajzolas(tmpor, tmpkep);
 				}
 
 		// Crash rajzolása
 		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
 			if (pe.getFoglalt() > 1)
 				try {
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltKep(boomKep);
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzoltOrientacio(0.0);
+					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0,boomKep);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-		//Komplett panel újrarajzolása a beállítások alapján
+		// Komplett panel újrarajzolása a beállítások alapján
 		jatekPanel.repaint();
 
 	}
@@ -762,7 +762,7 @@ public class View {
 
 	/**
 	 * A státusz-bárt kezelõ függvény, a Controller hívja.
-	 * */
+	 */
 	public void tajekoztatUser(int event) {
 		if (event == 1)
 			statusz.setText("Gyõztél!");
@@ -773,7 +773,7 @@ public class View {
 
 	/**
 	 * Ablak megsemmisítése.
-	 * */
+	 */
 	public void dispose() {
 		enAblakom.dispose();
 

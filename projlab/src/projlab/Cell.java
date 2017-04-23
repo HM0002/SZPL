@@ -9,12 +9,18 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 public class Cell extends JLabel {
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	/**
 	 * Az elem alap képének forgatás értéke
@@ -29,7 +35,7 @@ public class Cell extends JLabel {
 	/**
 	 * Az elemre rárajzolt kép (tipikusan a jármûvek) forgatás értéke
 	 */
-	double raRajzoltOrientacio = 0.0;
+	ArrayList<Double> raRajzoltOrientacio;
 
 	/**
 	 * A létrehozáskor beállított keret
@@ -42,10 +48,10 @@ public class Cell extends JLabel {
 	Image alapKep;
 
 	/**
-	 * A Label képe
+	 * A Label rárajzolt képei
 	 */
-	Image raRajzoltKep = null;
-
+	ArrayList<Image> raRajzoltKep;
+	
 	/**
 	 * Controller az esemény kezeléshez
 	 */
@@ -59,6 +65,8 @@ public class Cell extends JLabel {
 	Cell(Controller ctrlhere) {
 		super();
 		ctrl = ctrlhere;
+		raRajzoltKep=new ArrayList<Image>();
+		raRajzoltOrientacio=new ArrayList<Double>();
 
 		// Méret beállítása
 		setMaximumSize(new Dimension(50, 50));
@@ -121,55 +129,59 @@ public class Cell extends JLabel {
 
 		// alap kép elforgatása, kirajzolása
 		g2d.rotate(Math.toRadians(alapOrientacio), w2, h2);
-		g.drawImage(alapKep, 0, 0, null);
+		g2d.drawImage(alapKep, 0, 0, null);
 
 		// rárajzolt kép elforgatása, kirajzolása
-		if (raRajzoltKep != null) {
-			// transzformáció visszaállítása
-			g2d.setTransform(trans);
+		if (!(raRajzoltKep.isEmpty())) {
+
+			if (raRajzoltKep.size() != raRajzoltOrientacio.size()) {
+				logger.setLevel(Level.INFO);
+				logger.log(Level.WARNING, "Baj történt, nem egyezik az elforgatás és kirajzolandó képek száma!");
+				System.exit(0);
+			}
 			
-			//Elforgatás, kirajzolás
-			g2d.rotate(Math.toRadians(raRajzoltOrientacio), w2, h2);
-			g.drawImage(raRajzoltKep, 0, 0, null);
+				for (int cnt = 0; cnt < raRajzoltKep.size(); ++cnt) {
+					// transzformáció visszaállítása
+					g2d.setTransform(trans);
+
+					// rárajzolások, elforgatások, kirajzolások
+					g2d.rotate(Math.toRadians((double) raRajzoltOrientacio.get(cnt)), w2, h2);
+					g2d.drawImage(raRajzoltKep.get(cnt), 0, 0, null);
+				
+			}
 		}
 	}
 
 	/**
 	 * Az elem alap orientációjának beállítása
-	 * */
+	 */
 	void setAlapOrientation(Double tmp) {
 		alapOrientacio = tmp;
 	}
 
 	/**
 	 * Az elem alap képének beállítása
-	 * */
+	 */
 	public void setImage(Image img) {
 		alapKep = img;
 	}
 
-	
 	/**
 	 * Az eredeti kép visszaállítása (ne rajzoljon rá új réteget)
-	 * */
+	 */
 	public void restoreAlapImage() {
-		raRajzoltOrientacio = 0.0;
-		raRajzoltKep = null;
+		raRajzoltOrientacio.clear();
+		raRajzoltKep.clear();
 	}
 
-	
-	/**
-	 * A rárajzolnadó kép orientáció beállítása
-	 * */
-	public void setRaRajzoltOrientacio(Double or) {
-		raRajzoltOrientacio = or;
-	}
 	/**
 	 * A rárajzolnadó kép beállítása
-	 * */
-	public void setRaRajzoltKep(Image img) {
-		raRajzoltKep = img;
+	 */
+	public void setRaRajzolas(Double or, Image img) {
+		raRajzoltOrientacio.add(or);
+		raRajzoltKep.add(img);
 	}
+
 
 	public void setID(String id) {
 		this.id = id;
