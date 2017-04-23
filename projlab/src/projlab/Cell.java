@@ -20,11 +20,11 @@ public class Cell extends JLabel {
 	 * Az elem alap képének forgatás értéke
 	 */
 	double alapOrientacio = 0.0;
-	
+
 	/**
 	 * Az elemhez tartozó modellbeli pályaelem sorszáma
 	 */
-	String id="Ures";
+	String id = "Ures";
 
 	/**
 	 * Az elemre rárajzolt kép (tipikusan a jármûvek) forgatás értéke
@@ -45,7 +45,7 @@ public class Cell extends JLabel {
 	 * A Label képe
 	 */
 	Image raRajzoltKep = null;
-	
+
 	/**
 	 * Controller az esemény kezeléshez
 	 */
@@ -58,13 +58,15 @@ public class Cell extends JLabel {
 
 	Cell(Controller ctrlhere) {
 		super();
-		ctrl=ctrlhere;
+		ctrl = ctrlhere;
 
+		// Méret beállítása
 		setMaximumSize(new Dimension(50, 50));
 		setPreferredSize(new Dimension(50, 50));
 
+		// Egér esemény kezelõ, piros keretet csinál a mezõnek, ha felette van
+		// az egér
 		addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				originalBorder = getBorder();
@@ -73,33 +75,35 @@ public class Cell extends JLabel {
 			}
 		});
 
+		// Egér esemény kezelõ, visszarakja az eredeti keretet a mezõnek, ha
+		// elment felõle az egér
 		addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setBorder(originalBorder);
 				repaint();
 			}
 		});
-		
+
+		// Eseménykezõ, ha rákattintottunk, meghívja a controller kattintottElem
+		// függvényét
 		addMouseListener(new MouseAdapter() {
-			   public void mousePressed(MouseEvent e) {
-			       Cell cell = (Cell)e.getSource();
-			       ctrl.kattintottElem(cell.getID());
-			   }
+			public void mousePressed(MouseEvent e) {
+				Cell cell = (Cell) e.getSource();
+				ctrl.kattintottElem(cell.getID());
+			}
 		});
-		
-		
+
 	}
 
 	public void paintComponent(Graphics g) {
-	
+
 		// õs kirajzolás elõször
 		super.paintComponent(g);
 
 		// Graphics 2D alakítás
 		Graphics2D g2d = (Graphics2D) g;
-		
+
 		AffineTransform trans = g2d.getTransform();
 
 		// Antialias beálítás
@@ -118,48 +122,61 @@ public class Cell extends JLabel {
 		// alap kép elforgatása, kirajzolása
 		g2d.rotate(Math.toRadians(alapOrientacio), w2, h2);
 		g.drawImage(alapKep, 0, 0, null);
-		
+
 		// rárajzolt kép elforgatása, kirajzolása
 		if (raRajzoltKep != null) {
-			//transzformáció visszaállítása
+			// transzformáció visszaállítása
 			g2d.setTransform(trans);
-
+			
+			//Elforgatás, kirajzolás
 			g2d.rotate(Math.toRadians(raRajzoltOrientacio), w2, h2);
 			g.drawImage(raRajzoltKep, 0, 0, null);
 		}
 	}
 
 	/**
-	 * Setter az orientáció változóhoz
-	 */
+	 * Az elem alap orientációjának beállítása
+	 * */
 	void setAlapOrientation(Double tmp) {
 		alapOrientacio = tmp;
 	}
 
+	/**
+	 * Az elem alap képének beállítása
+	 * */
 	public void setImage(Image img) {
 		alapKep = img;
 	}
 
+	
+	/**
+	 * Az eredeti kép visszaállítása (ne rajzoljon rá új réteget)
+	 * */
 	public void restoreAlapImage() {
 		raRajzoltOrientacio = 0.0;
 		raRajzoltKep = null;
 	}
 
+	
+	/**
+	 * A rárajzolnadó kép orientáció beállítása
+	 * */
 	public void setRaRajzoltOrientacio(Double or) {
 		raRajzoltOrientacio = or;
 	}
-
+	/**
+	 * A rárajzolnadó kép beállítása
+	 * */
 	public void setRaRajzoltKep(Image img) {
 		raRajzoltKep = img;
 	}
-	
+
 	public void setID(String id) {
-		this.id=id;
+		this.id = id;
 	}
-	
+
 	public String getID() {
 		return id;
 	}
-
 
 }

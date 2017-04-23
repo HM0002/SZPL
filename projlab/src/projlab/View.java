@@ -639,6 +639,7 @@ public class View {
 					e.printStackTrace();
 				}
 
+		//Komplett panel újrarajzolása a beállítások alapján
 		jatekPanel.repaint();
 
 	}
@@ -759,6 +760,9 @@ public class View {
 		logger.setLevel(ltmp);
 	}
 
+	/**
+	 * A státusz-bárt kezelõ függvény, a Controller hívja.
+	 * */
 	public void tajekoztatUser(int event) {
 		if (event == 1)
 			statusz.setText("Gyõztél!");
@@ -767,6 +771,9 @@ public class View {
 		enAblakom.repaint();
 	}
 
+	/**
+	 * Ablak megsemmisítése.
+	 * */
 	public void dispose() {
 		enAblakom.dispose();
 

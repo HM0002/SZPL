@@ -14,8 +14,10 @@ public class Controller {
 
 	Controller() {
 
+		/**
+		 * Beágyazott idõzített feladat osztály, külön szálon fog futni
+		 */
 		TimerTask timerTask = new TimerTask() {
-
 			@Override
 			public void run() {
 				if (jatekFut) {
@@ -26,8 +28,10 @@ public class Controller {
 			}
 		};
 
+		/**
+		 * Az idõzítõ beállítása, elindítása.
+		 */
 		Timer timer = new Timer();
-
 		timer.scheduleAtFixedRate(timerTask, 0, 100);
 	}
 
@@ -45,17 +49,17 @@ public class Controller {
 	View view = null;
 
 	/**
-	 * Egy segéd változónk van, az utkozes. Értéke hamis, és egy loop-ban
-	 * vagyunk, amíg ez így is marad. A loop-ban meghívjuk az idoMeres metódust,
-	 * és ha eltelt 1 másodperc, az visszatér igazzal, egyébként nem csinálunk
-	 * semmit. Ha eltelt az 1 másodperc, meghívjuk az utkozesEllenorzes
-	 * metódust, melynek a visszatérését értékül adjuk az utkozes-nek. Ez után
+	 * Egy segéd változónk van, az utkozes, csak akkor lépünk az esmények
+	 * kezelõjébe, ha nincs ütközés. A függvény kívülrõl van idõzítve adott
+	 * idõnként hívva. Meghívjuk benne az idoMeres metódust, és ha eltelt 1
+	 * másodperc, az visszatér igazzal, egyébként nem csinálunk semmit. Ez után
 	 * meghíjuk a gyozelemEllenorzes metódust, ami ha igazzal tér vissza,
 	 * megnézzük, hogy van-e még pálya hátra a palyak listában. Ha nincs,
 	 * végigvittük a játékot, errõl értesítjük a felhasználót és visszatérünk a
 	 * menübe. Ha van még pálya hátra, felhívjuk a palyaBetoltes metódust, ami
-	 * betölti az új pályát. A gyozelemEllenorzes után felhívjuk a vonatInditas
-	 * metódust.
+	 * betölti az új pályát, valamint érvénytelenítjük az elõz pálya ablakát és
+	 * csinálunk új View-t az új pályának. A gyozelemEllenorzes után felhívjuk a
+	 * vonatInditas metódust, és kirajzoljuk a view-al az aktuális játékállást.
 	 */
 	void gameRun() {
 		logger.log(Level.INFO, "Controller.gameRun()");
@@ -82,11 +86,10 @@ public class Controller {
 				JM.vonatInditas();
 				view.draw(JM);
 			}
-		}
-		else {
-		// utkozes popup
-		logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
-		view.tajekoztatUser(2);
+		} else {
+			// utkozes popup
+			logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
+			view.tajekoztatUser(2);
 		}
 
 	}
@@ -100,7 +103,6 @@ public class Controller {
 		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 1000) {
 			view.draw(JM);
 			JM.idoEltelt();
-
 			return true;
 		}
 		return false;
@@ -520,6 +522,9 @@ public class Controller {
 
 	}
 
+	/**
+	 * Új játék gomb megnyomás esemény kezelése
+	 */
 	public void ujJatekKezdes() throws IOException {
 		init();
 	}
@@ -531,22 +536,24 @@ public class Controller {
 	public Boolean getJatekFut() {
 		return jatekFut;
 	}
-	
-	public void kattintottElem(String id){
-		if(id.contains("S")){
+
+	/**
+	 * Cella hívja, hogy erre az ID-jû elemre történt kattintás
+	 */
+	public void kattintottElem(String id) {
+		if (id.contains("S")) {
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 				if (palyaElem.getID().equals(id)) {
 					((Sin) palyaElem).setAlagut();
 				}
 			view.draw(JM);
-		}
-		else if (id.contains("V")){
+		} else if (id.contains("V")) {
 			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
 				if (palyaElem.getID().equals(id)) {
 					((Valto) palyaElem).atallit();
 				}
 			view.draw(JM);
-			
+
 		}
 	}
 }
