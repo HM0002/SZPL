@@ -57,7 +57,8 @@ public class View {
 	private Image keresztezoSinKep;
 	private Image boomKep;
 	private Image alagutKep;
-
+	private Image varakozoUtasKep;
+	
 	// Változó az eredeti pályaképnek
 	private String[][] palyaKep = null;
 
@@ -185,7 +186,9 @@ public class View {
 					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_egyenes.png"));
 			kanyarValtoKep = ImageIO
 					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\valto_kanyar.png"));
-
+			varakozoUtasKep = ImageIO
+					.read(new File(System.getProperty("user.home") + "\\elemek_kepei\\utas.png"));
+			
 		} catch (IOException e) {
 			logger.setLevel(Level.INFO);
 			logger.log(Level.INFO, "Nem sikerült a képeket beolvasni!");
@@ -480,8 +483,8 @@ public class View {
 		// Sinek lekérése
 		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
 		for (PalyaElem sin : sinek) {
-			Image tmpkep;
-			double tmpor;
+			Image tmpkep=uresKep;
+			double tmpor=0.0;
 			if (sin.getID().contains("V")) {
 				Cell cell = cells.get(Integer.parseInt(sin.getID().trim().substring(1)));
 
@@ -560,13 +563,20 @@ public class View {
 				if (pe.getAlagut()) {
 					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, alagutKep);
 				}
+		
+		//Várakozó utasok
+		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
+			if (pe.getID().contains("A")&&((Allomas)pe).getVarakozoUtas()) {
+				cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, varakozoUtasKep);
+		}
+		
 
 		// Vonatok rárajzolása
 		for (Vonat vonat : JM.getAktualisPalya().getVonatok())
 			for (Jarmu jarmu : vonat.getJarmuvek())
 				if (jarmu.getPozicio() != null) {
-					Image tmpkep;
-					double tmpor;
+					Image tmpkep=uresKep;
+					double tmpor=0.0;
 					celltmp = cells.get(Integer.parseInt(jarmu.getPozicio().getID().trim().substring(1)));
 					{
 						// Ha mozdony, rajzoljunk azt
