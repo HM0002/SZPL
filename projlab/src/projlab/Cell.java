@@ -20,6 +20,11 @@ public class Cell extends JLabel {
 	 * Az elem alap képének forgatás értéke
 	 */
 	double alapOrientacio = 0.0;
+	
+	/**
+	 * Az elemhez tartozó modellbeli pályaelem sorszáma
+	 */
+	String id="Ures";
 
 	/**
 	 * Az elemre rárajzolt kép (tipikusan a jármûvek) forgatás értéke
@@ -40,14 +45,20 @@ public class Cell extends JLabel {
 	 * A Label képe
 	 */
 	Image raRajzoltKep = null;
+	
+	/**
+	 * Controller az esemény kezeléshez
+	 */
+	static Controller ctrl;
 
 	/**
 	 * Auto generated
 	 */
 	private static final long serialVersionUID = 7342308389908249672L;
 
-	Cell() {
+	Cell(Controller ctrlhere) {
 		super();
+		ctrl=ctrlhere;
 
 		setMaximumSize(new Dimension(50, 50));
 		setPreferredSize(new Dimension(50, 50));
@@ -70,6 +81,15 @@ public class Cell extends JLabel {
 				repaint();
 			}
 		});
+		
+		addMouseListener(new MouseAdapter() {
+			   public void mousePressed(MouseEvent e) {
+			       Cell cell = (Cell)e.getSource();
+			       ctrl.kattintottElem(cell.getID());
+			   }
+		});
+		
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -132,5 +152,14 @@ public class Cell extends JLabel {
 	public void setRaRajzoltKep(Image img) {
 		raRajzoltKep = img;
 	}
+	
+	public void setID(String id) {
+		this.id=id;
+	}
+	
+	public String getID() {
+		return id;
+	}
+
 
 }

@@ -531,4 +531,22 @@ public class Controller {
 	public Boolean getJatekFut() {
 		return jatekFut;
 	}
+	
+	public void kattintottElem(String id){
+		if(id.contains("S")){
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(id)) {
+					((Sin) palyaElem).setAlagut();
+				}
+			view.draw(JM);
+		}
+		else if (id.contains("V")){
+			for (PalyaElem palyaElem : JM.getAktualisPalya().getElemek())
+				if (palyaElem.getID().equals(id)) {
+					((Valto) palyaElem).atallit();
+				}
+			view.draw(JM);
+			
+		}
+	}
 }
