@@ -97,7 +97,7 @@ public class Controller {
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
 	 */
 	public boolean idoMeres() {
-		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 100) {
+		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 1000) {
 			view.draw(JM);
 			JM.idoEltelt();
 
