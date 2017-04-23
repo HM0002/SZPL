@@ -59,13 +59,12 @@ public class Controller {
 	 */
 	void gameRun() {
 		logger.log(Level.INFO, "Controller.gameRun()");
-		
-		
+
 		boolean utkozes = JM.utkozesEllenorzes();
 
 		if (!utkozes) {
 			if (idoMeres()) {
-				
+
 				// GUI input kezelések
 				if (JM.gyozelemEllenorzes()) {
 					if (JM.getPalyaSzam() < 2) {
@@ -79,12 +78,15 @@ public class Controller {
 						view = new View(this, JM);
 					}
 				}
+
 				JM.vonatInditas();
+				view.draw(JM);
 			}
 		}
 		// utkozes popup
 		logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
 		view.tajekoztatUser(2);
+
 	}
 
 	/**
@@ -94,8 +96,9 @@ public class Controller {
 	 */
 	public boolean idoMeres() {
 		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 100) {
-			JM.idoEltelt();
 			view.draw(JM);
+			JM.idoEltelt();
+
 			return true;
 		}
 		return false;
@@ -129,7 +132,8 @@ public class Controller {
 			Palya p_user = palyaBetoltes(br, "Palya " + s[1]);
 			palyak.add(p_user);
 			JM = new JatekMotor(palyak);
-			if (view!=null) view.dispose();
+			if (view != null)
+				view.dispose();
 			view = new View(this, JM);
 			break;
 
@@ -236,7 +240,7 @@ public class Controller {
 		case "palyaBetoltes":
 			JM.palyaBetoltes();
 			view.dispose();
-			view=new View(this,JM);
+			view = new View(this, JM);
 			break;
 
 		case "exit":

@@ -93,8 +93,6 @@ public class JatekMotor {
 		prevTime = System.currentTimeMillis();
 	}
 
-
-
 	/** Kilép az alkalmazásból. */
 	public void kilepes() {
 		logger.log(Level.INFO, "JM.kilepes()");
@@ -221,9 +219,9 @@ public class JatekMotor {
 	public long getPrevTime() {
 		return prevTime;
 	}
-	
-	public void setPrevTime(long l){
-		prevTime=l;
+
+	public void setPrevTime(long l) {
+		prevTime = l;
 	}
 
 }

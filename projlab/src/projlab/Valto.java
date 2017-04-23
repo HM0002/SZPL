@@ -78,7 +78,9 @@ public class Valto extends PalyaElem {
 			foglalt--;
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
-		} else {
+		} else if(e==null)
+			return null;
+		else {
 			// Ez tuti soha nem fut le
 			logger.log(Level.INFO, "\n\n LEFUTOTT !!!!! WTF! \n\n");
 			setFoglalt();

@@ -8,15 +8,9 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 public class Cell extends JLabel {
 
@@ -24,16 +18,17 @@ public class Cell extends JLabel {
 	 * A forgatás értéke
 	 */
 	double orientacio = 0.0;
+	double eredetiOrientacio = 0.0;
 
 	/**
 	 * A létrehozáskor beállított keret
 	 */
 	Border originalBorder;
-	
+
 	/**
 	 * A létrehozáskor beállított eredeti kép
 	 */
-	Image EredetiKep;
+	Image eredetiKep;
 
 	/**
 	 * A Label képe
@@ -106,8 +101,14 @@ public class Cell extends JLabel {
 	public void setImage(Image img) {
 		kep = img;
 	}
-	
+
 	public void setEredetiImage() {
-		EredetiKep = kep;
+		eredetiKep = kep;
+		eredetiOrientacio = orientacio;
+	}
+
+	public void restoreEredetiImage() {
+		kep = eredetiKep;
+		orientacio = eredetiOrientacio;
 	}
 }
