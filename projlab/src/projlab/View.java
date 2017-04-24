@@ -647,12 +647,12 @@ public class View {
 					e.printStackTrace();
 				}
 
-		//StartStop gomb ellenõrzése
+		// StartStop gomb ellenõrzése
 		if (ctrl.getJatekFut() == true)
 			startStop.setText("  Pause  ");
 		else
 			startStop.setText("  Start  ");
-		
+
 		// Komplett panel újrarajzolása a beállítások alapján
 		jatekPanel.repaint();
 

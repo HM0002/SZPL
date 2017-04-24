@@ -9,9 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +19,14 @@ import javax.swing.border.Border;
 
 public class Cell extends JLabel {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+	/**
+	 * "Java-Struktúra" a kép és orientáció egységbe zárására
+	 */
+	class KepOrientacio {
+		public Image kep;
+		public double or;
+	}
 
 	/**
 	 * Az elem alap képének forgatás értéke
@@ -33,9 +39,10 @@ public class Cell extends JLabel {
 	String id = "Ures";
 
 	/**
-	 * Az elemre rárajzolt képek forgatás értéke
+	 * Az elemre rárajzolt képek forgatás értéke és képe, Vector, mert az
+	 * alapból syncronized
 	 */
-	ArrayList<Double> raRajzoltOrientacio;
+	Vector<KepOrientacio> raRajzoltak;
 
 	/**
 	 * A létrehozáskor beállított keret
@@ -47,11 +54,6 @@ public class Cell extends JLabel {
 	 */
 	Image alapKep;
 
-	/**
-	 * A Label rárajzolt képei
-	 */
-	ArrayList<Image> raRajzoltKep;
-	
 	/**
 	 * Controller az esemény kezeléshez
 	 */
@@ -65,8 +67,12 @@ public class Cell extends JLabel {
 	Cell(Controller ctrlhere) {
 		super();
 		ctrl = ctrlhere;
-		raRajzoltKep=new ArrayList<Image>();
-		raRajzoltOrientacio=new ArrayList<Double>();
+
+		// Vector konstruktor 5,5 paraméterrel, 5 mérettel nyisson, 5-ösével
+		// inkrementáljon
+		// raRajzoltKep=new Vector<Image>(5,5);
+		// raRajzoltOrientacio=new Vector<Double>(5,5);
+		raRajzoltak = new Vector<KepOrientacio>(5, 5);
 
 		// Méret beállítása
 		setMaximumSize(new Dimension(50, 50));
@@ -132,22 +138,21 @@ public class Cell extends JLabel {
 		g2d.drawImage(alapKep, 0, 0, null);
 
 		// rárajzolt kép elforgatása, kirajzolása
-		if (!(raRajzoltKep.isEmpty())) {
+		synchronized (raRajzoltak) {
 
-			if (raRajzoltKep.size() != raRajzoltOrientacio.size()) {
-				logger.setLevel(Level.INFO);
-				logger.log(Level.WARNING, "Baj történt, nem egyezik az elforgatás és kirajzolandó képek száma!");
-				System.exit(0);
-			}
-			
-				for (int cnt = 0; cnt < raRajzoltKep.size(); ++cnt) {
-					// transzformáció visszaállítása
+			// ha nincs rárajzolandó elem, kész
+			if (raRajzoltak.size() != 0) {
+
+				// rárajzolandók rárajzolása
+				for (KepOrientacio kepor : raRajzoltak) {
+					// transzformáció visszaállítása az õstõl kapottra
 					g2d.setTransform(trans);
 
 					// rárajzolások, elforgatások, kirajzolások
-					g2d.rotate(Math.toRadians((double) raRajzoltOrientacio.get(cnt)), w2, h2);
-					g2d.drawImage(raRajzoltKep.get(cnt), 0, 0, null);
-				
+					g2d.rotate(Math.toRadians(kepor.or), w2, h2);
+					g2d.drawImage(kepor.kep, 0, 0, null);
+
+				}
 			}
 		}
 	}
@@ -170,18 +175,18 @@ public class Cell extends JLabel {
 	 * Az eredeti kép visszaállítása (ne rajzoljon rá új réteget)
 	 */
 	public void restoreAlapImage() {
-		raRajzoltOrientacio.clear();
-		raRajzoltKep.clear();
+		raRajzoltak.clear();
 	}
 
 	/**
 	 * A rárajzolnadó kép beállítása
 	 */
 	public void setRaRajzolas(Double or, Image img) {
-		raRajzoltOrientacio.add(or);
-		raRajzoltKep.add(img);
+		KepOrientacio tmp = new KepOrientacio();
+		tmp.kep = img;
+		tmp.or = or;
+		raRajzoltak.add(tmp);
 	}
-
 
 	public void setID(String id) {
 		this.id = id;

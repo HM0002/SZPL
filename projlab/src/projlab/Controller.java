@@ -49,15 +49,17 @@ public class Controller {
 	View view = null;
 
 	/**
-	 * Egy segéd változónk van, az utkozes, csak akkor lépünk az esmények
-	 * kezelõjébe, ha nincs ütközés. A függvény kívülrõl van idõzítve adott
-	 * idõnként hívva. Meghívjuk benne az idoMeres metódust, és ha eltelt 1
-	 * másodperc, az visszatér igazzal, egyébként nem csinálunk semmit. Ez után
-	 * meghíjuk a gyozelemEllenorzes metódust, ami ha igazzal tér vissza,
+	 * A függvény kívülrõl van idõzítve adott idõnként hívva. Két segéd
+	 * változónk van, az utkozes és a gyozelem, melyeket a függvény elején
+	 * kiértékelünk, és csak akkor léptetünk az esményeken (idoMeres), ha nincs
+	 * ütközés és nincs gyõzelem. Ha ez teljesült meghívjuk az idoMeres
+	 * metódust, és ha eltelt 1 másodperc, az visszatér igazzal (valamint
+	 * lépteti is a játékmotort), egyébként nem csinálunk semmit. Ez után ismét
+	 * meghívjuk a gyozelemEllenorzes metódust, ami ha igazzal tér vissza,
 	 * megnézzük, hogy van-e még pálya hátra a palyak listában. Ha nincs,
 	 * végigvittük a játékot, errõl értesítjük a felhasználót és visszatérünk a
 	 * menübe. Ha van még pálya hátra, felhívjuk a palyaBetoltes metódust, ami
-	 * betölti az új pályát, valamint érvénytelenítjük az elõz pálya ablakát és
+	 * betölti az új pályát, valamint érvénytelenítjük az elõzõ pálya ablakát és
 	 * csinálunk új View-t az új pályának. A gyozelemEllenorzes után felhívjuk a
 	 * vonatInditas metódust, és kirajzoljuk a view-al az aktuális játékállást.
 	 */
@@ -65,8 +67,9 @@ public class Controller {
 		logger.log(Level.INFO, "Controller.gameRun()");
 
 		boolean utkozes = JM.utkozesEllenorzes();
+		boolean gyozelem = JM.gyozelemEllenorzes();
 
-		if (!utkozes) {
+		if (!utkozes && !gyozelem) {
 			if (idoMeres()) {
 
 				// GUI input kezelések
@@ -87,7 +90,7 @@ public class Controller {
 				JM.vonatInditas();
 				view.draw(JM);
 			}
-		} else {
+		} else if (utkozes) {
 			// utkozes popup
 			logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
 			view.tajekoztatUser(2);
@@ -101,7 +104,7 @@ public class Controller {
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
 	 */
 	public boolean idoMeres() {
-		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 1000) {
+		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 150) {
 			view.draw(JM);
 			JM.idoEltelt();
 			return true;
