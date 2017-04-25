@@ -139,6 +139,7 @@ public abstract class PalyaElem {
 		return id;
 	}
 
+	/** Visszatér a sínelem elhelyezkedésével. */
 	int[] getPoz() {
 		return poz;
 	}

@@ -579,13 +579,11 @@ public class View {
 					{
 						// Ha mozdony, rajzoljunk azt
 						if (jarmu.getID().contains("M")) {
-
 							tmpkep = mozdonyKep;
-
 						}
 						// kocsi
 						else if (jarmu.getID().contains("K")) {
-							tmpkep = (kocsiKepek.get(jarmu.getSzin()));
+							tmpkep = (kocsiKepek.get(((Kocsi) jarmu).getEredetiSzin()));
 						}
 						// szeneskocsi
 						else {
@@ -605,40 +603,118 @@ public class View {
 							else
 								tmpor = 0.0;
 						}
+						// S001 szintén egyedi kezelést igényel a speciális
+						// bekötés miatt, ha S000-ról jön a vonat
+						else if (jarmu.getPozicio().getID().contains("S001")
+								&& jarmu.getElozoPozicio().getID().contains("S000")) {
+							if (jarmu.getPozicio().getPoz()[1] == 1) {
 
-						else if (jarmu.getPozicio().getID().contains("S001")) {
-							if (jarmu.getPozicio().getPoz()[1] == 1)
 								tmpor = 270.0;
-							else if (jarmu.getPozicio().getPoz()[1] == rows - 1)
+							} else if (jarmu.getPozicio().getPoz()[1] == rows - 1) {
+
 								tmpor = 90.0;
-							else if (jarmu.getPozicio().getPoz()[0] == 1)
+
+							} else if (jarmu.getPozicio().getPoz()[0] == 1) {
+
 								tmpor = 180.0;
-							else
+
+							} else {
+
 								tmpor = 0.0;
+
+							}
 						}
 						// X egyezik, Y nõ --> vonat lefelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
-								&& jarmu.getPozicio().getPoz()[1] > jarmu.getElozoPozicio().getPoz()[1])
+								&& jarmu.getPozicio().getPoz()[1] > jarmu.getElozoPozicio().getPoz()[1]) {
+
+							// Alap-forgatás
 							tmpor = 270.0;
 
-						// X csökken, Y nem változik --> vonat balra megy
+							// kanyarban van-e
+							if (jarmu.getPozicio().szomszedok[0] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[1].getPoz()[0] > jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[1].getPoz()[0] < jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor + 45.0;
+							} else if (jarmu.getPozicio().szomszedok[1] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[0].getPoz()[0] > jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[0].getPoz()[0] < jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor + 45.0;
+							}
+
+						}
+						// X nõ, Y nem változik --> vonat jobbra megy
 						else if (jarmu.getPozicio().getPoz()[0] > jarmu.getElozoPozicio().getPoz()[0]
-								&& jarmu.getPozicio().getPoz()[1] == jarmu.getElozoPozicio().getPoz()[1])
+								&& jarmu.getPozicio().getPoz()[1] == jarmu.getElozoPozicio().getPoz()[1]) {
+
+							// Alap-forgatás
 							tmpor = 180.0;
 
+							// kanyarban van-e
+							if (jarmu.getPozicio().szomszedok[0] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[1].getPoz()[1] < jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[1].getPoz()[1] > jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor + 45.0;
+							} else if (jarmu.getPozicio().szomszedok[1] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[0].getPoz()[1] < jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[0].getPoz()[1] > jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor + 45.0;
+							}
+						}
 						// X nem változik, Y csökken --> vonat felfelé megy
 						else if (jarmu.getPozicio().getPoz()[0] == jarmu.getElozoPozicio().getPoz()[0]
-								&& jarmu.getPozicio().getPoz()[1] < jarmu.getElozoPozicio().getPoz()[1])
+								&& jarmu.getPozicio().getPoz()[1] < jarmu.getElozoPozicio().getPoz()[1]) {
+
+							// Alap-forgatás
 							tmpor = 90.0;
-						// X nõ változik, Y nem változik --> vonat jobbra megy
-						else
+
+							// kanyarban van-e
+							if (jarmu.getPozicio().szomszedok[0] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[1].getPoz()[0] < jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[1].getPoz()[0] > jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor + 45.0;
+							} else if (jarmu.getPozicio().szomszedok[1] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[0].getPoz()[0] < jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[0].getPoz()[0] > jarmu.getPozicio().getPoz()[0])
+									tmpor = tmpor + 45.0;
+							}
+						}
+						// X csökken, Y nem változik --> vonat balra megy
+						else {
+							// Alap-forgatás
 							tmpor = 0.0;
+
+							// kanyarban van-e
+							if (jarmu.getPozicio().szomszedok[0] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[1].getPoz()[1] > jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[1].getPoz()[1] < jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor + 45.0;
+							} else if (jarmu.getPozicio().szomszedok[1] == jarmu.getElozoPozicio()) {
+								if (jarmu.getPozicio().szomszedok[0].getPoz()[1] > jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor - 45.0;
+								else if (jarmu.getPozicio().szomszedok[0].getPoz()[1] < jarmu.getPozicio().getPoz()[1])
+									tmpor = tmpor + 45.0;
+							}
+						}
 					}
 					celltmp.setRaRajzolas(tmpor, tmpkep);
-				}
+
+					//Üres kocsi esetén rárajzolni a szürke köpenyt
+					if (jarmu.getID().contains("K")&&jarmu.getSzin()==0)
+						celltmp.setRaRajzolas(tmpor, kocsiKepek.get(0));
+										}
 
 		// Crash rajzolása
-		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
+		for (
+
+		PalyaElem pe : JM.getAktualisPalya().getElemek())
 			if (pe.getFoglalt() > 1)
 				try {
 					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, boomKep);

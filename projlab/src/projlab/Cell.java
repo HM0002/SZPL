@@ -69,9 +69,7 @@ public class Cell extends JLabel {
 		ctrl = ctrlhere;
 
 		// Vector konstruktor 5,5 paraméterrel, 5 mérettel nyisson, 5-ösével
-		// inkrementáljon
-		// raRajzoltKep=new Vector<Image>(5,5);
-		// raRajzoltOrientacio=new Vector<Double>(5,5);
+		// inkrementáljon, az elvileg mindig elég.
 		raRajzoltak = new Vector<KepOrientacio>(5, 5);
 
 		// Méret beállítása
@@ -115,8 +113,9 @@ public class Cell extends JLabel {
 		// õs kirajzolás elõször
 		super.paintComponent(g);
 
-		// Graphics 2D alakítás
-		Graphics2D g2d = (Graphics2D) g;
+		// Új graphics objektum, hogy a borderek ne forogjanak, majd Graphics 2D
+		// alakítás
+		Graphics2D g2d = (Graphics2D) g.create();
 
 		AffineTransform trans = g2d.getTransform();
 
@@ -155,6 +154,8 @@ public class Cell extends JLabel {
 				}
 			}
 		}
+		// Eldobás, miután nem használjuk, fontos!
+		g2d.dispose();
 	}
 
 	/**
