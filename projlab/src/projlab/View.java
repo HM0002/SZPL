@@ -77,7 +77,7 @@ public class View {
 
 		// Az ablak
 		enAblakom = new JFrame("Vonatos játék by Team Delta");
-		enAblakom.setSize(700, 700);
+		enAblakom.setMinimumSize(new Dimension(500, 500));
 
 		// layout
 		enAblakom.setLayout(new BorderLayout());
@@ -110,8 +110,7 @@ public class View {
 		// panel az ablakoknak
 		jatekPanel = new JPanel();
 		enAblakom.add(jatekPanel, BorderLayout.CENTER);
-		jatekPanel.setMaximumSize(new Dimension(650, 550));
-		jatekPanel.setPreferredSize(new Dimension(650, 550));
+		jatekPanel.setMinimumSize(new Dimension(500, 500));
 		jatekPanel.setDoubleBuffered(true);
 
 		// Státusz ablak
@@ -486,7 +485,7 @@ public class View {
 		for (PalyaElem sin : sinek) {
 			Image tmpkep = uresKep;
 			double tmpor = 0.0;
-			if (sin.getID().contains("V")) {
+			if (sin instanceof Valto) {
 				Cell cell = cells.get(Integer.parseInt(sin.getID().trim().substring(1)));
 
 				// szomszédok lekérése
@@ -567,7 +566,7 @@ public class View {
 
 		// Várakozó utasok
 		for (PalyaElem pe : sinek)
-			if (pe.getID().contains("A") && ((Allomas) pe).getVarakozoUtas()) {
+			if (pe instanceof Allomas && ((Allomas) pe).getVarakozoUtas()) {
 				cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, varakozoUtasKep);
 			}
 
@@ -580,11 +579,11 @@ public class View {
 					celltmp = cells.get(Integer.parseInt(jarmu.getPozicio().getID().trim().substring(1)));
 					{
 						// Ha mozdony, rajzoljunk azt
-						if (jarmu.getID().contains("M")) {
+						if (jarmu instanceof Mozdony) {
 							tmpkep = mozdonyKep;
 						}
 						// kocsi
-						else if (jarmu.getID().contains("K")) {
+						else if (jarmu instanceof Kocsi) {
 							tmpkep = (kocsiKepek.get(((Kocsi) jarmu).getEredetiSzin()));
 						}
 						// szeneskocsi
@@ -709,7 +708,7 @@ public class View {
 					celltmp.setRaRajzolas(tmpor, tmpkep);
 
 					// Üres kocsi esetén rárajzolni a szürke köpenyt
-					if (jarmu.getID().contains("K") && jarmu.getSzin() == 0)
+					if (jarmu instanceof Kocsi && jarmu.getSzin() == 0)
 						celltmp.setRaRajzolas(tmpor, kocsiKepek.get(0));
 				}
 
@@ -740,6 +739,7 @@ public class View {
 	 * Az aktuális pálya és játék állás kimenetre kirajzolásáért felelõs
 	 * függvény.
 	 */
+	@SuppressWarnings("unused")
 	private void konzolDraw(JatekMotor JM) {
 
 		// Változó a kirajzolandó pályaképnek az eredeti alapján

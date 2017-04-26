@@ -35,8 +35,8 @@ public class Main {
 	 * bemenetet a commandMapping függvény segítségével.
 	 */
 	public static void main(String[] args) throws SecurityException, IOException {
-		
-		Controller controller=new Controller();
+
+		Controller controller = new Controller();
 
 		for (Handler handler : logger.getParent().getHandlers()) {
 			logger.getParent().removeHandler(handler);
@@ -48,16 +48,14 @@ public class Main {
 		fileHandler.setFormatter(formatter);
 		logger.addHandler(fileHandler);
 
-		if (args[0].equals("K"))
+		if (args[0].equals("K")) {
 			br = new BufferedReader(new InputStreamReader(System.in));
-		else if (args[0].equals("F"))
+			controller.commandMapping(new String[] { "loadPalya", "" }, br);
+		} else if (args[0].equals("F"))
 			br = new BufferedReader(
 					new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1] + ".txt"));
 		else {
-			System.out.println("Érvénytelen bemenet!");
-			// JM.ujJatek();
-			// Majd a kész játékban.
-			System.exit(0);
+			controller.ujJatekKezdes();
 		}
 
 		logger.setLevel(Level.OFF);
@@ -70,9 +68,4 @@ public class Main {
 
 	}
 
-	
-
-
-
-	
 }

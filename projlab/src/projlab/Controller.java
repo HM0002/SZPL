@@ -93,8 +93,8 @@ public class Controller {
 						view = new View(this, JM);
 					}
 				}
-					JM.vonatInditas();
-					view.draw(JM);
+				JM.vonatInditas();
+				view.draw(JM);
 			}
 		}
 	}

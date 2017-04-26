@@ -10,16 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 public class Cell extends JLabel {
-	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
 	/**
 	 * "Java-Struktúra" a kép és orientáció egységbe zárására
 	 */

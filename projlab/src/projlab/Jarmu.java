@@ -93,8 +93,9 @@ public abstract class Jarmu {
 	/** Ütközésdetektálás bekötetlen váltón. */
 	public void testValto() {
 		// ütközés generálás, ha váltó és nincs bekötve a lépéskor
-		if ((this.getPozicio().getID().contains("V")) && !(this.getPozicio().szomszedok[0] == this.getElozoPozicio()
-				|| this.getPozicio().szomszedok[1] == this.getElozoPozicio()))
+		if ((this.getPozicio() instanceof Valto)
+				&& !(((Valto) this.getPozicio()).getAllas()[0] == this.getElozoPozicio()
+						|| ((Valto) this.getPozicio()).getAllas()[1] == this.getElozoPozicio()))
 			this.getPozicio().setFoglalt();
 	}
 
