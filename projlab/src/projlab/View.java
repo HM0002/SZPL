@@ -65,6 +65,9 @@ public class View {
 	// mezõk, sorok
 	private int columns, rows;
 
+	// palyaelemek
+	ArrayList<PalyaElem> sinek;
+
 	/**
 	 * View konstruktor
 	 */
@@ -200,7 +203,7 @@ public class View {
 		rows = palyaKep.length;
 
 		// Sinek lekérése
-		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
+		sinek = JM.getAktualisPalya().getElemek();
 
 		cells = new ArrayList<Cell>();
 		for (int i = 0; i < sinek.size(); i++)
@@ -466,7 +469,7 @@ public class View {
 	public void draw(JatekMotor JM) {
 
 		// Ultimate ötlet, rajzoljon ide is oda is
-		konzolDraw(JM);
+		// konzolDraw(JM);
 		guiDraw(JM);
 	}
 
@@ -480,7 +483,6 @@ public class View {
 
 		// Váltó állások rárajzolása
 		// Sinek lekérése
-		ArrayList<PalyaElem> sinek = JM.getAktualisPalya().getElemek();
 		for (PalyaElem sin : sinek) {
 			Image tmpkep = uresKep;
 			double tmpor = 0.0;
@@ -558,13 +560,13 @@ public class View {
 
 		// Alagutak
 		if (JM.getAktualisPalya().getAlagutSzam() > 0)
-			for (PalyaElem pe : JM.getAktualisPalya().getElemek())
+			for (PalyaElem pe : sinek)
 				if (pe.getAlagut()) {
 					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, alagutKep);
 				}
 
 		// Várakozó utasok
-		for (PalyaElem pe : JM.getAktualisPalya().getElemek())
+		for (PalyaElem pe : sinek)
 			if (pe.getID().contains("A") && ((Allomas) pe).getVarakozoUtas()) {
 				cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, varakozoUtasKep);
 			}
@@ -706,15 +708,15 @@ public class View {
 					}
 					celltmp.setRaRajzolas(tmpor, tmpkep);
 
-					//Üres kocsi esetén rárajzolni a szürke köpenyt
-					if (jarmu.getID().contains("K")&&jarmu.getSzin()==0)
+					// Üres kocsi esetén rárajzolni a szürke köpenyt
+					if (jarmu.getID().contains("K") && jarmu.getSzin() == 0)
 						celltmp.setRaRajzolas(tmpor, kocsiKepek.get(0));
-										}
+				}
 
 		// Crash rajzolása
 		for (
 
-		PalyaElem pe : JM.getAktualisPalya().getElemek())
+		PalyaElem pe : sinek)
 			if (pe.getFoglalt() > 1)
 				try {
 					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, boomKep);
@@ -730,7 +732,7 @@ public class View {
 			startStop.setText("  Start  ");
 
 		// Komplett panel újrarajzolása a beállítások alapján
-		jatekPanel.repaint();
+		enAblakom.repaint();
 
 	}
 
@@ -853,12 +855,9 @@ public class View {
 	/**
 	 * A státusz-bárt kezelõ függvény, a Controller hívja.
 	 */
-	public void tajekoztatUser(int event) {
-		if (event == 1)
-			statusz.setText("Gyõztél!");
-		else if (event == 2)
-			statusz.setText("Ütközés történt, vesztettél!");
-		enAblakom.repaint();
+	public void tajekoztatUser(String str, JatekMotor JM) {
+		statusz.setText(str);
+		draw(JM);
 	}
 
 	/**

@@ -22,8 +22,6 @@ public class Controller {
 			public void run() {
 				if (jatekFut) {
 					gameRun();
-					logger.setLevel(Level.INFO);
-					logger.log(Level.WARNING, "TimerTask futott!");
 				}
 			}
 		};
@@ -32,7 +30,7 @@ public class Controller {
 		 * Az idõzítõ beállítása, elindítása.
 		 */
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 0, 200);
+		timer.scheduleAtFixedRate(timerTask, 0, 100);
 	}
 
 	/**
@@ -72,12 +70,21 @@ public class Controller {
 		if (!utkozes && !gyozelem) {
 			if (idoMeres()) {
 
+				if (JM.utkozesEllenorzes()) {
+					// utkozes popup
+					logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
+					setJatekFutas();
+					view.tajekoztatUser("Ütközés történt, vesztettél!", JM);
+					view.draw(JM);
+				}
+
 				// GUI input kezelések
-				if (JM.gyozelemEllenorzes()) {
+				else if (JM.gyozelemEllenorzes()) {
 					if (JM.getPalyaSzam() < 2) {
 						logger.log(Level.INFO, "Megnyertük a játékot!");
-						view.tajekoztatUser(1);
 						setJatekFutas();
+						view.tajekoztatUser("Gyõztél!", JM);
+						view.draw(JM);
 						return;
 					} else {
 						logger.log(Level.INFO, "Megnyertük a pályát!");
@@ -86,16 +93,10 @@ public class Controller {
 						view = new View(this, JM);
 					}
 				}
-
-				JM.vonatInditas();
-				view.draw(JM);
+					JM.vonatInditas();
+					view.draw(JM);
 			}
-		} else if (utkozes) {
-			// utkozes popup
-			logger.log(Level.INFO, "Controller.gameRun() metódusban ütközés történt!");
-			view.tajekoztatUser(2);
 		}
-
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class Controller {
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
 	 */
 	public boolean idoMeres() {
-		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() >300) {
+		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 200) {
 			view.draw(JM);
 			JM.idoEltelt();
 			return true;

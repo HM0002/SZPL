@@ -74,6 +74,7 @@ public class Cell extends JLabel {
 
 		// Méret beállítása
 		setMaximumSize(new Dimension(50, 50));
+		setMinimumSize(new Dimension(50, 50));
 		setPreferredSize(new Dimension(50, 50));
 
 		// Egér esemény kezelõ, piros keretet csinál a mezõnek, ha felette van
