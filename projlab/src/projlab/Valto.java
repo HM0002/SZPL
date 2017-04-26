@@ -50,7 +50,9 @@ public class Valto extends PalyaElem {
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
 		} else {
-			logger.log(Level.INFO, this.getID() + " váltónál kisiklott a vonat!");
+			// Ez tuti soha nem fut le, itt volt régen a váltón kisiklás
+			// detektálás
+			logger.log(Level.INFO, "\n\n LEFUTOTT !!!!! WTF! \n\n");
 			setFoglalt();
 			return null;
 		}
@@ -78,7 +80,7 @@ public class Valto extends PalyaElem {
 			foglalt--;
 			szomszedok[0].setFoglalt();
 			return szomszedok[0];
-		} else if(e==null)
+		} else if (e == null)
 			return null;
 		else {
 			// Ez tuti soha nem fut le

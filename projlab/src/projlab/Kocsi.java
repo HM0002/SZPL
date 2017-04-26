@@ -84,6 +84,7 @@ public class Kocsi extends Jarmu {
 		PalyaElem temp = pozicio;
 		pozicio = pozicio.elfogad(this);
 		elozoPozicio = temp;
+		testValto();
 	}
 
 }

@@ -36,5 +36,6 @@ public class Szeneskocsi extends Jarmu {
 		PalyaElem temp = pozicio;
 		pozicio = pozicio.elfogad(this);
 		elozoPozicio = temp;
+		testValto();
 	}
 }

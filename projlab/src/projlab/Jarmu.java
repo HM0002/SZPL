@@ -90,6 +90,14 @@ public abstract class Jarmu {
 		sP.setFoglalt();
 	}
 
+	/** Ütközésdetektálás bekötetlen váltón. */
+	public void testValto() {
+		// ütközés generálás, ha váltó és nincs bekötve a lépéskor
+		if ((this.getPozicio().getID().contains("V")) && !(this.getPozicio().szomszedok[0] == this.getElozoPozicio()
+				|| this.getPozicio().szomszedok[1] == this.getElozoPozicio()))
+			this.getPozicio().setFoglalt();
+	}
+
 	/**
 	 * Visszatérünk 0-val, mert a Mozdony és a Szeneskocsi mindig üres. A Kocsi
 	 * felüldefiniálja ezt a metódust.
