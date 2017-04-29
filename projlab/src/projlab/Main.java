@@ -44,7 +44,7 @@ public class Main {
 
 		CustomRecordFormatter formatter = new CustomRecordFormatter();
 
-		FileHandler fileHandler = new FileHandler("%h\\kimenet.txt");
+		FileHandler fileHandler = new FileHandler("kimenet.txt");
 		fileHandler.setFormatter(formatter);
 		logger.addHandler(fileHandler);
 
@@ -53,7 +53,7 @@ public class Main {
 			controller.commandMapping(new String[] { "loadPalya", "" }, br);
 		} else if (args[0].equals("F"))
 			br = new BufferedReader(
-					new FileReader(System.getProperty("user.home") + "\\teszt_bemenetek\\" + args[1] + ".txt"));
+					new FileReader("teszt_bemenetek\\" + args[1] + ".txt"));
 		else {
 			controller.ujJatekKezdes();
 		}

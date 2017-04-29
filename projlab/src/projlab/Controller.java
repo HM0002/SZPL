@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 
 public class Controller {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+	int leptetes_ideje = 300;
+	
 	Controller() {
 
 		/**
@@ -30,7 +31,7 @@ public class Controller {
 		 * Az idõzítõ beállítása, elindítása.
 		 */
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 0, 100);
+		timer.scheduleAtFixedRate(timerTask, 0, leptetes_ideje/10);
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class Controller {
 	 * eltelt a másodperc. Ha nem telt el, hamissal térünk vissza.
 	 */
 	public boolean idoMeres() {
-		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > 200) {
+		if (Math.abs(System.currentTimeMillis()) - JM.getPrevTime() > leptetes_ideje) {
 			view.draw(JM);
 			JM.idoEltelt();
 			return true;
@@ -275,13 +276,23 @@ public class Controller {
 
 		ArrayList<Palya> palyak = new ArrayList<Palya>();
 
+		Palya p2 = palyaBetoltes(
+				new BufferedReader(new FileReader("palyak\\palya_2.txt")),
+				"Palya 1");
+		palyak.add(p2);
+
 		Palya p1 = palyaBetoltes(
-				new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_1.txt")),
+				new BufferedReader(new FileReader("palyak\\palya_1.txt")),
 				"Palya 1");
 		palyak.add(p1);
+/*
+		Palya p2 = palyaBetoltes(
+				new BufferedReader(new FileReader("palyak\\palya_2.txt")),
+				"Palya 1");
+		palyak.add(p2);*/
 
 		Palya p25 = palyaBetoltes(
-				new BufferedReader(new FileReader(System.getProperty("user.home") + "\\palyak\\palya_25.txt")),
+				new BufferedReader(new FileReader("palyak\\palya_25.txt")),
 				"Palya 25");
 		palyak.add(p25);
 
