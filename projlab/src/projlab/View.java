@@ -57,7 +57,7 @@ public class View {
 	private Image boomKep;
 	private Image alagutKep;
 	private Image varakozoUtasKep;
-	private Image alagut_nyil;
+	private Image alagutNyil;
 
 	// Változó az eredeti pályaképnek
 	private String[][] palyaKep = null;
@@ -164,30 +164,25 @@ public class View {
 			kocsiKepek = new ArrayList<Image>();
 			allomasKepek = new ArrayList<Image>();
 			mozdonyKep = ImageIO.read(new File("elemek_kepei\\mozdony.png"));
-			szenesKocsiKep = ImageIO
-					.read(new File("elemek_kepei\\szeneskocsi.png"));
+			szenesKocsiKep = ImageIO.read(new File("elemek_kepei\\szeneskocsi.png"));
 			egyenesSinKep = ImageIO.read(new File("elemek_kepei\\egyenes.png"));
 			kanyarKep = ImageIO.read(new File("elemek_kepei\\kanyar.png"));
-			keresztezoSinKep = ImageIO
-					.read(new File("elemek_kepei\\keresztezodes.png"));
+			keresztezoSinKep = ImageIO.read(new File("elemek_kepei\\keresztezodes.png"));
 			boomKep = ImageIO.read(new File("elemek_kepei\\boom.png"));
 			alagutKep = ImageIO.read(new File("elemek_kepei\\alagut.png"));
 
 			// Állomásképek tömb feltöltése
 			allomasKepek.add(null);
 			for (int i = 1; i <= szinSzam; i++) {
-				allomasKepek.add(ImageIO
-						.read(new File("elemek_kepei\\allomas_" + i + ".png")));
+				allomasKepek.add(ImageIO.read(new File("elemek_kepei\\allomas_" + i + ".png")));
 			}
 			// Kocsi képek tömb feltöltése
 			for (int i = 0; i <= szinSzam; i++) {
-				kocsiKepek.add(ImageIO
-						.read(new File("elemek_kepei\\kocsi_" + i + ".png")));
+				kocsiKepek.add(ImageIO.read(new File("elemek_kepei\\kocsi_" + i + ".png")));
 			}
-			ValtoSinKep = ImageIO
-					.read(new File("elemek_kepei\\valto.png"));
+			ValtoSinKep = ImageIO.read(new File("elemek_kepei\\valto.png"));
 			varakozoUtasKep = ImageIO.read(new File("elemek_kepei\\utas.png"));
-			alagut_nyil = ImageIO.read(new File("elemek_kepei\\nyil_bal.png"));
+			alagutNyil = ImageIO.read(new File("elemek_kepei\\nyil_bal.png"));
 
 		} catch (IOException e) {
 			logger.setLevel(Level.INFO);
@@ -304,11 +299,13 @@ public class View {
 					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 					else {
 						cell.setImage(kanyarKep);
-						
+
 						// Kanyarodó sín képének forgatási szöge
 						cell.setAlapOrientation(kanyar_forgatasa(sin, szomszedok));
 					}
 
+					// Rajtoljuk rá azt is, hogy váltó
+					cell.setRaRajzolas(0.0, ValtoSinKep);
 				}
 
 				else if (palyaKep[i][j].contains("A")) {
@@ -332,6 +329,11 @@ public class View {
 							// ha igen, elforgatja a sínt
 							cell.setAlapOrientation(90.0);
 					}
+
+					// Rajzoljuk rá a várakozó utasokat, ha vannak
+					if (((Allomas) sin).getVarakozoUtas())
+						cell.setRaRajzolas(0.0, varakozoUtasKep);
+
 				} else if (palyaKep[i][j].contains("    ")) {
 					cell.setImage(uresKep);
 				}
@@ -393,18 +395,17 @@ public class View {
 				// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 				else {
 					tmpkep = kanyarKep;
-					
+
 					// Kanyarodó sín képének forgatási szöge
 					tmpor = kanyar_forgatasa(sin, szomszedok);
-					
+
 				}
-				
+
 				cell.setImage(tmpkep);
 				cell.setAlapOrientation(tmpor);
-				
+
 				cell.setRaRajzolas(0.0, ValtoSinKep);
-				
-				
+
 			}
 		}
 
@@ -412,7 +413,21 @@ public class View {
 		if (JM.getAktualisPalya().getAlagutSzam() > 0)
 			for (PalyaElem pe : sinek)
 				if (pe.getAlagut()) {
-					cells.get(Integer.parseInt(pe.getID().trim().substring(1))).setRaRajzolas(0.0, alagutKep);
+
+					int index = Integer.parseInt(pe.getID().trim().substring(1));
+					cells.get(index).setRaRajzolas(0.0, alagutKep);
+
+					// továbbhaladási irány rárajzolása
+					// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re fog
+					// menni
+					if (pe.szomszedok[0].getAlagut()) {
+						cells.get(index).setRaRajzolas(alagutNyilOrientacio(pe, 1), alagutNyil);
+					}
+
+					// egyébként szomszéd 0-ra
+					else {
+						cells.get(index).setRaRajzolas(alagutNyilOrientacio(pe, 0), alagutNyil);
+					}
 				}
 
 		// Várakozó utasok
@@ -718,7 +733,7 @@ public class View {
 		enAblakom.dispose();
 
 	}
-	
+
 	public double kanyar_forgatasa(PalyaElem sin, PalyaElem[] szomszedok) {
 		int sin_X = sin.getPoz()[0];
 		int sin_Y = sin.getPoz()[1];
@@ -726,46 +741,61 @@ public class View {
 		int szomszedok_0_Y = szomszedok[0].getPoz()[1];
 		int szomszedok_1_X = szomszedok[1].getPoz()[0];
 		int szomszedok_1_Y = szomszedok[1].getPoz()[1];
-		
+
 		// És akkor csak azt kell eldönteni, merrõl merre nézzen
 		// Elõször szomszéd alatta és a másik tõle balra vagy
 		// fordítva
-		if ((szomszedok_0_X == sin_X
-				&& szomszedok_0_Y == sin_Y + 1
-				&& szomszedok_1_X == sin_X - 1
+		if ((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y + 1 && szomszedok_1_X == sin_X - 1
 				&& szomszedok_1_Y == sin_Y)
-				|| (szomszedok_1_X == sin_X
-						&& szomszedok_1_Y == sin_Y + 1
-						&& szomszedok_0_X == sin_X - 1
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y + 1 && szomszedok_0_X == sin_X - 1
 						&& szomszedok_0_Y == sin_Y)) {
 			return 0.0;
 		}
 		// Elõször szomszéd felette és a másik tõle
 		// jobbra vagy fordítva
-		else if ((szomszedok_0_X == sin_X + 1
-				&& szomszedok_0_Y == sin_Y
-				&& szomszedok_1_X == sin_X
+		else if ((szomszedok_0_X == sin_X + 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X
 				&& szomszedok_1_Y == sin_Y - 1)
-				|| (szomszedok_1_X == sin_X + 1
-						&& szomszedok_1_Y == sin_Y
-						&& szomszedok_0_X == sin_X
+				|| (szomszedok_1_X == sin_X + 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X
 						&& szomszedok_0_Y == sin_Y - 1)) {
 			return 180.0;
 		}
 		// Elõször szomszéd alatta és a másik tõle
 		// jobbra vagy fordítva
-		else if ((szomszedok_0_X == sin_X
-				&& szomszedok_0_Y == sin_Y + 1
-				&& szomszedok_1_X == sin_X + 1
+		else if ((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y + 1 && szomszedok_1_X == sin_X + 1
 				&& szomszedok_1_Y == sin_Y)
-				|| (szomszedok_1_X == sin_X
-						&& szomszedok_1_Y == sin_Y + 1
-						&& szomszedok_0_X == sin_X + 1
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y + 1 && szomszedok_0_X == sin_X + 1
 						&& szomszedok_0_Y == sin_Y)) {
 			return 270.0;
 		}
 		// Elõször szomszéd felette és a másik tõle
 		// balra vagy fordítva
+		else {
+			return 90.0;
+		}
+	}
+
+	public double alagutNyilOrientacio(PalyaElem pe, Integer index) {
+		int sin_X = pe.getPoz()[0];
+		int sin_Y = pe.getPoz()[1];
+		int kov_X = pe.szomszedok[index].getPoz()[0];
+		int kov_Y = pe.szomszedok[index].getPoz()[1];
+
+		// És akkor csak azt kell eldönteni, merrõl merre nézzen
+		// Elõször a következõ balra
+		if (sin_X + 1 == kov_X) {
+			return 180.0;
+		}
+		// a következõ felfelé
+		else if (sin_Y + 1 == kov_Y) {
+			return 270.0;
+		}
+
+		// a következõ jobbra
+		else if (sin_X - 1 == kov_X) {
+			return 0.0;
+		}
+
+		// következõ lefelé
 		else {
 			return 90.0;
 		}
