@@ -52,8 +52,7 @@ public class View {
 	private Image szenesKocsiKep;
 	private Image egyenesSinKep;
 	private Image kanyarKep;
-	private Image egyenesValtoSinKep;
-	private Image kanyarValtoKep;
+	private Image ValtoSinKep;
 	private Image keresztezoSinKep;
 	private Image boomKep;
 	private Image alagutKep;
@@ -185,10 +184,8 @@ public class View {
 				kocsiKepek.add(ImageIO
 						.read(new File("elemek_kepei\\kocsi_" + i + ".png")));
 			}
-			egyenesValtoSinKep = ImageIO
-					.read(new File("elemek_kepei\\valto_egyenes.png"));
-			kanyarValtoKep = ImageIO
-					.read(new File("elemek_kepei\\valto_kanyar.png"));
+			ValtoSinKep = ImageIO
+					.read(new File("elemek_kepei\\valto.png"));
 			varakozoUtasKep = ImageIO.read(new File("elemek_kepei\\utas.png"));
 			alagut_nyil = ImageIO.read(new File("elemek_kepei\\nyil_bal.png"));
 
@@ -229,28 +226,7 @@ public class View {
 
 				// Üres cella létrehozása
 				Cell cell = new Cell(ctrl);
-/*
-				// üres határoló
-				Border border = null;
 
-				// határolók beállítása
-				if (i < rows - 1) {
-					if (j < columns - 1) {
-						border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
-					} else {
-						border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
-					}
-				} else {
-					if (j < columns - 1) {
-						border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
-					} else {
-						border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
-					}
-				}
-
-				// Határoló átadása a cellának
-				cell.setBorder(border);
-*/
 				// Cellakép beállítása
 
 				// S000 speciális sín beállítása
@@ -315,7 +291,7 @@ public class View {
 					// ha egyenes, akkor a megfelelõ kép
 					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
 							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-						cell.setImage(egyenesValtoSinKep);
+						cell.setImage(egyenesSinKep);
 
 						// Cellakép orientáció beállítása
 
@@ -327,7 +303,7 @@ public class View {
 					}
 					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 					else {
-						cell.setImage(kanyarValtoKep);
+						cell.setImage(kanyarKep);
 						
 						// Kanyarodó sín képének forgatási szöge
 						cell.setAlapOrientation(kanyar_forgatasa(sin, szomszedok));
@@ -402,7 +378,7 @@ public class View {
 				// ha egyenes, akkor a megfelelõ kép
 				if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
 						|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-					tmpkep = egyenesValtoSinKep;
+					tmpkep = egyenesSinKep;
 
 					// Cellakép orientáció beállítása
 
@@ -416,13 +392,19 @@ public class View {
 				}
 				// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
 				else {
-					tmpkep = kanyarValtoKep;
+					tmpkep = kanyarKep;
 					
 					// Kanyarodó sín képének forgatási szöge
 					tmpor = kanyar_forgatasa(sin, szomszedok);
 					
 				}
-				cell.setRaRajzolas(tmpor, tmpkep);
+				
+				cell.setImage(tmpkep);
+				cell.setAlapOrientation(tmpor);
+				
+				cell.setRaRajzolas(0.0, ValtoSinKep);
+				
+				
 			}
 		}
 
