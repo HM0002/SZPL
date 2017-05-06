@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Controller {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	int leptetes_ideje = 300;
+	int leptetes_ideje = 700;
 	
 	Controller() {
 
@@ -543,6 +543,7 @@ public class Controller {
 	 * Új játék gomb megnyomás esemény kezelése
 	 */
 	public void ujJatekKezdes() throws IOException {
+		jatekFut = false;
 		init();
 	}
 

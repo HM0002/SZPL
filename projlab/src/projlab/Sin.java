@@ -43,7 +43,7 @@ public class Sin extends PalyaElem {
 
 		PalyaElem elozoPozicio = m.getElozoPozicio();
 
-		if (alagut == true && !elozoPozicio.getAlagut())
+		if ((alagut == true && !elozoPozicio.getAlagut()) || ( alagut == true && m.getPozicio().getID().contains("S000")))
 			if (palya.getAlagutSzam() == 2) {
 				foglalt--;
 				PalyaElem pe = palya.alagut(this);
@@ -82,7 +82,7 @@ public class Sin extends PalyaElem {
 
 		PalyaElem elozoPozicio = k.getElozoPozicio();
 
-		if (alagut == true && !elozoPozicio.getAlagut())
+		if ((alagut == true && !elozoPozicio.getAlagut()) || ( alagut == true && k.getPozicio().getID().contains("S000")))
 			if (palya.getAlagutSzam() == 2) {
 				foglalt--;
 				PalyaElem pe = palya.alagut(this);
@@ -121,7 +121,7 @@ public class Sin extends PalyaElem {
 
 		PalyaElem elozoPozicio = sz.getElozoPozicio();
 
-		if (alagut == true && !elozoPozicio.getAlagut())
+		if ((alagut == true && !elozoPozicio.getAlagut()) || ( alagut == true && sz.getPozicio().getID().contains("S000")))
 			if (palya.getAlagutSzam() == 2) {
 				foglalt--;
 				PalyaElem pe = palya.alagut(this);

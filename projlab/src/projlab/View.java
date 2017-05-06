@@ -421,12 +421,12 @@ public class View {
 					// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re fog
 					// menni
 					if (pe.szomszedok[0].getAlagut()) {
-						cells.get(index).setRaRajzolas(alagutNyilOrientacio(pe, 1), alagutNyil);
+						cells.get(index).setRaRajzolas(iranyOrientacio(pe, 1), alagutNyil);
 					}
 
 					// egyébként szomszéd 0-ra
 					else {
-						cells.get(index).setRaRajzolas(alagutNyilOrientacio(pe, 0), alagutNyil);
+						cells.get(index).setRaRajzolas(iranyOrientacio(pe, 0), alagutNyil);
 					}
 				}
 
@@ -461,34 +461,26 @@ public class View {
 
 						// S000 speciális elem
 						if (jarmu.getPozicio().getID().contains("S000")) {
-							if (jarmu.getPozicio().getPoz()[1] == 0)
-								tmpor = 270.0;
-							else if (jarmu.getPozicio().getPoz()[1] == rows)
-								tmpor = 90.0;
-							else if (jarmu.getPozicio().getPoz()[0] == 0)
-								tmpor = 180.0;
-							else
-								tmpor = 0.0;
+							tmpor = iranyOrientacio(jarmu.getPozicio(), 0);
 						}
 						// S001 szintén egyedi kezelést igényel a speciális
 						// bekötés miatt, ha S000-ról jön a vonat
 						else if (jarmu.getPozicio().getID().contains("S001")
 								&& jarmu.getElozoPozicio().getID().contains("S000")) {
-							if (jarmu.getPozicio().getPoz()[1] == 1) {
+							tmpor = iranyOrientacio(jarmu.getPozicio(), 0);
+						}
+						// Alagút
+						else if (jarmu.getPozicio().getAlagut() && jarmu.getElozoPozicio().getAlagut()){
+							// továbbhaladási irány rárajzolása
+							// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re fog
+							// menni
+							if (jarmu.getPozicio().szomszedok[0].getAlagut()) {
+								tmpor = iranyOrientacio(jarmu.getPozicio(), 1);
+							}
 
-								tmpor = 270.0;
-							} else if (jarmu.getPozicio().getPoz()[1] == rows - 1) {
-
-								tmpor = 90.0;
-
-							} else if (jarmu.getPozicio().getPoz()[0] == 1) {
-
-								tmpor = 180.0;
-
-							} else {
-
-								tmpor = 0.0;
-
+							// egyébként szomszéd 0-ra
+							else {
+								tmpor = iranyOrientacio(jarmu.getPozicio(), 0);
 							}
 						}
 						// X egyezik, Y nõ --> vonat lefelé megy
@@ -774,7 +766,7 @@ public class View {
 		}
 	}
 
-	public double alagutNyilOrientacio(PalyaElem pe, Integer index) {
+	public double iranyOrientacio(PalyaElem pe, Integer index) {
 		int sin_X = pe.getPoz()[0];
 		int sin_Y = pe.getPoz()[1];
 		int kov_X = pe.szomszedok[index].getPoz()[0];
