@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +39,9 @@ public class View {
 	private Controller ctrl;
 	private JLabel statusz;
 	private JLabel palya;
+	private JLabel sebessegKomboLabel;
+	private JComboBox<String> sebessegCombo;
+	String[] sebessegek;
 	private ArrayList<Cell> cells;
 	private Image uresKep;
 	private ArrayList<Image> kocsiKepek;
@@ -92,8 +95,7 @@ public class View {
 		ujJatekGomb = new JButton("Új játék");
 		gombPanel.add(ujJatekGomb);
 
-		// Kilépés gomb az ablakra
-
+		// Start/stop gomb az ablakra
 		startStop = new JButton();
 		if (ctrl.getJatekFut() == true)
 			startStop.setText("  Pause  ");
@@ -104,6 +106,24 @@ public class View {
 		// Kilépés gomb az ablakra
 		exitGomb = new JButton("Kilépés");
 		gombPanel.add(exitGomb);
+
+		// Sebességállítás dolgai
+		sebessegKomboLabel = new JLabel("    Játéksebesség:");
+		gombPanel.add(sebessegKomboLabel);
+		sebessegek = new String[] { "Hardcore", "Gyors", "Normál", "Lassú", "Nagymamák kedvence" };
+		sebessegCombo = new JComboBox<String>(sebessegek);
+		
+		if (ctrl.getLetetesIdeje()==150)
+		sebessegCombo.setSelectedIndex(0);
+		else if (ctrl.getLetetesIdeje()==400)
+			sebessegCombo.setSelectedIndex(1);	
+		else if (ctrl.getLetetesIdeje()==700)
+			sebessegCombo.setSelectedIndex(2);
+		else if (ctrl.getLetetesIdeje()==1200)
+			sebessegCombo.setSelectedIndex(3);	
+		else if (ctrl.getLetetesIdeje()==2000)
+			sebessegCombo.setSelectedIndex(4);	
+		gombPanel.add(sebessegCombo);
 
 		// panel az ablakoknak
 		jatekPanel = new JPanel();
@@ -153,6 +173,29 @@ public class View {
 					e.printStackTrace();
 				}
 				enAblakom.dispose();
+			}
+		});
+
+		// Sebességállítás kombobox event handler
+		sebessegCombo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				@SuppressWarnings("unchecked")
+				JComboBox<String> combo = (JComboBox<String>) event.getSource();
+				String selectedSpeed = (String) combo.getSelectedItem();
+
+				if (selectedSpeed.equals("Hardcore")) {
+					ctrl.setLetetesIdeje(150);
+				} else if (selectedSpeed.equals("Gyors")) {
+					ctrl.setLetetesIdeje(400);
+				} else if (selectedSpeed.equals("Normál")) {
+					ctrl.setLetetesIdeje(700);
+				} else if (selectedSpeed.equals("Lassú")) {
+					ctrl.setLetetesIdeje(1200);
+				} else if (selectedSpeed.equals("Nagymamák kedvence")) {
+					ctrl.setLetetesIdeje(2000);
+				}
+
 			}
 		});
 
@@ -869,10 +912,10 @@ public class View {
 		}
 		// Egyenes
 		// Vízszintes
-		else if((szomszedok_0_X == sin_X - 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X + 1 
+		else if ((szomszedok_0_X == sin_X - 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X + 1
 				&& szomszedok_1_Y == sin_Y)
-				|| (szomszedok_1_X == sin_X - 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X + 1 
-						&& szomszedok_0_Y == sin_Y)){
+				|| (szomszedok_1_X == sin_X - 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X + 1
+						&& szomszedok_0_Y == sin_Y)) {
 			if (szomszedok_2_Y == sin_Y - 1) {
 				cell.setImage(valto_egyenes);
 				cell.setAlapOrientation(180.0);
@@ -881,11 +924,11 @@ public class View {
 				cell.setAlapOrientation(0.0);
 			}
 		}
-		//Függõleges
-		else if((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y - 1 && szomszedok_1_X == sin_X 
+		// Függõleges
+		else if ((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y - 1 && szomszedok_1_X == sin_X
 				&& szomszedok_1_Y == sin_Y + 1)
-				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y - 1 && szomszedok_0_X == sin_X 
-						&& szomszedok_0_Y == sin_Y + 1)){
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y - 1 && szomszedok_0_X == sin_X
+						&& szomszedok_0_Y == sin_Y + 1)) {
 			if (szomszedok_2_X == sin_X - 1) {
 				cell.setImage(valto_egyenes);
 				cell.setAlapOrientation(90.0);

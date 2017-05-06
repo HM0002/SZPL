@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class Controller {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	int leptetes_ideje = 700;
-	
+
 	Controller() {
 
 		/**
@@ -31,7 +31,7 @@ public class Controller {
 		 * Az idõzítõ beállítása, elindítása.
 		 */
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 0, leptetes_ideje/10);
+		timer.scheduleAtFixedRate(timerTask, 0, leptetes_ideje / 10);
 	}
 
 	/**
@@ -276,24 +276,17 @@ public class Controller {
 
 		ArrayList<Palya> palyak = new ArrayList<Palya>();
 
-		Palya p2 = palyaBetoltes(
-				new BufferedReader(new FileReader("palyak\\palya_2.txt")),
-				"Palya 2");
+		Palya p2 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_2.txt")), "Palya 2");
 		palyak.add(p2);
 
-		Palya p1 = palyaBetoltes(
-				new BufferedReader(new FileReader("palyak\\palya_1.txt")),
-				"Palya 1");
+		Palya p1 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_1.txt")), "Palya 1");
 		palyak.add(p1);
-/*
-		Palya p2 = palyaBetoltes(
-				new BufferedReader(new FileReader("palyak\\palya_2.txt")),
-				"Palya 1");
-		palyak.add(p2);*/
+		/*
+		 * Palya p2 = palyaBetoltes( new BufferedReader(new
+		 * FileReader("palyak\\palya_2.txt")), "Palya 1"); palyak.add(p2);
+		 */
 
-		Palya p25 = palyaBetoltes(
-				new BufferedReader(new FileReader("palyak\\palya_25.txt")),
-				"Palya 25");
+		Palya p25 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_25.txt")), "Palya 25");
 		palyak.add(p25);
 
 		JM = new JatekMotor(palyak);
@@ -573,5 +566,15 @@ public class Controller {
 			view.draw(JM);
 
 		}
+	}
+
+	/** Beállítja a léptetés idõközét */
+	public void setLetetesIdeje(int i) {
+		leptetes_ideje = i;
+	}
+	
+	/** Visszatér a léptetés aktuális idõközével */
+	public int getLetetesIdeje() {
+		return leptetes_ideje;
 	}
 }
