@@ -420,13 +420,15 @@ public class View {
 					// továbbhaladási irány rárajzolása
 					// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re fog
 					// menni
-					if (pe.szomszedok[0].getAlagut()) {
-						cells.get(index).setRaRajzolas(iranyOrientacio(pe, 1), alagutNyil);
-					}
+					if (JM.getAktualisPalya().getAlagutSzam() == 2) {
+						if (pe.szomszedok[0].getAlagut()) {
+							cells.get(index).setRaRajzolas(iranyOrientacio(pe, 1), alagutNyil);
+						}
 
-					// egyébként szomszéd 0-ra
-					else {
-						cells.get(index).setRaRajzolas(iranyOrientacio(pe, 0), alagutNyil);
+						// egyébként szomszéd 0-ra
+						else {
+							cells.get(index).setRaRajzolas(iranyOrientacio(pe, 0), alagutNyil);
+						}
 					}
 				}
 
@@ -470,9 +472,10 @@ public class View {
 							tmpor = iranyOrientacio(jarmu.getPozicio(), 0);
 						}
 						// Alagút
-						else if (jarmu.getPozicio().getAlagut() && jarmu.getElozoPozicio().getAlagut()){
+						else if (jarmu.getPozicio().getAlagut() && jarmu.getElozoPozicio().getAlagut()) {
 							// továbbhaladási irány rárajzolása
-							// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re fog
+							// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re
+							// fog
 							// menni
 							if (jarmu.getPozicio().szomszedok[0].getAlagut()) {
 								tmpor = iranyOrientacio(jarmu.getPozicio(), 1);
