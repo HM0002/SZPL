@@ -1,7 +1,6 @@
 package projlab;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,8 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -24,8 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.MatteBorder;
 
 public class View {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -338,27 +333,6 @@ public class View {
 
 					valtoBeallitasa(cell, sin, szomszedok);
 
-					/*
-					 * // ha egyenes, akkor a megfelelõ kép if
-					 * (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
-					 * || szomszedok[0].getPoz()[1] ==
-					 * szomszedok[1].getPoz()[1]) {
-					 * cell.setImage(egyenesSinKep);
-					 * 
-					 * // Cellakép orientáció beállítása
-					 * 
-					 * // megnézi, függõlegesen egy vonalban vannak-e, mert //
-					 * akkor forgatni kell a képen if (szomszedok[0].getPoz()[0]
-					 * == szomszedok[1].getPoz()[0]) // ha igen, elforgatja a
-					 * sínt cell.setAlapOrientation(90.0); } // Ha nem egyenes a
-					 * sín, akkor tuti kanyar, hiszen S else {
-					 * cell.setImage(kanyarKep);
-					 * 
-					 * // Kanyarodó sín képének forgatási szöge
-					 * cell.setAlapOrientation(kanyar_forgatasa(sin,
-					 * szomszedok)); }
-					 */
-
 					// Rajtoljuk rá azt is, hogy váltó
 					cell.setRaRajzolas(0.0, ValtoSinKep);
 				}
@@ -409,7 +383,7 @@ public class View {
 
 	public void draw(JatekMotor JM) {
 
-		// Ultimate ötlet, rajzoljon ide is oda is
+		// Annak kiválasztása, hova rajzoljon
 		// konzolDraw(JM);
 		guiDraw(JM);
 	}
@@ -425,8 +399,7 @@ public class View {
 		// Váltó állások rárajzolása
 		// Sinek lekérése
 		for (PalyaElem sin : sinek) {
-			Image tmpkep = uresKep;
-			double tmpor = 0.0;
+
 			if (sin instanceof Valto) {
 				Cell cell = cells.get(Integer.parseInt(sin.getID().trim().substring(1)));
 
@@ -435,27 +408,6 @@ public class View {
 
 				valtoBeallitasa(cell, sin, szomszedok);
 
-				/*
-				 * // ha egyenes, akkor a megfelelõ kép if
-				 * (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0] ||
-				 * szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-				 * tmpkep = egyenesSinKep;
-				 * 
-				 * // Cellakép orientáció beállítása
-				 * 
-				 * // megnézi, függõlegesen egy vonalban vannak-e, mert // akkor
-				 * forgatni kell a képen if (szomszedok[0].getPoz()[0] ==
-				 * szomszedok[1].getPoz()[0]) // ha igen, elforgatja a sínt
-				 * tmpor = 90.0; else tmpor = 0.0; } // Ha nem egyenes a sín,
-				 * akkor tuti kanyar, hiszen S else { tmpkep = kanyarKep;
-				 * 
-				 * // Kanyarodó sín képének forgatási szöge tmpor =
-				 * kanyar_forgatasa(sin, szomszedok);
-				 * 
-				 * }
-				 * 
-				 * cell.setImage(tmpkep); cell.setAlapOrientation(tmpor);
-				 */
 				cell.setRaRajzolas(0.0, ValtoSinKep);
 
 			}
