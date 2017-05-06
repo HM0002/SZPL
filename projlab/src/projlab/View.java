@@ -58,6 +58,9 @@ public class View {
 	private Image alagutKep;
 	private Image varakozoUtasKep;
 	private Image alagutNyil;
+	private Image valto_kanyar_1;
+	private Image valto_kanyar_2;
+	private Image valto_egyenes;
 
 	// Változó az eredeti pályaképnek
 	private String[][] palyaKep = null;
@@ -170,6 +173,9 @@ public class View {
 			keresztezoSinKep = ImageIO.read(new File("elemek_kepei\\keresztezodes.png"));
 			boomKep = ImageIO.read(new File("elemek_kepei\\boom.png"));
 			alagutKep = ImageIO.read(new File("elemek_kepei\\alagut.png"));
+			valto_kanyar_1 = ImageIO.read(new File("elemek_kepei\\valto_kanyar_1.png"));
+			valto_kanyar_2 = ImageIO.read(new File("elemek_kepei\\valto_kanyar_2.png"));
+			valto_egyenes = ImageIO.read(new File("elemek_kepei\\valto_egyenes.png"));
 
 			// Állomásképek tömb feltöltése
 			allomasKepek.add(null);
@@ -237,11 +243,57 @@ public class View {
 					}
 				}
 
+				// S001 speciális sín beállítása
+				else if (palyaKep[i][j].contains("001")) {
+					cell.setID(palyaKep[i][j]);
+
+					PalyaElem kezdoSin = sinek.get(0);
+					PalyaElem sin = sinek.get(1);
+					PalyaElem[] szomszedok = sin.szomszedok;
+					double tmpor = kanyar_forgatasa(sin, szomszedok);
+
+					if (tmpor == 0.0) {
+						if (kezdoSin.getPoz()[0] == sin.getPoz()[0]) {
+							cell.setImage(valto_kanyar_2);
+							cell.setAlapOrientation(90.0);
+						} else {
+							cell.setImage(valto_kanyar_1);
+							cell.setAlapOrientation(0.0);
+						}
+					} else if (tmpor == 90.0) {
+						if (kezdoSin.getPoz()[0] == sin.getPoz()[0]) {
+							cell.setImage(valto_kanyar_1);
+							cell.setAlapOrientation(90.0);
+						} else {
+							cell.setImage(valto_kanyar_2);
+							cell.setAlapOrientation(180.0);
+						}
+					} else if (tmpor == 180.0) {
+						if (kezdoSin.getPoz()[0] == sin.getPoz()[0]) {
+							cell.setImage(valto_kanyar_2);
+							cell.setAlapOrientation(270.0);
+						} else {
+							cell.setImage(valto_kanyar_1);
+							cell.setAlapOrientation(180.0);
+						}
+					} else {
+						if (kezdoSin.getPoz()[0] == sin.getPoz()[0]) {
+							cell.setImage(valto_kanyar_1);
+							cell.setAlapOrientation(270.0);
+						} else {
+							cell.setImage(valto_kanyar_2);
+							cell.setAlapOrientation(0.0);
+						}
+					}
+
+				}
+
 				// Cellakép, ha keresztezõdés
 				else if (palyaKep[i][j].contains("K")) {
 					cell.setID(palyaKep[i][j]);
 					cell.setImage(keresztezoSinKep);
 				}
+
 				// cellakép, ha egyenes sín elem
 				else if (palyaKep[i][j].contains("S")) {
 					cell.setID(palyaKep[i][j]);
@@ -273,6 +325,7 @@ public class View {
 						cell.setAlapOrientation(kanyar_forgatasa(sin, szomszedok));
 					}
 				}
+
 				// Váltó pályakép
 				else if (palyaKep[i][j].contains("V")) {
 					cell.setID(palyaKep[i][j]);
@@ -283,31 +336,34 @@ public class View {
 					// szomszédok lekérése
 					PalyaElem[] szomszedok = sin.szomszedok;
 
-					// ha egyenes, akkor a megfelelõ kép
-					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
-							|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-						cell.setImage(egyenesSinKep);
+					valtoBeallitasa(cell, sin, szomszedok);
 
-						// Cellakép orientáció beállítása
-
-						// megnézi, függõlegesen egy vonalban vannak-e, mert
-						// akkor forgatni kell a képen
-						if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
-							// ha igen, elforgatja a sínt
-							cell.setAlapOrientation(90.0);
-					}
-					// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
-					else {
-						cell.setImage(kanyarKep);
-
-						// Kanyarodó sín képének forgatási szöge
-						cell.setAlapOrientation(kanyar_forgatasa(sin, szomszedok));
-					}
+					/*
+					 * // ha egyenes, akkor a megfelelõ kép if
+					 * (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
+					 * || szomszedok[0].getPoz()[1] ==
+					 * szomszedok[1].getPoz()[1]) {
+					 * cell.setImage(egyenesSinKep);
+					 * 
+					 * // Cellakép orientáció beállítása
+					 * 
+					 * // megnézi, függõlegesen egy vonalban vannak-e, mert //
+					 * akkor forgatni kell a képen if (szomszedok[0].getPoz()[0]
+					 * == szomszedok[1].getPoz()[0]) // ha igen, elforgatja a
+					 * sínt cell.setAlapOrientation(90.0); } // Ha nem egyenes a
+					 * sín, akkor tuti kanyar, hiszen S else {
+					 * cell.setImage(kanyarKep);
+					 * 
+					 * // Kanyarodó sín képének forgatási szöge
+					 * cell.setAlapOrientation(kanyar_forgatasa(sin,
+					 * szomszedok)); }
+					 */
 
 					// Rajtoljuk rá azt is, hogy váltó
 					cell.setRaRajzolas(0.0, ValtoSinKep);
 				}
 
+				// Állomás pályakép
 				else if (palyaKep[i][j].contains("A")) {
 					cell.setID(palyaKep[i][j]);
 					// Elem lekérése
@@ -377,33 +433,29 @@ public class View {
 				// szomszédok lekérése
 				PalyaElem[] szomszedok = sin.szomszedok;
 
-				// ha egyenes, akkor a megfelelõ kép
-				if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0]
-						|| szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
-					tmpkep = egyenesSinKep;
+				valtoBeallitasa(cell, sin, szomszedok);
 
-					// Cellakép orientáció beállítása
-
-					// megnézi, függõlegesen egy vonalban vannak-e, mert
-					// akkor forgatni kell a képen
-					if (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0])
-						// ha igen, elforgatja a sínt
-						tmpor = 90.0;
-					else
-						tmpor = 0.0;
-				}
-				// Ha nem egyenes a sín, akkor tuti kanyar, hiszen S
-				else {
-					tmpkep = kanyarKep;
-
-					// Kanyarodó sín képének forgatási szöge
-					tmpor = kanyar_forgatasa(sin, szomszedok);
-
-				}
-
-				cell.setImage(tmpkep);
-				cell.setAlapOrientation(tmpor);
-
+				/*
+				 * // ha egyenes, akkor a megfelelõ kép if
+				 * (szomszedok[0].getPoz()[0] == szomszedok[1].getPoz()[0] ||
+				 * szomszedok[0].getPoz()[1] == szomszedok[1].getPoz()[1]) {
+				 * tmpkep = egyenesSinKep;
+				 * 
+				 * // Cellakép orientáció beállítása
+				 * 
+				 * // megnézi, függõlegesen egy vonalban vannak-e, mert // akkor
+				 * forgatni kell a képen if (szomszedok[0].getPoz()[0] ==
+				 * szomszedok[1].getPoz()[0]) // ha igen, elforgatja a sínt
+				 * tmpor = 90.0; else tmpor = 0.0; } // Ha nem egyenes a sín,
+				 * akkor tuti kanyar, hiszen S else { tmpkep = kanyarKep;
+				 * 
+				 * // Kanyarodó sín képének forgatási szöge tmpor =
+				 * kanyar_forgatasa(sin, szomszedok);
+				 * 
+				 * }
+				 * 
+				 * cell.setImage(tmpkep); cell.setAlapOrientation(tmpor);
+				 */
 				cell.setRaRajzolas(0.0, ValtoSinKep);
 
 			}
@@ -794,6 +846,103 @@ public class View {
 		else {
 			return 90.0;
 		}
+	}
+
+	private void valtoBeallitasa(Cell cell, PalyaElem sin, PalyaElem[] szomszedok) {
+		int sin_X = sin.getPoz()[0];
+		int sin_Y = sin.getPoz()[1];
+		int szomszedok_0_X = szomszedok[0].getPoz()[0];
+		int szomszedok_0_Y = szomszedok[0].getPoz()[1];
+		int szomszedok_1_X = szomszedok[1].getPoz()[0];
+		int szomszedok_1_Y = szomszedok[1].getPoz()[1];
+		int szomszedok_2_X = szomszedok[2].getPoz()[0];
+		int szomszedok_2_Y = szomszedok[2].getPoz()[1];
+
+		// És akkor csak azt kell eldönteni, merrõl merre nézzen
+		// Elõször szomszéd alatta és a másik tõle balra vagy
+		// fordítva
+		if ((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y + 1 && szomszedok_1_X == sin_X - 1
+				&& szomszedok_1_Y == sin_Y)
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y + 1 && szomszedok_0_X == sin_X - 1
+						&& szomszedok_0_Y == sin_Y)) {
+			if (szomszedok_2_Y == sin_Y) {
+				cell.setImage(valto_kanyar_1);
+				cell.setAlapOrientation(0.0);
+			} else {
+				cell.setImage(valto_kanyar_2);
+				cell.setAlapOrientation(90.0);
+			}
+		}
+		// Elõször szomszéd felette és a másik tõle
+		// jobbra vagy fordítva
+		else if ((szomszedok_0_X == sin_X + 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X
+				&& szomszedok_1_Y == sin_Y - 1)
+				|| (szomszedok_1_X == sin_X + 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X
+						&& szomszedok_0_Y == sin_Y - 1)) {
+			if (szomszedok_2_Y == sin_Y) {
+				cell.setImage(valto_kanyar_1);
+				cell.setAlapOrientation(180.0);
+			} else {
+				cell.setImage(valto_kanyar_2);
+				cell.setAlapOrientation(270.0);
+			}
+		}
+		// Elõször szomszéd alatta és a másik tõle
+		// jobbra vagy fordítva
+		else if ((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y + 1 && szomszedok_1_X == sin_X + 1
+				&& szomszedok_1_Y == sin_Y)
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y + 1 && szomszedok_0_X == sin_X + 1
+						&& szomszedok_0_Y == sin_Y)) {
+			if (szomszedok_2_Y == sin_Y) {
+				cell.setImage(valto_kanyar_2);
+				cell.setAlapOrientation(0.0);
+			} else {
+				cell.setImage(valto_kanyar_1);
+				cell.setAlapOrientation(270.0);
+			}
+		}
+		// Elõször szomszéd felette és a másik tõle
+		// balra vagy fordítva
+		else if ((szomszedok_0_X == sin_X - 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X
+				&& szomszedok_1_Y == sin_Y - 1)
+				|| (szomszedok_1_X == sin_X - 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X
+						&& szomszedok_0_Y == sin_Y - 1)) {
+			if (szomszedok_2_Y == sin_Y) {
+				cell.setImage(valto_kanyar_2);
+				cell.setAlapOrientation(180.0);
+			} else {
+				cell.setImage(valto_kanyar_1);
+				cell.setAlapOrientation(90.0);
+			}
+		}
+		// Egyenes
+		// Vízszintes
+		else if((szomszedok_0_X == sin_X - 1 && szomszedok_0_Y == sin_Y && szomszedok_1_X == sin_X + 1 
+				&& szomszedok_1_Y == sin_Y)
+				|| (szomszedok_1_X == sin_X - 1 && szomszedok_1_Y == sin_Y && szomszedok_0_X == sin_X + 1 
+						&& szomszedok_0_Y == sin_Y)){
+			if (szomszedok_2_Y == sin_Y - 1) {
+				cell.setImage(valto_egyenes);
+				cell.setAlapOrientation(180.0);
+			} else {
+				cell.setImage(valto_egyenes);
+				cell.setAlapOrientation(0.0);
+			}
+		}
+		//Függõleges
+		else if((szomszedok_0_X == sin_X && szomszedok_0_Y == sin_Y - 1 && szomszedok_1_X == sin_X 
+				&& szomszedok_1_Y == sin_Y + 1)
+				|| (szomszedok_1_X == sin_X && szomszedok_1_Y == sin_Y - 1 && szomszedok_0_X == sin_X 
+						&& szomszedok_0_Y == sin_Y + 1)){
+			if (szomszedok_2_X == sin_X - 1) {
+				cell.setImage(valto_egyenes);
+				cell.setAlapOrientation(90.0);
+			} else {
+				cell.setImage(valto_egyenes);
+				cell.setAlapOrientation(270.0);
+			}
+		}
+
 	}
 
 }
