@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 public class Controller {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	int leptetes_ideje = 700;
+	int varakozoIdo = 0;
 
 	Controller() {
 
@@ -21,7 +22,9 @@ public class Controller {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (jatekFut) {
+				if (varakozoIdo>0) varakozoIdo=varakozoIdo-leptetes_ideje;
+				if (varakozoIdo<0) varakozoIdo=0;				
+				if (jatekFut&&varakozoIdo==0) {
 					gameRun();
 				}
 			}
@@ -89,6 +92,8 @@ public class Controller {
 						return;
 					} else {
 						logger.log(Level.INFO, "Megnyertük a pályát!");
+						//7 tick-nyit várunk, mielõtt elindulna az új pálya
+						varakozoIdo = leptetes_ideje*10*7;
 						JM.palyaBetoltes();
 						view.dispose();
 						view = new View(this, JM);

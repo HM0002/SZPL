@@ -112,17 +112,17 @@ public class View {
 		gombPanel.add(sebessegKomboLabel);
 		sebessegek = new String[] { "Hardcore", "Gyors", "Normál", "Lassú", "Nagymamák kedvence" };
 		sebessegCombo = new JComboBox<String>(sebessegek);
-		
-		if (ctrl.getLetetesIdeje()==150)
-		sebessegCombo.setSelectedIndex(0);
-		else if (ctrl.getLetetesIdeje()==400)
-			sebessegCombo.setSelectedIndex(1);	
-		else if (ctrl.getLetetesIdeje()==700)
+
+		if (ctrl.getLetetesIdeje() == 150)
+			sebessegCombo.setSelectedIndex(0);
+		else if (ctrl.getLetetesIdeje() == 400)
+			sebessegCombo.setSelectedIndex(1);
+		else if (ctrl.getLetetesIdeje() == 700)
 			sebessegCombo.setSelectedIndex(2);
-		else if (ctrl.getLetetesIdeje()==1200)
-			sebessegCombo.setSelectedIndex(3);	
-		else if (ctrl.getLetetesIdeje()==2000)
-			sebessegCombo.setSelectedIndex(4);	
+		else if (ctrl.getLetetesIdeje() == 1200)
+			sebessegCombo.setSelectedIndex(3);
+		else if (ctrl.getLetetesIdeje() == 2000)
+			sebessegCombo.setSelectedIndex(4);
 		gombPanel.add(sebessegCombo);
 
 		// panel az ablakoknak
@@ -519,7 +519,11 @@ public class View {
 							tmpor = iranyOrientacio(jarmu.getPozicio(), 0);
 						}
 						// Alagút
-						else if (jarmu.getPozicio().getAlagut() && jarmu.getElozoPozicio().getAlagut()) {
+						else if ((jarmu.getPozicio().getAlagut() && jarmu.getElozoPozicio().getAlagut())
+								|| ((jarmu.getPozicio().getAlagut()
+										&& jarmu.getPozicio().szomszedok[0] != jarmu.getElozoPozicio())
+										&& (jarmu.getPozicio().getAlagut()
+												&& jarmu.getPozicio().szomszedok[1] != jarmu.getElozoPozicio()))) {
 							// továbbhaladási irány rárajzolása
 							// Ha a 0. szomszéd az alagút, akkor a szomszéd 1-re
 							// fog
