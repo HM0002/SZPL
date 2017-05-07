@@ -22,9 +22,11 @@ public class Controller {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (varakozoIdo>0) varakozoIdo=varakozoIdo-leptetes_ideje;
-				if (varakozoIdo<0) varakozoIdo=0;				
-				if (jatekFut&&varakozoIdo==0) {
+				if (varakozoIdo > 0)
+					varakozoIdo = varakozoIdo - leptetes_ideje;
+				else if (varakozoIdo < 0)
+					varakozoIdo = 0;
+				if (jatekFut && varakozoIdo == 0) {
 					gameRun();
 				}
 			}
@@ -92,8 +94,8 @@ public class Controller {
 						return;
 					} else {
 						logger.log(Level.INFO, "Megnyertük a pályát!");
-						//7 tick-nyit várunk, mielõtt elindulna az új pálya
-						varakozoIdo = leptetes_ideje*10*7;
+						// 7 tick-nyit várunk, mielõtt elindulna az új pálya
+						varakozoIdo = leptetes_ideje * 10 * 7;
 						JM.palyaBetoltes();
 						view.dispose();
 						view = new View(this, JM);
@@ -577,7 +579,7 @@ public class Controller {
 	public void setLetetesIdeje(int i) {
 		leptetes_ideje = i;
 	}
-	
+
 	/** Visszatér a léptetés aktuális idõközével */
 	public int getLetetesIdeje() {
 		return leptetes_ideje;
