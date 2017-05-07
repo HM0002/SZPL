@@ -48,23 +48,26 @@ public class Main {
 		fileHandler.setFormatter(formatter);
 		logger.addHandler(fileHandler);
 
-		if (args[0].equals("K")) {
+		String line;
+
+		if (args.length > 0 && args[0].equals("K")) {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			controller.commandMapping(new String[] { "loadPalya", "" }, br);
-		} else if (args[0].equals("F"))
-			br = new BufferedReader(
-					new FileReader("teszt_bemenetek\\" + args[1] + ".txt"));
-		else {
+			while ((line = br.readLine()) != null) {
+				String[] lines = line.split(" ");
+				controller.commandMapping(lines, br);
+			}
+		} else if (args.length > 0 && args[0].equals("F")) {
+			br = new BufferedReader(new FileReader("teszt_bemenetek\\" + args[1] + ".txt"));
+			while ((line = br.readLine()) != null) {
+				String[] lines = line.split(" ");
+				controller.commandMapping(lines, br);
+			}
+		} else {
 			controller.ujJatekKezdes();
 		}
 
 		logger.setLevel(Level.OFF);
-
-		String line;
-		while ((line = br.readLine()) != null) {
-			String[] lines = line.split(" ");
-			controller.commandMapping(lines, br);
-		}
 
 	}
 

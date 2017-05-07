@@ -283,18 +283,14 @@ public class Controller {
 
 		ArrayList<Palya> palyak = new ArrayList<Palya>();
 
-		Palya p2 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_2.txt")), "Palya 2");
-		palyak.add(p2);
-
 		Palya p1 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_1.txt")), "Palya 1");
 		palyak.add(p1);
-		/*
-		 * Palya p2 = palyaBetoltes( new BufferedReader(new
-		 * FileReader("palyak\\palya_2.txt")), "Palya 1"); palyak.add(p2);
-		 */
 
-		Palya p25 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_25.txt")), "Palya 25");
-		palyak.add(p25);
+		Palya p2 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_2.txt")), "Palya 2");
+		palyak.add(p2);
+		
+		Palya p3 = palyaBetoltes(new BufferedReader(new FileReader("palyak\\palya_3.txt")), "Palya 3");
+		palyak.add(p3);
 
 		JM = new JatekMotor(palyak);
 		view = new View(this, JM);
