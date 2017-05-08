@@ -78,7 +78,6 @@ public class View {
 
 		// Az ablak
 		enAblakom = new JFrame("Vonatos játék by Team Delta");
-		enAblakom.setMinimumSize(new Dimension(500, 500));
 
 		// layout
 		enAblakom.setLayout(new BorderLayout());
@@ -128,7 +127,6 @@ public class View {
 		// panel az ablakoknak
 		jatekPanel = new JPanel();
 		enAblakom.add(jatekPanel, BorderLayout.CENTER);
-		jatekPanel.setMinimumSize(new Dimension(500, 500));
 		jatekPanel.setDoubleBuffered(true);
 
 		// Státusz ablak
@@ -238,6 +236,9 @@ public class View {
 		palyaKep = JM.getAktualisPalya().getPalyaKep();
 		columns = palyaKep[0].length;
 		rows = palyaKep.length;
+
+		// palyameret alapjan minimum ablakméret beállítása
+		enAblakom.setMinimumSize(new Dimension(Math.max(columns * 50 + 16, 680), rows * 50 + 100));
 
 		// Sinek lekérése
 		sinek = JM.getAktualisPalya().getElemek();
